@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Fitness Tracker</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#121923;
+      --panel2:#17212d;
+      --line:#263241;
+      --text:#f4f7fb;
+      --muted:#93a1b2;
+      --accent:#52d7ad;
+      --accent2:#2bb98f;
+      --warn:#f5bb4b;
+      --danger:#ff6b6b;
+      --shadow:0 10px 30px rgba(0,0,0,.22);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg);color-scheme:dark}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 15% 0%,rgba(82,215,173,.08),transparent 26%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .app{
+      width:min(100%,860px);
+      margin:0 auto;
+      padding:calc(18px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+    }
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px
+    }
+    .brand h1{margin:0;font-size:26px;letter-spacing:-.6px}
+    .brand p{margin:5px 0 0;color:var(--muted);font-size:13px}
+    .pill{
+      background:rgba(82,215,173,.12);color:var(--accent);border:1px solid rgba(82,215,173,.22);
+      border-radius:999px;padding:9px 12px;font-weight:700;font-size:12px
+    }
+    .tabs{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+      background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:18px;margin-bottom:16px;
+      position:sticky;top:8px;z-index:10;backdrop-filter:blur(18px)
+    }
+    .tab{
+      min-height:44px;border:0;border-radius:13px;background:transparent;color:var(--muted);font-weight:700
+    }
+    .tab.active{background:var(--panel2);color:var(--text)}
+    .view{display:none}
+    .view.active{display:block}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .card{
+      background:linear-gradient(180deg,rgba(23,33,45,.96),rgba(18,25,35,.96));
+      border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)
+    }
+    .stat .label,.small{color:var(--muted);font-size:12px}
+    .stat .value{font-size:24px;font-weight:800;margin-top:5px;letter-spacing:-.5px}
+    .section-title{font-size:18px;font-weight:800;margin:20px 0 10px;letter-spacing:-.2px}
+    .goal{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:14px;border:1px solid var(--line);background:var(--panel);border-radius:17px;margin-bottom:9px
+    }
+    .goal b{display:block;font-size:15px}
+    .goal span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .check{
+      appearance:none;width:27px;height:27px;border:2px solid #536274;border-radius:9px;flex:0 0 auto;
+      position:relative;background:transparent
+    }
+    .check:checked{background:var(--accent);border-color:var(--accent)}
+    .check:checked::after{
+      content:"✓";position:absolute;color:#06110d;font-weight:900;left:5px;top:0px;font-size:19px
+    }
+    .progress{
+      height:10px;background:#1c2632;border-radius:999px;overflow:hidden;margin-top:12px
+    }
+    .progress > div{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:.25s}
+    .macro{
+      text-align:center;padding:15px 8px;background:var(--panel);border:1px solid var(--line);border-radius:16px
+    }
+    .macro b{display:block;font-size:21px;margin-top:4px}
+    .inputrow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    label.field{display:block}
+    .field span{display:block;color:var(--muted);font-size:12px;margin:0 0 6px}
+    input,select{
+      width:100%;min-height:46px;border-radius:14px;border:1px solid var(--line);
+      background:#0f151d;color:var(--text);padding:10px 12px;outline:none
+    }
+    input:focus,select:focus{border-color:var(--accent)}
+    .btn{
+      width:100%;min-height:47px;border:0;border-radius:15px;background:var(--accent);color:#06110d;
+      font-weight:900;padding:12px 16px
+    }
+    .btn.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+    .walk-hero{
+      display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:10px;align-items:stretch
+    }
+    .walk-main{
+      background:linear-gradient(145deg,rgba(82,215,173,.17),rgba(82,215,173,.05));
+      border:1px solid rgba(82,215,173,.26);border-radius:18px;padding:16px
+    }
+    .walk-main .big{font-size:31px;font-weight:900;line-height:1}
+    .walk-stat{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .walk-stat b{display:block;font-size:18px;margin-top:5px}
+    .blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .block{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .block .tag{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:.5px}
+    .block b{display:block;margin-top:8px;font-size:17px}
+    .notice{
+      margin-top:12px;padding:13px 14px;border-radius:15px;background:#101820;border:1px solid var(--line);
+      color:#c3ceda;font-size:13px;line-height:1.45
+    }
+    .week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+    .day{
+      min-height:72px;background:var(--panel);border:1px solid var(--line);border-radius:15px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px
+    }
+    .day span{font-size:12px;font-weight:800}
+    .day.done{border-color:rgba(82,215,173,.55);background:rgba(82,215,173,.08)}
+    .weight-list{display:flex;flex-direction:column;gap:8px}
+    .weight-item{
+      display:flex;justify-content:space-between;align-items:center;padding:12px 13px;
+      border:1px solid var(--line);background:var(--panel);border-radius:14px
+    }
+    .weight-item small{color:var(--muted)}
+    .chart{
+      margin-top:12px;border:1px solid var(--line);background:var(--panel);border-radius:18px;padding:10px;overflow:hidden
+    }
+    svg{width:100%;height:auto;display:block}
+    .footer-note{
+      color:var(--muted);font-size:11px;line-height:1.5;margin-top:18px;text-align:center
+    }
+    .checkpoint{
+      background:linear-gradient(145deg,rgba(82,215,173,.14),rgba(82,215,173,.03));
+      border:1px solid rgba(82,215,173,.25);border-radius:22px;padding:18px
+    }
+    .checkpoint .big{font-size:34px;font-weight:900;margin:4px 0}
+    .feedback{margin-top:10px;padding:12px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);font-size:13px;line-height:1.45}
+    @media(max-width:700px){
+      .grid4{grid-template-columns:repeat(2,1fr)}
+      .grid3{grid-template-columns:repeat(3,1fr)}
+      .inputrow,.walk-hero,.blocks{grid-template-columns:1fr}
+      .walk-hero{grid-template-columns:repeat(2,1fr)}
+      .walk-main{grid-column:1/-1}
+      .week{grid-template-columns:repeat(4,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Fitness Tracker</h1>
+        <p>Cut · Muskelaufbau · Walking Pad</p>
+      </div>
+      <div class="pill">Ziel: 80–82 kg</div>
+    </header>
+
+    <nav class="tabs" aria-label="Bereiche">
+      <button class="tab active" data-view="today">Heute</button>
+      <button class="tab" data-view="walking">Walking</button>
+      <button class="tab" data-view="progress">Fortschritt</button>
+    </nav>
+
+    <section id="today" class="view active">
+      <div class="grid4">
+        <div class="card stat"><div class="label">Start</div><div class="value">93 kg</div></div>
+        <div class="card stat"><div class="label">Größe</div><div class="value">188 cm</div></div>
+        <div class="card stat"><div class="label">Kalorien</div><div class="value">2.350</div></div>
+        <div class="card stat"><div class="label">Zieltempo</div><div class="value">0,5–0,7</div><div class="small">kg/Woche</div></div>
+      </div>
+
+      <div class="section-title">Tagesziele <span id="scoreText" class="small"></span></div>
+      <div class="card">
+        <label class="goal"><div><b>Kalorien</b><span>≈ 2.350 kcal</span></div><input class="check daily" data-key="cal" type="checkbox"></label>
+        <label class="goal"><div><b>Protein</b><span>180 g</span></div><input class="check daily" data-key="protein" type="checkbox"></label>
+        <label class="goal"><div><b>10.000 Gesamtschritte</b><span>Alltag + Walking Pad</span></div><input class="check daily" data-key="steps" type="checkbox"></label>
+        <label class="goal"><div><b>Krafttraining / Erholung</b><span>3× pro Woche, Leistung halten</span></div><input class="check daily" data-key="training" type="checkbox"></label>
+        <label class="goal"><div><b>Regeneration</b><span>Schlaf, Wasser, Belastung im Blick</span></div><input class="check daily" data-key="recovery" type="checkbox"></label>
+        <div class="progress"><div id="dailyProgress"></div></div>
+      </div>
+
+      <div class="section-title">Makros</div>
+      <div class="grid3">
+        <div class="macro"><span class="small">Protein</span><b>180 g</b></div>
+        <div class="macro"><span class="small">Fett</span><b>70 g</b></div>
+        <div class="macro"><span class="small">Carbs</span><b>250 g</b></div>
+      </div>
+
+      <div class="section-title">Langfristiges Ziel</div>
+      <div class="checkpoint">
+        <div class="small">ERSTER GROSSER CHECKPOINT</div>
+        <div class="big">80–82 kg</div>
+        <div class="small">Danach neu beurteilen: Taille, Kraft, Spiegelbild und Körperfett. Kein starres Endgewicht.</div>
+      </div>
+    </section>
+
+    <section id="walking" class="view">
+      <div class="walk-hero">
+        <div class="walk-main">
+          <div class="small">TAGESZIEL</div>
+          <div class="big" id="heroSteps">10.000</div>
+          <div style="color:var(--accent);font-weight:800;margin-top:6px">Schritte gesamt</div>
+        </div>
+        <div class="walk-stat"><span class="small">Neigung</span><b>8°</b><span class="small">≈ 14,1 %</span></div>
+        <div class="walk-stat"><span class="small">Tempo</span><b id="heroPace">6,7 km/h</b></div>
+        <div class="walk-stat"><span class="small">Zeit</span><b id="heroTime">≈ 68 Min.</b></div>
+      </div>
+
+      <div class="section-title">Walking-Pad-Rechner</div>
+      <div class="card">
+        <div class="inputrow">
+          <label class="field"><span>Tempo</span>
+            <select id="pace">
+              <option value="5">5,0 km/h</option>
+              <option value="5.5">5,5 km/h</option>
+              <option value="6.2">6,2 km/h</option>
+              <option value="6.7" selected>6,7 km/h</option>
+            </select>
+          </label>
+          <label class="field"><span>Walking-Pad-Schritte</span>
+            <input id="walkSteps" type="number" min="0" max="20000" step="500" value="10000">
+          </label>
+          <label class="field"><span>Schrittlänge</span>
+            <input id="stride" type="number" min="0.4" max="1.2" step="0.01" value="0.76">
+          </label>
+        </div>
+        <div class="grid3" style="margin-top:12px">
+          <div class="macro"><span class="small">Distanz</span><b id="distance">7,6 km</b></div>
+          <div class="macro"><span class="small">Dauer</span><b id="duration">68 Min.</b></div>
+          <div class="macro"><span class="small">Belastung</span><b id="load">Cardio</b></div>
+        </div>
+        <div class="notice" id="walkNote">6,7 km/h bei 8° ist eher echtes Cardio. Solange Puls, Beine und Krafttraining gut bleiben, ist das okay.</div>
+      </div>
+
+      <div class="section-title">3-Blöcke-Plan</div>
+      <div class="blocks">
+        <div class="block"><div class="tag">BLOCK 1</div><b>3.000 Schritte</b><span class="small" id="b1">≈ 20 Min.</span><div class="small" style="margin-top:7px">morgens</div></div>
+        <div class="block"><div class="tag">BLOCK 2</div><b>3.000 Schritte</b><span class="small" id="b2">≈ 20 Min.</span><div class="small" style="margin-top:7px">mittags</div></div>
+        <div class="block"><div class="tag">BLOCK 3</div><b>4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
+      </div>
+
+      <div class="section-title">Wochentracker</div>
+      <div class="card">
+        <div class="week" id="weekGrid"></div>
+        <div class="progress"><div id="weekProgress"></div></div>
+        <div class="small" id="weekStatus" style="margin-top:9px">0 von 7 Tagen</div>
+        <button class="btn secondary" id="resetWeek" style="margin-top:12px">Woche zurücksetzen</button>
+      </div>
+    </section>
+
+    <section id="progress" class="view">
+      <div class="section-title">Gewicht eintragen</div>
+      <div class="card">
+        <div class="grid2">
+          <label class="field"><span>Datum</span><input id="weightDate" type="date"></label>
+          <label class="field"><span>Gewicht</span><input id="weightValue" type="number" min="50" max="200" step="0.1" value="93"></label>
+        </div>
+        <button class="btn" id="addWeight" style="margin-top:12px">Gewicht speichern</button>
+        <div class="feedback" id="weightFeedback">Zieltempo: ungefähr −0,5 bis −0,7 kg pro Woche.</div>
+      </div>
+
+      <div class="section-title">Verlauf</div>
+      <div class="chart">
+        <svg id="weightChart" viewBox="0 0 720 250" role="img" aria-label="Gewichtsverlauf"></svg>
+      </div>
+
+      <div class="section-title">Einträge</div>
+      <div class="weight-list" id="weightList"></div>
+
+      <div class="section-title">Dein Rahmen</div>
+      <div class="card">
+        <div class="grid2">
+          <div class="stat"><div class="label">Krafttraining</div><div class="value">3×</div><div class="small">pro Woche</div></div>
+          <div class="stat"><div class="label">Schritte</div><div class="value">10.000</div><div class="small">gesamt / Tag</div></div>
+        </div>
+        <div class="notice">Wenn dein 7-Tage-Trend mehrere Wochen deutlich unter etwa 0,5 kg Verlust liegt, erst Tracking und Schritte prüfen. Wenn er länger deutlich über etwa 0,9–1,0 kg liegt und Kraft oder Regeneration leiden, Defizit etwas verkleinern.</div>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Deine Daten werden nur lokal in diesem Browser gespeichert. 8° entsprechen rechnerisch ungefähr 14,1 % Steigung.
+    </p>
+  </main>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  const storage = {
+    get(k, fallback){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
+    set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  // Tabs
+  $$('.tab').forEach(btn => btn.addEventListener('click', () => {
+    $$('.tab').forEach(b => b.classList.toggle('active', b === btn));
+    $$('.view').forEach(v => v.classList.toggle('active', v.id === btn.dataset.view));
+  }));
+
+  // Daily goals
+  const dateKey = new Date().toISOString().slice(0,10);
+  const dailyKey = 'fitness-daily-' + dateKey;
+  const dailyState = storage.get(dailyKey, {});
+  $$('.daily').forEach(c => {
+    c.checked = !!dailyState[c.dataset.key];
+    c.addEventListener('change', () => {
+      const s = {};
+      $$('.daily').forEach(x => s[x.dataset.key] = x.checked);
+      storage.set(dailyKey, s);
+      updateDaily();
+    });
+  });
+  function updateDaily(){
+    const done = $$('.daily').filter(x => x.checked).length;
+    $('#scoreText').textContent = `· ${done}/5`;
+    $('#dailyProgress').style.width = `${done/5*100}%`;
+  }
+  updateDaily();
+
+  // Walking
+  const walkingPrefs = storage.get('fitness-walking', {pace:6.7,steps:10000,stride:.76});
+  $('#pace').value = String(walkingPrefs.pace);
+  $('#walkSteps').value = walkingPrefs.steps;
+  $('#stride').value = walkingPrefs.stride;
+
+  function minutes(steps, pace, stride){ return (steps * stride / 1000) / pace * 60; }
+  function fmt1(n){ return n.toFixed(1).replace('.', ','); }
+  function updateWalking(){
+    const pace = Math.max(1, Math.min(10, Number($('#pace').value) || 6.7));
+    const steps = Math.max(0, Math.min(20000, Number($('#walkSteps').value) || 0));
+    const stride = Math.max(.4, Math.min(1.2, Number($('#stride').value) || .76));
+    const km = steps * stride / 1000;
+    const mins = minutes(steps, pace, stride);
+    $('#heroSteps').textContent = Math.round(steps).toLocaleString('de-DE');
+    $('#heroPace').textContent = fmt1(pace) + ' km/h';
+    $('#heroTime').textContent = '≈ ' + Math.round(mins) + ' Min.';
+    $('#distance').textContent = fmt1(km) + ' km';
+    $('#duration').textContent = Math.round(mins) + ' Min.';
+    $('#b1').textContent = '≈ ' + Math.round(minutes(3000, pace, stride)) + ' Min.';
+    $('#b2').textContent = '≈ ' + Math.round(minutes(3000, pace, stride)) + ' Min.';
+    $('#b3').textContent = '≈ ' + Math.round(minutes(4000, pace, stride)) + ' Min.';
+    let load='Locker', note='Lockerer Bereich – gut geeignet, um Schritte zu sammeln.';
+    if(pace >= 6.5){ load='Cardio'; note='6,7 km/h bei 8° ist eher echtes Cardio. Solange Puls, Beine und Krafttraining gut bleiben, ist das okay.'; }
+    else if(pace >= 6){ load='Zügig'; note='Zügiges Tempo. Gut nutzbar, solange deine Regeneration nicht leidet.'; }
+    $('#load').textContent = load;
+    $('#walkNote').textContent = note;
+    storage.set('fitness-walking',{pace,steps,stride});
+  }
+  ['pace','walkSteps','stride'].forEach(id => $('#'+id).addEventListener('input', updateWalking));
+  updateWalking();
+
+  // Week
+  const days = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+  let weekState = storage.get('fitness-week', Array(7).fill(false));
+  const grid = $('#weekGrid');
+  days.forEach((d,i) => {
+    const b = document.createElement('button');
+    b.className = 'day' + (weekState[i] ? ' done':'');
+    b.type = 'button';
+    b.innerHTML = `<span>${d}</span><input class="check" type="checkbox" ${weekState[i]?'checked':''} tabindex="-1" aria-hidden="true">`;
+    b.addEventListener('click', () => {
+      weekState[i] = !weekState[i];
+      storage.set('fitness-week', weekState);
+      renderWeek();
+    });
+    grid.appendChild(b);
+  });
+  function renderWeek(){
+    [...grid.children].forEach((b,i) => {
+      b.classList.toggle('done', !!weekState[i]);
+      b.querySelector('input').checked = !!weekState[i];
+    });
+    const n = weekState.filter(Boolean).length;
+    $('#weekStatus').textContent = `${n} von 7 Tagen`;
+    $('#weekProgress').style.width = `${n/7*100}%`;
+  }
+  $('#resetWeek').addEventListener('click', () => {
+    weekState = Array(7).fill(false);
+    storage.set('fitness-week', weekState);
+    renderWeek();
+  });
+  renderWeek();
+
+  // Weight tracking
+  const dateInput = $('#weightDate');
+  dateInput.value = new Date().toISOString().slice(0,10);
+  let weights = storage.get('fitness-weights', []);
+  $('#addWeight').addEventListener('click', () => {
+    const date = dateInput.value;
+    const value = Number($('#weightValue').value);
+    if(!date || !Number.isFinite(value) || value < 50 || value > 200){
+      $('#weightFeedback').textContent = 'Bitte ein gültiges Datum und realistisches Gewicht eingeben.';
+      return;
+    }
+    const existing = weights.findIndex(x => x.date === date);
+    if(existing >= 0) weights[existing].value = value;
+    else weights.push({date,value});
+    weights.sort((a,b) => a.date.localeCompare(b.date));
+    storage.set('fitness-weights', weights);
+    renderWeights();
+  });
+
+  function renderWeights(){
+    const list = $('#weightList');
+    list.innerHTML = '';
+    if(!weights.length){
+      list.innerHTML = '<div class="notice">Noch keine Gewichtseinträge gespeichert.</div>';
+      $('#weightChart').innerHTML = '<text x="360" y="125" fill="#93a1b2" text-anchor="middle" font-size="15">Noch keine Daten</text>';
+      $('#weightFeedback').textContent = 'Zieltempo: ungefähr −0,5 bis −0,7 kg pro Woche.';
+      return;
+    }
+    [...weights].reverse().slice(0,12).forEach((w) => {
+      const row = document.createElement('div');
+      row.className='weight-item';
+      const date = new Date(w.date+'T00:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+      row.innerHTML = `<div><b>${w.value.toFixed(1).replace('.', ',')} kg</b><br><small>${date}</small></div><button class="btn secondary" style="width:auto;min-height:38px;padding:8px 11px">Löschen</button>`;
+      row.querySelector('button').addEventListener('click', () => {
+        weights = weights.filter(x => x.date !== w.date);
+        storage.set('fitness-weights', weights);
+        renderWeights();
+      });
+      list.appendChild(row);
+    });
+    drawChart();
+    updateWeightFeedback();
+  }
+
+  function updateWeightFeedback(){
+    if(weights.length < 2){
+      $('#weightFeedback').textContent='Noch mindestens einen weiteren Wert eintragen, dann kann ich den Trend bewerten.';
+      return;
+    }
+    const a = weights[weights.length-2], b = weights[weights.length-1];
+    const diff = b.value - a.value;
+    const days = Math.max(1,(new Date(b.date)-new Date(a.date))/86400000);
+    const perWeek = diff / days * 7;
+    let msg = '';
+    if(perWeek <= -0.5 && perWeek >= -0.7) msg='Genau im Zielbereich.';
+    else if(perWeek < -0.7 && perWeek >= -0.9) msg='Etwas schneller als geplant – Regeneration und Kraft beobachten.';
+    else if(perWeek < -0.9) msg='Deutlich schneller als geplant – bei anhaltendem Trend Defizit etwas verkleinern.';
+    else if(perWeek < -0.3) msg='Etwas langsamer – noch nicht vorschnell ändern.';
+    else if(perWeek <= 0) msg='Aktuell wenig Veränderung – Trend über mehrere Wochen ansehen.';
+    else msg='Aktuell höher – einzelne Schwankungen sind normal, Trend beobachten.';
+    $('#weightFeedback').textContent = `Hochgerechnet: ${perWeek.toFixed(2).replace('.', ',')} kg/Woche. ${msg}`;
+  }
+
+  function drawChart(){
+    const svg = $('#weightChart');
+    const pts = weights.slice(-12);
+    const W=720,H=250,pad=38;
+    if(!pts.length) return;
+    const vals = pts.map(x=>x.value);
+    let min=Math.min(...vals), max=Math.max(...vals);
+    if(min===max){min-=1;max+=1}
+    min=Math.floor((min-.5)*2)/2; max=Math.ceil((max+.5)*2)/2;
+    const x = i => pad + (W-pad*2) * (pts.length===1 ? .5 : i/(pts.length-1));
+    const y = v => H-pad - (v-min)/(max-min)*(H-pad*2);
+    let out = '';
+    [0,.25,.5,.75,1].forEach(t=>{
+      const yy=pad+(H-pad*2)*t;
+      const val=max-(max-min)*t;
+      out += `<line x1="${pad}" x2="${W-pad}" y1="${yy}" y2="${yy}" stroke="#263241" stroke-width="1"/>`;
+      out += `<text x="${pad-8}" y="${yy+4}" fill="#93a1b2" text-anchor="end" font-size="11">${val.toFixed(1)}</text>`;
+    });
+    const path = pts.map((p,i)=>(i?'L':'M')+x(i)+' '+y(p.value)).join(' ');
+    out += `<path d="${path}" fill="none" stroke="#52d7ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    pts.forEach((p,i)=>{
+      out += `<circle cx="${x(i)}" cy="${y(p.value)}" r="5" fill="#0b0f14" stroke="#52d7ad" stroke-width="3"/>`;
+      const label = new Date(p.date+'T00:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+      out += `<text x="${x(i)}" y="${H-10}" fill="#93a1b2" text-anchor="middle" font-size="10">${label}</text>`;
+    });
+    svg.innerHTML=out;
+  }
+
+  renderWeights();
+})();
+</script>
+</body>
+</html>
