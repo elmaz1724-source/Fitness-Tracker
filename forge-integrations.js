@@ -127,6 +127,9 @@
   function handleIncoming(){
     const hash=location.hash||'';
     if(!hash.startsWith('#forge-sync?'))return;
+    // Show the corresponding setup/status area so incoming links are understandable.
+    const trainingTab=document.querySelector('.tab[data-view="training"]');
+    if(trainingTab)trainingTab.click();
     cleanHash();
     try{
       const item=parseBridgeHash(hash);
