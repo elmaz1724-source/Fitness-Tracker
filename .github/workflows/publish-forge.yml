@@ -49,11 +49,33 @@ jobs:
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
           if (manifest.display !== 'standalone') throw new Error('PWA manifest missing standalone');
           NODE
+      - name: Ensure GitHub Pages uses workflow publishing
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MODE="$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type' 2>/dev/null || true)"
+          echo "Pages source: ${MODE:-unknown}"
+          if [ "$MODE" != "workflow" ]; then
+            if ! gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow >/dev/null; then
+              echo '::error::Switch Settings → Pages → Source to GitHub Actions, then re-run this workflow.'
+              exit 1
+            fi
+            echo 'Pages source updated to GitHub Actions.'
+          fi
       - name: Create static site bundle
         run: |
           mkdir -p site
           cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js manifest.webmanifest sw.js icon.svg site/
           touch site/.nojekyll
+          node - <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('index.html','utf8');
+          const version=html.match(/<meta name="application-version" content="([^"]+)"/)?.[1] || 'unknown';
+          const info={app:'FORGE',version,commit:process.env.GITHUB_SHA,builtAt:new Date().toISOString()};
+          fs.writeFileSync('site/build-info.json',JSON.stringify(info,null,2));
+          console.log('Publishing',info);
+          NODE
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
@@ -63,3 +85,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify public deployment
+        shell: bash
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          TARGET="${SITE_URL%/}/build-info.json?run=$GITHUB_RUN_ID"
+          for attempt in 1 2 3 4 5 6; do
+            BODY="$(curl --silent --show-error --location --max-time 12 "$TARGET" || true)"
+            if printf '%s' "$BODY" | grep -Fq "$GITHUB_SHA"; then
+              echo "Public website verified: $GITHUB_SHA"
+              exit 0
+            fi
+            echo "Waiting for the public Pages build ($attempt/6)"
+            sleep 5
+          done
+          echo '::warning::GitHub accepted the Pages deploy but live build identification could not be confirmed yet.'
