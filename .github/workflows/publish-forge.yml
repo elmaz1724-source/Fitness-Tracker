@@ -31,11 +31,13 @@ jobs:
           test -f forge-extras.js
           test -f forge-polish.css
           test -f forge-polish.js
+          test -f forge-integrations.js
           test -f manifest.webmanifest
           test -f sw.js
           test -f icon.svg
           node --check forge-extras.js
           node --check forge-polish.js
+          node --check forge-integrations.js
           node --check sw.js
           node - <<'NODE'
           const fs = require('fs');
@@ -55,6 +57,10 @@ jobs:
           if (tabs.length!==4 || new Set(tabs).size!==4)
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
+          const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          for(const id of [...integrations.matchAll(/\$\('#([A-Za-z0-9_-]+)'\)/g)].map(m=>m[1])){
+            if(!ids.includes(id))throw new Error('Missing integration element: '+id);
+          }
           if (!/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(polish))
             throw new Error('Mobile navigation must use four equal columns');
           const nav=html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
@@ -84,7 +90,7 @@ jobs:
       - name: Create static site bundle
         run: |
           mkdir -p site
-          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js manifest.webmanifest sw.js icon.svg site/
+          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js forge-integrations.js manifest.webmanifest sw.js icon.svg site/
           touch site/.nojekyll
           node - <<'NODE'
           const fs=require('fs');

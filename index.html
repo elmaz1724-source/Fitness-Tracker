@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="6.1.0">
+  <meta name="application-version" content="7.0.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -676,6 +676,47 @@
           <div id="forgeImportStatus" class="forge-feedback" role="status"></div>
         </div>
       </div>
+      <div class="forge-section" id="forgeSyncSection">
+        <div class="forge-heading"><div><div class="forge-kicker">DATENVERBINDUNG</div><h2>Apple Health → FORGE</h2></div><span class="forge-chip">Ohne Server</span></div>
+        <div class="forge-surface">
+          <p class="forge-muted">Über die iPhone-App „Kurzbefehle“ kannst du Schritte und Gewicht aus Health an FORGE übergeben, ohne jeden Wert abzutippen. Der Übertragungslink verwendet nur einen URL-Fragmentteil: Deine Messwerte werden dabei nicht an GitHub Pages gesendet.</p>
+          <div class="forge-sync-stats">
+            <div class="forge-tile"><span>Letzte Übernahme</span><b id="forgeLastSyncDate" class="forge-sync-date">Noch nie</b><span id="forgeLastSyncDetails">Noch keine Daten aus einem Kurzbefehl</span></div>
+          </div>
+          <div class="forge-sync-how">
+            <strong>Kurzbefehle einrichten</strong>
+            <ol>
+              <li>Erstelle auf deinem iPhone in <b>Kurzbefehle</b> einen neuen Kurzbefehl.</li>
+              <li>Lies über <b>Health-Messungen suchen</b> deine Schritte für heute aus und summiere sie. Optional: Suche das letzte Körpergewicht in kg.</li>
+              <li>Füge die ermittelten Werte in die Platzhalter <code>DATUM</code>, <code>SCHRITTE</code> und optional <code>GEWICHT</code> des Links ein. Für das Datum das Format <code>yyyy-MM-dd</code> verwenden.</li>
+              <li>Öffne den fertigen Link mit der Aktion <b>URLs öffnen</b>. FORGE fragt vor der Speicherung um Bestätigung.</li>
+            </ol>
+          </div>
+          <button type="button" class="forge-sm-btn primary" id="forgeCopyHealthLink">Vorlage für Kurzbefehle kopieren</button>
+          <div class="forge-feedback" id="forgeSyncStatus" role="status" aria-live="polite"></div>
+          <p class="forge-import-help">Die Health-Berechtigungen bleiben bei Apple Kurzbefehle. Das Öffnen kann Safari statt der installierten Web-App starten; Daten liegen jeweils lokal im verwendeten Browser. Eine automatische unsichtbare Cloud-Synchronisierung ist das nicht.</p>
+          <div class="forge-line"></div>
+          <strong class="forge-sync-subtitle">Garmin Connect</strong>
+          <p class="forge-import-help">Garmin-Daten kannst du weiterhin als passend formatierte CSV importieren. Für eine automatische Garmin-Verbindung wäre ein sicherer Server erforderlich; einen privaten Garmin-API-Schlüssel niemals in diese öffentliche Web-App einfügen.</p>
+        </div>
+      </div>
+      <div class="forge-section" id="forgeCalendarSection">
+        <div class="forge-heading"><div><div class="forge-kicker">ERINNERUNGEN AUSSERHALB DER APP</div><h2>iPhone-Kalendererinnerungen</h2></div></div>
+        <div class="forge-surface">
+          <p class="forge-muted">Lade einen Kalenderplan für Wiegen, Kreatin und einen kurzen Schrittcheck herunter. Nach dem Import in deinen Kalender können dich Kalender-Benachrichtigungen erinnern, auch wenn FORGE geschlossen ist.</p>
+          <div class="forge-reminder-config">
+            <label class="forge-checkbox"><input id="forgeCalendarWeightOn" type="checkbox" checked> Gewicht</label>
+            <label class="forge-field"><span>Uhrzeit</span><input type="time" id="forgeCalendarWeightTime" value="08:00"></label>
+            <label class="forge-checkbox"><input id="forgeCalendarCreatineOn" type="checkbox" checked> Kreatin</label>
+            <label class="forge-field"><span>Uhrzeit</span><input type="time" id="forgeCalendarCreatineTime" value="12:00"></label>
+            <label class="forge-checkbox"><input id="forgeCalendarStepsOn" type="checkbox" checked> Schritte prüfen</label>
+            <label class="forge-field"><span>Uhrzeit</span><input type="time" id="forgeCalendarStepsTime" value="20:00"></label>
+          </div>
+          <button type="button" class="forge-sm-btn primary" id="forgeExportCalendar">Kalendererinnerungen herunterladen</button>
+          <div id="forgeCalendarStatus" class="forge-feedback" role="status" aria-live="polite"></div>
+          <p class="forge-import-help">Der Download fügt keine Termine heimlich hinzu – du bestätigst den Import in deiner Kalender-App. Die Anzeige von Benachrichtigungen hängt von den iPhone-Kalendereinstellungen ab. Bei unregelmäßigen Schlafzeiten kannst du alternativ einen Kurzbefehl beim Ausschalten des Weckers ausführen lassen.</p>
+        </div>
+      </div>
       <div class="forge-section">
         <div class="forge-heading"><h2>FORGE als iPhone-App</h2></div>
         <div class="forge-surface">
@@ -685,7 +726,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.1.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.0.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -697,7 +738,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 6.1.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 7.0.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -1188,7 +1229,7 @@
   }
 
   // Lokale Backups: bestehende Keys bleiben unverändert, Migration nicht nötig.
-  const allowedKey=k=>/^fitness-(walking|week|week-migrated-week|week-\d{4}-\d{2}-\d{2}|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
+  const allowedKey=k=>/^fitness-(walking|week|week-migrated-week|week-\d{4}-\d{2}-\d{2}|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|last-sync-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
   $('#exportData').addEventListener('click',()=>{
     const saved={};
     for(let i=0;i<localStorage.length;i++){
@@ -1225,5 +1266,6 @@
 </script>
   <script src="./forge-extras.js" defer></script>
   <script src="./forge-polish.js" defer></script>
+  <script src="./forge-integrations.js" defer></script>
 </body>
 </html>

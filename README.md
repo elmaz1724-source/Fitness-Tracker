@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 6.1:** Kompakte iPhone-Navigation, Schnell-Backup direkt im Quick Log, eindeutige Hinweise zu lokalen Daten und bessere Eingaben mit geöffneter Tastatur. Die bisherigen Tracking- und Speicherfunktionen bleiben unverändert.
+**Version 7.0:** Alle sieben Alltagsbereiche sind jetzt nutzbar: Smart Daily Planner, Walking-Autopilot, Trainingslog, Quick Log, Erinnerungen, Datenimport inklusive Apple-Kurzbefehle-Brücke und installierbare iPhone-Web-App. Ernährungstracking bleibt ausgeschaltet.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -15,11 +15,42 @@ https://elmaz1724-source.github.io/Fitness-Tracker/
 - Trainingsjournal mit Sätzen, Wiederholungen, Gewichten und Vorwertvergleich
 - Kalenderwochentracker (montags automatisch neue Woche)
 - In-App-Erinnerungen, manuell ein- und ausschaltbar
-- Manueller CSV-Import von Schritten und Gewicht
+- Manueller CSV-Import von Schritten und Gewicht, plus Apple-Health-Kurzbefehle-Brücke (bestätigter Import ohne Server)
+- Exportierbare wiederkehrende Kalendererinnerungen, auch außerhalb von FORGE sichtbar (nach manuellem Kalenderimport)
 - Export und Import aller lokalen Fitnessdaten als JSON, jetzt auch direkt auf dem Startbildschirm (Quick Log)
 - Installierbare Web-App mit Offline-Shell
 
-**Nicht implementiert:** Ernährungstagebuch, automatische Apple-Health-/Garmin-Synchronisierung, echte Push-Erinnerungen oder automatische Tracking-Gerätedaten.
+**Nicht implementiert:** Ernährungstagebuch, unsichtbare direkte HealthKit-/Garmin-Cloud-Synchronisierung, eigene Web-Push-Server. Kurzbefehle können Health-Daten auslesen und mit einem Link an FORGE übergeben, benötigen aber zum tatsächlichen Import das Öffnen der Website sowie eine Bestätigung. Kalendererinnerungen laufen nach dem Import über die Kalender-App, nicht über FORGE-Push.
+
+## Apple Health über Kurzbefehle (ohne Server)
+
+In FORGE unter **Training → Apple Health → FORGE** auf **Vorlage für Kurzbefehle kopieren** tippen.
+
+Die Vorlage sieht so aus (die Platzhalter werden in der Kurzbefehle-App zu dynamischen Werten):
+
+```text
+https://elmaz1724-source.github.io/Fitness-Tracker/#forge-sync?date=DATUM&steps=SCHRITTE
+```
+
+Optional `&weight=GEWICHT` ergänzen (kg mit Punkt oder Komma). Du kannst auch nur Gewicht importieren, wenn der `steps`-Teil entfernt wird. Das Datum muss im ISO-Format `yyyy-MM-dd` übergeben werden.
+
+1. In **Apple Kurzbefehle** einen Kurzbefehl anlegen.
+2. Über die Health-Aktionen deine tatsächlich gelaufenen Schritte des aktuellen Kalendertags abfragen und als Gesamtwert ausgeben. Wenn mehrere Geräte Messwerte liefern, mögliche Dopplungen der Health-Stichproben beachten und nach Datenquelle filtern.
+3. Optional das aktuelle Körpergewicht aus Health lesen und in kg formatieren.
+4. Den Link mit den dynamischen Variablen bauen und mit **URLs öffnen** ausführen.
+5. In FORGE die importierten Werte bestätigen. Bereits vorhandene Messungen werden nicht stillschweigend überschrieben.
+
+**Datenschutz:** Die Messwerte stehen im URL-**Fragment** (`#...`) und werden damit nicht an GitHub Pages geschickt. FORGE entfernt das Fragment unmittelbar aus der Adresszeile und speichert Werte nur lokal. Trotzdem sollte ein solcher Link nicht öffentlich geteilt werden. Ein Kurzbefehl kann über iOS-Automationen ausgelöst werden, aber eine stille Hintergrund-Synchronisation ohne Öffnen und Bestätigen gibt es mit dieser GitHub-Pages-Lösung nicht.
+
+Wichtig: Wenn der Link Safari statt der installierten Home-Bildschirm-App öffnet, können deren lokalen Datenbestände getrennt sein. Erst in Safari prüfen, ob FORGE dieselben Daten wie in der installierten App zeigt. Ggf. JSON-Backup exportieren/importieren, statt Browserdaten zu löschen.
+
+**Garmin:** Die Garmin Connect Personal API existiert, benötigt aber ein privates API-Secret und Access Token. Schlüssel dürfen nicht im öffentlichen GitHub-Repository oder in GitHub-Pages-JavaScript stehen. Bis eine sichere Serverkomponente vorhanden ist, den vorhandenen CSV-Import verwenden.
+
+## Erinnerungen per iPhone-Kalender
+
+Unter **Training → iPhone-Kalendererinnerungen** gewünschte Erinnerungstypen (Gewicht, Kreatin, Schritte) sowie Uhrzeiten auswählen und auf **Kalendererinnerungen herunterladen** tippen. Es wird eine `FORGE-Erinnerungen.ics`-Datei mit wiederkehrenden täglichen Terminen samt Alarm erzeugt. Erst nach dem **bewussten Import** in deine Kalender-App entstehen Termine. Ein wiederholter Import kann je nach Kalender-App Duplikate erzeugen; vor erneutem Import bestehende Termine prüfen. Kalenderbenachrichtigungen müssen auf dem iPhone aktiviert sein.
+
+Bei variablem Schlafrhythmus kannst du alternativ in Apple Kurzbefehle eine Automation bei **Wecker gestoppt** erstellen. FORGE selbst kann ohne zusätzliche Serverinfrastruktur keine zeitgesteuerten Web-Pushs verschicken.
 
 ## Datenspeicherung
 
@@ -74,4 +105,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **6.1.0** (Startbildschirm-Backup und kompakte iPhone-Eingabe; Live-Veröffentlichung nach dem Merge noch zu prüfen).
+Aktuelle Version: **7.0.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
