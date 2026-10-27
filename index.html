@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
+  <meta name="application-version" content="5.1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -464,7 +465,7 @@
         <div class="walk-main">
           <div class="small">TAGESZIEL</div>
           <div class="big" id="heroSteps">10.000</div>
-          <div style="color:var(--accent);font-weight:800;margin-top:6px">Schritte gesamt</div>
+          <div style="color:var(--accent);font-weight:800;margin-top:6px">Geplante Gesamtschritte</div>
         </div>
         <div class="walk-stat"><span class="small">Neigung</span><b id="heroIncline">8°</b><span class="small" id="heroInclinePct">≈ 14,1 %</span></div>
         <div class="walk-stat"><span class="small">Tempo</span><b id="heroPace">6,7 km/h</b></div>
@@ -492,7 +493,7 @@
           <div class="macro"><span class="small">Dauer</span><b id="duration">68 Min.</b></div>
           <div class="macro"><span class="small">Belastung</span><b id="load">Cardio</b></div>
         </div>
-        <div class="goal-line" id="walkGoalLine">10.000 Gesamtschritte geplant</div>
+        <div class="goal-line" id="walkGoalLine">10.000 Gesamtschritte geplant – einschließlich zukünftiger Walking-Einheit</div>
         <div class="notice" id="walkNote">Belastung abhängig von Tempo und Steigung.</div>
       </div>
 
@@ -747,8 +748,8 @@
       $('#b'+(i+1)).textContent='≈ '+Math.round(minutes(blockSteps,pace,stride))+' Min.';
     });
     $('#walkGoalLine').innerHTML=remain===0
-      ?'<strong>✓ Tagesziel erreicht!</strong> '+total.toLocaleString('de-DE')+' Gesamtschritte geplant.'
-      :'<strong>'+remain.toLocaleString('de-DE')+' Schritte</strong> bis zum Tagesziel von 10.000 · '+total.toLocaleString('de-DE')+' insgesamt geplant.';
+      ?'<strong>✓ Geplantes Tagesziel erreicht!</strong> '+total.toLocaleString('de-DE')+' Schritte insgesamt vorgesehen. Walking-Pad-Schritte sind erst nach der Einheit wirklich absolviert.'
+      :'<strong>'+remain.toLocaleString('de-DE')+' geplante Schritte</strong> bis zu 10.000 · '+total.toLocaleString('de-DE')+' Schritte einschließlich der noch nicht absolvierten Walking-Einheit.';
     let load='Locker',note='Lockeres Gehen – geeignet, um Bewegung in den Tag zu bringen.';
     if(pace>=6.5||incline>=7){load='Intensiv';note='Bei diesem Tempo oder dieser Neigung kann die Einheit fordernd sein. Puls, Belastungsempfinden und Erholung beachten.';}
     else if(pace>=5.7||incline>=3){load='Zügig';note='Zügiges Gehen. Die tatsächliche Belastung hängt auch von deiner Fitness und deinem Puls ab.';}
@@ -868,34 +869,55 @@
   });
   renderPlanner();
 
-  // Week
+  // Wochentracker: Kalenderwoche (Mo–So). Bestehender "fitness-week"-Key bleibt erhalten.
   const days = ['Mo','Di','Mi','Do','Fr','Sa','So'];
-  let weekState = storage.get('fitness-week', Array(7).fill(false));
+  const weekMonday = new Date();
+  weekMonday.setHours(12,0,0,0);
+  weekMonday.setDate(weekMonday.getDate()-((weekMonday.getDay()+6)%7));
+  const weekStart=localDate(weekMonday);
+  const weekKey='fitness-week-'+weekStart;
+  const migrationKey='fitness-week-migrated-week';
+  const validWeek = value => Array.isArray(value) && value.length===7 && value.every(x=>typeof x==='boolean');
+  let weekState=storage.get(weekKey,null);
+  if(!validWeek(weekState)){
+    const migrated=storage.get(migrationKey,null);
+    const legacy=storage.get('fitness-week',Array(7).fill(false));
+    weekState=migrated===null && validWeek(legacy)?[...legacy]:Array(7).fill(false);
+    storage.set(weekKey,weekState);
+    if(migrated===null)storage.set(migrationKey,weekStart);
+  }
+  // Alte Daten werden nicht gelöscht. Jeder Wochenwechsel legt einen neuen Eintrag an.
   const grid = $('#weekGrid');
-  days.forEach((d,i) => {
-    const b = document.createElement('button');
-    b.className = 'day' + (weekState[i] ? ' done':'');
-    b.type = 'button';
-    b.innerHTML = `<span>${d}</span><input class="check" type="checkbox" ${weekState[i]?'checked':''} tabindex="-1" aria-hidden="true">`;
-    b.addEventListener('click', () => {
-      weekState[i] = !weekState[i];
-      storage.set('fitness-week', weekState);
+  days.forEach((d,i)=>{
+    const b=document.createElement('button');
+    b.className='day'+(weekState[i]?' done':'');
+    b.type='button';
+    b.setAttribute('aria-label',d+' als Walking-Tag markieren');
+    b.innerHTML='<span>'+d+'</span><input class="check" type="checkbox" '+(weekState[i]?'checked':'')+' tabindex="-1" aria-hidden="true">';
+    b.addEventListener('click',()=>{
+      weekState[i]=!weekState[i];
+      storage.set(weekKey,weekState);
+      storage.set('fitness-week',weekState); // Abwärtskompatibilität
       renderWeek();
     });
     grid.appendChild(b);
   });
   function renderWeek(){
-    [...grid.children].forEach((b,i) => {
-      b.classList.toggle('done', !!weekState[i]);
-      b.querySelector('input').checked = !!weekState[i];
+    [...grid.children].forEach((b,i)=>{
+      b.classList.toggle('done',!!weekState[i]);
+      b.querySelector('input').checked=!!weekState[i];
+      b.setAttribute('aria-pressed',String(!!weekState[i]));
     });
-    const n = weekState.filter(Boolean).length;
-    $('#weekStatus').textContent = `${n} von 7 Tagen`;
-    $('#weekProgress').style.width = `${n/7*100}%`;
+    const n=weekState.filter(Boolean).length;
+    const startLabel=weekMonday.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
+    $('#weekStatus').textContent=n+' von 7 Tagen · Woche ab '+startLabel;
+    $('#weekProgress').style.width=n/7*100+'%';
   }
-  $('#resetWeek').addEventListener('click', () => {
-    weekState = Array(7).fill(false);
-    storage.set('fitness-week', weekState);
+  $('#resetWeek').addEventListener('click',()=>{
+    if(!confirm('Markierungen für diese Kalenderwoche zurücksetzen?'))return;
+    weekState=Array(7).fill(false);
+    storage.set(weekKey,weekState);
+    storage.set('fitness-week',weekState);
     renderWeek();
   });
   renderWeek();
@@ -1121,7 +1143,7 @@
   }
 
   // Lokale Backups: bestehende Keys bleiben unverändert, Migration nicht nötig.
-  const allowedKey=k=>/^fitness-(walking|week|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
+  const allowedKey=k=>/^fitness-(walking|week|week-migrated-week|week-\d{4}-\d{2}-\d{2}|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
   $('#exportData').addEventListener('click',()=>{
     const saved={};
     for(let i=0;i<localStorage.length;i++){
@@ -1148,6 +1170,10 @@
       location.reload();
     }catch(error){$('#backupFeedback').textContent='Import nicht möglich: '+error.message;}
     finally{e.target.value='';}
+  });
+  // Sobald der Tag bei geöffneter App gewechselt hat, die neuen Tages-Schlüssel laden.
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden&&localDate(new Date())!==dateKey)location.reload();
   });
   renderWeights();
 })();
