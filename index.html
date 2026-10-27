@@ -238,7 +238,44 @@
     .summary-tile span{display:block;font-size:11px;color:#9aabb5}
     .summary-tile b{display:block;font-size:22px;letter-spacing:-.6px;margin-top:8px}
     .backup-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+
     .backup-tools .btn{font-size:13px}
+    /* Fortschritt 3.0 */
+    .trend-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+    .trend-metric{background:linear-gradient(155deg,#172329,#121b22);border:1px solid #304147;border-radius:19px;padding:16px;min-width:0}
+    .trend-metric .caption{font-size:11px;color:#a0b2b7;letter-spacing:.1px}
+    .trend-metric .number{display:block;font-size:clamp(20px,2.7vw,27px);font-weight:900;letter-spacing:-1px;margin-top:9px;white-space:nowrap}
+    .trend-metric .sub{display:block;font-size:11px;color:#91a5af;margin-top:4px;line-height:1.4}
+    .trend-metric.primary{background:linear-gradient(130deg,#263d2a,#1b2a24);border-color:#477044}
+    .trend-metric.primary .number{color:var(--accent)}
+    .insights-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:13px;margin-top:18px}
+    .insight-card,.forecast-card{border-radius:23px;border:1px solid #304149;background:#121d24;padding:20px}
+    .forecast-card{background:linear-gradient(135deg,#1c3226,#142321 68%,#121d24);border-color:#35563d}
+    .insight-heading{display:flex;align-items:center;gap:9px;margin-bottom:12px;font-size:16px;font-weight:850}
+    .insight-symbol{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#30452b;color:var(--accent);font-size:17px}
+    .insight-detail{color:#bdcdd1;font-size:13px;line-height:1.6;margin:0}
+    .insight-note{font-size:11px;color:#9aabb4;line-height:1.5;margin-top:12px}
+    .goal-options{display:flex;gap:7px;align-items:center;margin:11px 0}
+    .goal-option{border:1px solid #456448;border-radius:999px;background:#25372b;color:#c5d8c6;padding:7px 13px;font-size:12px;font-weight:800;cursor:pointer}
+    .goal-option.active{background:var(--accent);border-color:var(--accent);color:#18200c}
+    .forecast-date{font-size:clamp(19px,2.2vw,25px);font-weight:900;letter-spacing:-.7px;line-height:1.3;margin:11px 0 8px}
+    .forecast-caption{font-size:12px;color:#aac0b7;line-height:1.5}
+    .progress-track{background:#2b3c37;border-radius:99px;height:10px;overflow:hidden;margin-top:15px}
+    .progress-fill{width:0;height:100%;background:linear-gradient(90deg,#70c86a,#c3f65d);transition:width .25s}
+    .progress-meta{display:flex;justify-content:space-between;gap:8px;margin-top:7px;color:#abbdb7;font-size:11px}
+    .chart-topline{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;margin-top:7px}
+    .legend{display:flex;flex-wrap:wrap;gap:13px}
+    .legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a8bbc1}
+    .legend i{display:inline-block;width:18px;height:3px;border-radius:99px;background:#718794}
+    .legend i.avg{background:#c3f65d}
+    .chart-explain{font-size:11px;color:#8ea3ac;line-height:1.5;margin:9px 4px 0}
+    .stat-note{font-size:11px;color:#92aab0;margin-top:11px;line-height:1.5}
+    @media(max-width:700px){
+      .trend-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .insights-layout{grid-template-columns:1fr}
+      .insight-card,.forecast-card{padding:18px}
+      .trend-metric{padding:14px}
+    }
     @media(max-width:700px){
       .app{padding:calc(18px + env(safe-area-inset-top)) 14px calc(112px + env(safe-area-inset-bottom))}
       .topbar{margin-bottom:18px}.brand h1{font-size:21px}.brand-mark{width:40px;height:40px}
@@ -375,6 +412,31 @@
         <div class="summary-tile"><span>Bis 82 kg</span><b id="weightRemaining">—</b></div>
         <div class="summary-tile"><span>Messungen</span><b id="weightEntries">0</b></div>
       </div>
+
+      <div class="trend-grid" aria-label="7-Tage-Gewichtstrend">
+        <div class="trend-metric primary"><span class="caption">7-Tage-Durchschnitt</span><strong class="number" id="avg7">—</strong><span class="sub" id="avg7Detail">Noch keine Daten</span></div>
+        <div class="trend-metric"><span class="caption">Vorwoche</span><strong class="number" id="weekDelta">—</strong><span class="sub">Änderung des Durchschnitts</span></div>
+        <div class="trend-metric"><span class="caption">Aktuelles Trendtempo</span><strong class="number" id="trendRate">—</strong><span class="sub">kg pro Woche (Schätzwert)</span></div>
+        <div class="trend-metric"><span class="caption">Ziel-Fortschritt</span><strong class="number" id="weightGoalPercent">—</strong><span class="sub">Vom Start bei 93 kg bis zum Ziel</span></div>
+      </div>
+      <div class="insights-layout">
+        <div class="insight-card">
+          <div class="insight-heading"><span class="insight-symbol" aria-hidden="true">✦</span>Deine Trendanalyse</div>
+          <p class="insight-detail" id="weightInsight" aria-live="polite">Trage regelmäßig dein Gewicht ein, um einen belastbaren Trend zu sehen.</p>
+          <p class="insight-note" id="weightSample">Für den Wochenvergleich benötigen wir mindestens drei Messungen in jeder der beiden 7-Tage-Perioden.</p>
+        </div>
+        <div class="forecast-card">
+          <div class="insight-heading"><span class="insight-symbol" aria-hidden="true">↗</span>Deine Zielprognose</div>
+          <div class="goal-options" role="group" aria-label="Zielgewicht wählen">
+            <button type="button" class="goal-option active" data-weight-goal="82" aria-pressed="true">82 kg</button>
+            <button type="button" class="goal-option" data-weight-goal="80" aria-pressed="false">80 kg</button>
+          </div>
+          <div class="forecast-date" id="forecastDate">Noch nicht genug Daten</div>
+          <div class="forecast-caption" id="forecastDetail">Mindestens drei Wiegedaten innerhalb von sieben Tagen für eine erste Prognose erfassen.</div>
+          <div class="progress-track" role="progressbar" aria-label="Fortschritt zum Zielgewicht" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="goalProgressTrack"><div class="progress-fill" id="goalProgressFill"></div></div>
+          <div class="progress-meta"><span>Start 93 kg</span><span id="remainingGoal">Ziel 82 kg</span></div>
+        </div>
+      </div>
       <div class="section-title">Gewicht eintragen</div>
       <div class="card">
         <div class="grid2">
@@ -385,9 +447,11 @@
         <div class="feedback" id="weightFeedback">Zieltempo: ungefähr −0,5 bis −0,7 kg pro Woche.</div>
       </div>
 
-      <div class="section-title">Verlauf</div>
+      <div class="section-title">Dein Gewichtsverlauf</div>
       <div class="chart">
-        <svg id="weightChart" viewBox="0 0 720 250" role="img" aria-label="Gewichtsverlauf"></svg>
+        <div class="chart-topline"><span class="small">Letzte 35 Tage deiner Messungen</span><div class="legend"><span><i></i>Tagesgewicht</span><span><i class="avg"></i>7-Tage-Ø</span></div></div>
+        <svg id="weightChart" viewBox="0 0 720 290" role="img" aria-label="Gewichtsmessungen und gleitender Durchschnitt über sieben Kalendertage"></svg>
+        <p class="chart-explain">Der grüne Verlauf glättet Tagesschwankungen. Ein Durchschnitt erscheint erst ab drei Messungen innerhalb von sieben Tagen.</p>
       </div>
 
       <div class="section-title">Einträge</div>
@@ -554,100 +618,222 @@
   });
   renderWeek();
 
-  // Weight tracking
+  // Gewicht: bestehende fitness-weights Datenstruktur vollständig beibehalten.
   const dateInput = $('#weightDate');
   dateInput.value = localDate(new Date());
+  function dayNumber(s) {
+    if(typeof s!=='string'|| !/^\d{4}-\d{2}-\d{2}$/.test(s))return NaN;
+    const ms=Date.parse(s+'T00:00:00Z');
+    return Number.isFinite(ms)&&new Date(ms).toISOString().slice(0,10)===s?Math.round(ms/86400000):NaN;
+  }
   let weights = storage.get('fitness-weights', []);
-  $('#addWeight').addEventListener('click', () => {
-    const date = dateInput.value;
-    const value = Number($('#weightValue').value);
-    if(!date || !Number.isFinite(value) || value < 50 || value > 200){
-      $('#weightFeedback').textContent = 'Bitte ein gültiges Datum und realistisches Gewicht eingeben.';
+  if(!Array.isArray(weights))weights=[];
+  weights=weights.filter(w=>w&&Number.isFinite(dayNumber(w.date))&&typeof w.value==='number'&&Number.isFinite(w.value)&&w.value>=50&&w.value<=200)
+    .sort((a,b)=>a.date.localeCompare(b.date));
+  // Ungültige importierte Daten werden nicht in die Berechnungen übernommen.
+  let selectedGoal=82;
+  const weightDay=w=>dayNumber(w.date);
+  function entriesInRange(start,end){return weights.filter(w=>weightDay(w)>=start&&weightDay(w)<=end);}
+  function average(list){return list.length?list.reduce((sum,w)=>sum+w.value,0)/list.length:null;}
+  function spanForDay(end){
+    const current=entriesInRange(end-6,end);
+    const previous=entriesInRange(end-13,end-7);
+    return {current,previous,avg:current.length>=3?average(current):null,priorAvg:previous.length>=3?average(previous):null};
+  }
+  function german(n,digits=1){return n.toFixed(digits).replace('.',',');}
+  function signed(n,digits=2){return (n>0?'+':'')+german(n,digits);}
+  function displayDate(daysFromToday){
+    const d=new Date();
+    d.setHours(12,0,0,0);
+    d.setDate(d.getDate()+daysFromToday);
+    return d.toLocaleDateString('de-DE',{day:'2-digit',month:'short',year:'numeric'});
+  }
+  function rangeDate(a,b){return a===b?displayDate(a):displayDate(a)+' – '+displayDate(b);}
+  function computeTrend(){
+    if(!weights.length)return null;
+    const latest=weights[weights.length-1],latestDay=weightDay(latest);
+    const {current,previous,avg,priorAvg}=spanForDay(latestDay);
+    const today=dayNumber(localDate(new Date()));
+    return {latest,latestDay,avg,priorAvg,currentN:current.length,previousN:previous.length,
+      rate:avg!==null&&priorAvg!==null?avg-priorAvg:null,
+      stale:today-latestDay>7,
+      future:latestDay>today};
+  }
+  $('#addWeight').addEventListener('click',()=>{
+    const date=dateInput.value;
+    const value=Number($('#weightValue').value);
+    if(!Number.isFinite(dayNumber(date))||dayNumber(date)>dayNumber(localDate(new Date()))||!$('#weightValue').value.trim()||!Number.isFinite(value)||value<50||value>200){
+      $('#weightFeedback').textContent='Bitte ein gültiges Datum bis heute und ein Gewicht zwischen 50 und 200 kg eingeben.';
       return;
     }
-    const existing = weights.findIndex(x => x.date === date);
-    if(existing >= 0) weights[existing].value = value;
+    const existing=weights.findIndex(x=>x.date===date);
+    if(existing>=0)weights[existing].value=value;
     else weights.push({date,value});
-    weights.sort((a,b) => a.date.localeCompare(b.date));
-    storage.set('fitness-weights', weights);
+    weights.sort((a,b)=>a.date.localeCompare(b.date));
+    storage.set('fitness-weights',weights);
     renderWeights();
+    $('#weightFeedback').textContent='✓ Dein Gewicht wurde gespeichert. Der Trend wurde aktualisiert.';
   });
-
+  $$('.goal-option').forEach(button=>button.addEventListener('click',()=>{
+    selectedGoal=Number(button.dataset.weightGoal);
+    $$('.goal-option').forEach(b=>{
+      const active=b===button;
+      b.classList.toggle('active',active);
+      b.setAttribute('aria-pressed',String(active));
+    });
+    renderAnalysis();
+  }));
   function renderWeights(){
-    const latest=weights.length?weights[weights.length-1].value:null;
-    $('#currentWeight').textContent=latest===null?'—':fmt1(latest)+' kg';
-    $('#changeFromStart').textContent=latest===null?'—':(latest-93>0?'+':'')+fmt1(latest-93)+' kg';
-    $('#weightRemaining').textContent=latest===null?'—':Math.max(0,latest-82).toFixed(1).replace('.',',')+' kg';
+    const t=computeTrend(),latest=t?t.latest.value:null;
+    $('#currentWeight').textContent=latest===null?'—':german(latest)+' kg';
+    $('#changeFromStart').textContent=latest===null?'—':signed(latest-93,1)+' kg';
+    $('#weightRemaining').textContent=latest===null?'—':german(Math.max(0,latest-82))+' kg';
     $('#weightEntries').textContent=String(weights.length);
-    const list = $('#weightList');
-    list.innerHTML = '';
+    const list=$('#weightList');
+    list.innerHTML='';
     if(!weights.length){
-      list.innerHTML = '<div class="notice">Noch keine Gewichtseinträge gespeichert.</div>';
-      $('#weightChart').innerHTML = '<text x="360" y="125" fill="#93a1b2" text-anchor="middle" font-size="15">Noch keine Daten</text>';
-      $('#weightFeedback').textContent = 'Zieltempo: ungefähr −0,5 bis −0,7 kg pro Woche.';
-      return;
-    }
-    [...weights].reverse().slice(0,12).forEach((w) => {
-      const row = document.createElement('div');
-      row.className='weight-item';
-      const date = new Date(w.date+'T00:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
-      row.innerHTML = `<div><b>${w.value.toFixed(1).replace('.', ',')} kg</b><br><small>${date}</small></div><button class="btn secondary" style="width:auto;min-height:38px;padding:8px 11px">Löschen</button>`;
-      row.querySelector('button').addEventListener('click', () => {
-        weights = weights.filter(x => x.date !== w.date);
-        storage.set('fitness-weights', weights);
-        renderWeights();
+      list.innerHTML='<div class="notice">Noch keine Gewichtseinträge gespeichert. Trage dein morgendliches Gewicht ein – ab drei Messungen in sieben Tagen erscheint dein erster Durchschnitt.</div>';
+    }else{
+      [...weights].reverse().slice(0,12).forEach(w=>{
+        const row=document.createElement('div');
+        row.className='weight-item';
+        const date=new Date(w.date+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+        row.innerHTML='<div><b>'+german(w.value)+' kg</b><br><small>'+date+'</small></div><button class="btn secondary" style="width:auto;min-height:38px;padding:8px 11px">Löschen</button>';
+        row.querySelector('button').addEventListener('click',()=>{
+          weights=weights.filter(x=>x.date!==w.date);
+          storage.set('fitness-weights',weights);
+          renderWeights();
+        });
+        list.appendChild(row);
       });
-      list.appendChild(row);
-    });
+    }
+    renderAnalysis();
     drawChart();
-    updateWeightFeedback();
   }
-
-  function updateWeightFeedback(){
-    if(weights.length < 2){
-      $('#weightFeedback').textContent='Noch mindestens einen weiteren Wert eintragen, dann kann ich den Trend bewerten.';
+  function renderAnalysis(){
+    const t=computeTrend();
+    const avg=t?.avg??null;
+    const base=avg??(t?t.latest.value:null);
+    const percent=base===null?0:Math.min(100,Math.max(0,(93-base)/(93-selectedGoal)*100));
+    $('#goalProgressFill').style.width=percent+'%';
+    $('#goalProgressTrack').setAttribute('aria-valuenow',String(Math.round(percent)));
+    $('#weightGoalPercent').textContent=t?Math.round(percent)+' %':'—';
+    $('#remainingGoal').textContent=base!==null?german(Math.max(0,base-selectedGoal))+' kg bis '+selectedGoal+' kg':'Ziel '+selectedGoal+' kg';
+    $('#avg7').textContent=avg!==null?german(avg,2)+' kg':'—';
+    $('#avg7Detail').textContent=t?t.currentN+'/7 Tage mit Eintrag · bis '+new Date(t.latest.date+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'}):'Mind. 3 Messungen nötig';
+    $('#weekDelta').textContent=t&&t.rate!==null?signed(t.rate)+' kg':'—';
+    $('#trendRate').textContent=t&&t.rate!==null?signed(t.rate)+' kg':'—';
+    if(!t){
+      $('#weightInsight').textContent='Beginne mit deinem ersten Gewichtseintrag. Sobald genug Werte vorliegen, siehst du hier den geglätteten Trend.';
+      $('#weightSample').textContent='3 Messungen pro 7-Tage-Periode sind das Minimum – tägliches Wiegen macht den Vergleich zuverlässiger.';
+      $('#forecastDate').textContent='Noch keine Prognose';
+      $('#forecastDetail').textContent='Trage mindestens drei aktuelle Gewichte innerhalb von sieben Tagen ein.';
+      $('#weightFeedback').textContent='Zieltempo: ungefähr −0,5 bis −0,7 kg pro Woche. Einzelne Tage sind wenig aussagekräftig.';
       return;
     }
-    const a = weights[weights.length-2], b = weights[weights.length-1];
-    const diff = b.value - a.value;
-    const days = Math.max(1,(new Date(b.date)-new Date(a.date))/86400000);
-    const perWeek = diff / days * 7;
-    let msg = '';
-    if(perWeek <= -0.5 && perWeek >= -0.7) msg='Genau im Zielbereich.';
-    else if(perWeek < -0.7 && perWeek >= -0.9) msg='Etwas schneller als geplant – Regeneration und Kraft beobachten.';
-    else if(perWeek < -0.9) msg='Deutlich schneller als geplant – bei anhaltendem Trend Defizit etwas verkleinern.';
-    else if(perWeek < -0.3) msg='Etwas langsamer – noch nicht vorschnell ändern.';
-    else if(perWeek <= 0) msg='Aktuell wenig Veränderung – Trend über mehrere Wochen ansehen.';
-    else msg='Aktuell höher – einzelne Schwankungen sind normal, Trend beobachten.';
-    $('#weightFeedback').textContent = `Hochgerechnet: ${perWeek.toFixed(2).replace('.', ',')} kg/Woche. ${msg}`;
+    const stale=t.stale||t.future;
+    const enough=t.avg!==null && t.priorAvg!==null;
+    $('#weightSample').textContent=
+      'Messungen: aktuell '+t.currentN+'/7, Vorwoche '+t.previousN+'/7. '
+      +(enough?'Vergleich zweier Kalenderwochen-Fenster von je 7 Tagen.':'Für den Trend fehlen noch mindestens drei Werte pro 7-Tage-Fenster.');
+    let insight='';
+    if(stale){
+      insight='Dein letzter Eintrag ist nicht aktuell. Trage dein neues Gewicht ein, damit die Analyse wieder aussagekräftig wird.';
+    }else if(t.avg===null){
+      insight='Guter Anfang. Noch '+(3-t.currentN)+' Messung(en) im laufenden 7-Tage-Fenster und du siehst deinen Durchschnitt.';
+    }else if(t.priorAvg===null){
+      insight='Dein aktueller 7-Tage-Durchschnitt liegt bei '+german(t.avg,2)+' kg. Für einen echten Wochenvergleich brauchen wir noch mehr Einträge aus der Vorwoche.';
+    }else if(t.rate<=-.5&&t.rate>=-.7){
+      insight='Dein 7-Tage-Durchschnitt ist gegenüber der Vorwoche um '+german(-t.rate,2)+' kg gesunken. Das entspricht ungefähr deinem geplanten Tempo von 0,5–0,7 kg/Woche.';
+    }else if(t.rate<-.9){
+      insight='Der Wochendurchschnitt liegt '+german(-t.rate,2)+' kg unter dem vorherigen. Das ist ein schneller Rückgang. Beobachte über mehrere Wochen auch Kraft, Energie und Regeneration.';
+    }else if(t.rate<-.7){
+      insight='Dein Durchschnitt sinkt etwas schneller als geplant ('+german(-t.rate,2)+' kg gegenüber der Vorwoche). Ein einzelner Wochenvergleich ist noch kein langfristiger Trend.';
+    }else if(t.rate<-.2){
+      insight='Dein Durchschnitt fällt um '+german(-t.rate,2)+' kg gegenüber der Vorwoche. Kleine Abweichungen vom Zieltempo sind normal; wichtiger ist die Entwicklung über mehrere Wochen.';
+    }else if(t.rate<=.2){
+      insight='Der Durchschnitt ist gegenüber der Vorwoche weitgehend stabil. Wasser, Salz, Schlaf und Training können das Gewicht vorübergehend beeinflussen.';
+    }else{
+      insight='Der Durchschnitt liegt '+german(t.rate,2)+' kg über der Vorwoche. Das muss kein Fettzuwachs sein. Schau zunächst auf mehrere Wochen und deine Messroutine.';
+    }
+    $('#weightInsight').textContent=insight;
+    const fb=$('#weightFeedback');
+    fb.textContent=stale?'Bitte aktuelle Wiegedaten ergänzen – der letzte Eintrag liegt länger zurück.':
+      enough?'7-Tage-Trend: '+signed(t.rate)+' kg gegenüber der Vorwoche. Tageswerte können stärker schwanken.':
+      'Für eine sichere Trendbewertung mindestens drei Einträge pro Woche sammeln.';
+    if(stale){
+      $('#forecastDate').textContent='Neue Messung nötig';
+      $('#forecastDetail').textContent='Die letzte Messung ist mehr als sieben Tage alt. Prognosen mit alten Daten wären irreführend.';
+    }else if(avg===null){
+      $('#forecastDate').textContent='Noch nicht genug Daten';
+      $('#forecastDetail').textContent='Mindestens drei Wiegedaten innerhalb von sieben Tagen liefern einen ersten Durchschnitt für die Schätzung.';
+    }else if(avg<=selectedGoal){
+      $('#forecastDate').textContent='Checkpoint erreicht!';
+      $('#forecastDetail').textContent='Dein 7-Tage-Durchschnitt liegt bereits bei oder unter '+selectedGoal+' kg. Beurteile zusätzlich deine Kraft und dein Wohlbefinden.';
+    }else{
+      const remaining=avg-selectedGoal;
+      const fastest=Math.ceil(remaining/.7*7);
+      const slowest=Math.ceil(remaining/.5*7);
+      $('#forecastDate').textContent=rangeDate(fastest,slowest);
+      let explanation='Grobe Planung bei 0,5–0,7 kg Gewichtsverlust pro Woche, ausgehend von deinem 7-Tage-Ø ('+german(avg,2)+' kg). Keine garantierte Vorhersage.';
+      if(enough){
+        if(t.rate<-.2&&t.rate>=-1.0){
+          const personal=Math.ceil(remaining/(-t.rate)*7);
+          explanation+=' Bei deinem jüngsten Zwei-Wochen-Vergleich wären es ungefähr '+Math.max(1,Math.ceil(personal/7))+' Wochen, falls dieses Tempo anhält.';
+        }else{
+          explanation+=' Das zuletzt gemessene Wochentempo ist nicht stabil genug für eine persönliche Hochrechnung.';
+        }
+      }
+      $('#forecastDetail').textContent=explanation;
+    }
   }
-
   function drawChart(){
-    const svg = $('#weightChart');
-    const pts = weights.slice(-12);
-    const W=720,H=250,pad=38;
-    if(!pts.length) return;
-    const vals = pts.map(x=>x.value);
-    let min=Math.min(...vals), max=Math.max(...vals);
-    if(min===max){min-=1;max+=1}
-    min=Math.floor((min-.5)*2)/2; max=Math.ceil((max+.5)*2)/2;
-    const x = i => pad + (W-pad*2) * (pts.length===1 ? .5 : i/(pts.length-1));
-    const y = v => H-pad - (v-min)/(max-min)*(H-pad*2);
-    let out = '';
-    [0,.25,.5,.75,1].forEach(t=>{
-      const yy=pad+(H-pad*2)*t;
-      const val=max-(max-min)*t;
-      out += `<line x1="${pad}" x2="${W-pad}" y1="${yy}" y2="${yy}" stroke="#263241" stroke-width="1"/>`;
-      out += `<text x="${pad-8}" y="${yy+4}" fill="#93a1b2" text-anchor="end" font-size="11">${val.toFixed(1)}</text>`;
+    const svg=$('#weightChart'),W=720,H=290,left=44,right=16,top=20,bottom=42;
+    if(!weights.length){
+      svg.innerHTML='<text x="360" y="145" fill="#91a2b2" text-anchor="middle" font-size="15">Noch keine Gewichtsaufzeichnungen</text>';
+      return;
+    }
+    const end=weightDay(weights[weights.length-1]);
+    const entries=weights.filter(w=>weightDay(w)>=end-34&&weightDay(w)<=end);
+    const series=entries.map(w=>({date:w.date,day:weightDay(w),value:w.value,avg:spanForDay(weightDay(w)).avg}));
+    const avgValues=series.filter(p=>p.avg!==null).map(p=>p.avg);
+    const vals=entries.map(x=>x.value).concat(avgValues);
+    let min=Math.min(...vals)-.45,max=Math.max(...vals)+.45;
+    if(max-min<1.2){const middle=(min+max)/2;min=middle-.6;max=middle+.6;}
+    min=Math.floor(min*2)/2;max=Math.ceil(max*2)/2;
+    const leftDay=series[0].day,rightDay=series[series.length-1].day;
+    const x=day=>left+(W-left-right)*(rightDay===leftDay?.5:(day-leftDay)/(rightDay-leftDay));
+    const y=v=>top+(H-top-bottom)*(max-v)/(max-min);
+    let out='<defs><linearGradient id="area7" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c3f65d" stop-opacity=".2"/><stop offset="1" stop-color="#c3f65d" stop-opacity="0"/></linearGradient></defs>';
+    [0,.25,.5,.75,1].forEach(p=>{
+      const yy=top+(H-top-bottom)*p,kg=max-(max-min)*p;
+      out+='<line x1="'+left+'" y1="'+yy+'" x2="'+(W-right)+'" y2="'+yy+'" stroke="#2a3c45" stroke-width="1"/>';
+      out+='<text x="'+(left-9)+'" y="'+(yy+4)+'" text-anchor="end" fill="#90a8ad" font-size="11">'+german(kg)+'</text>';
     });
-    const path = pts.map((p,i)=>(i?'L':'M')+x(i)+' '+y(p.value)).join(' ');
-    out += '<defs><linearGradient id="chartArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#c3f65d" stop-opacity=".22"/><stop offset="100%" stop-color="#c3f65d" stop-opacity="0"/></linearGradient></defs>';
-    out += `<path d="${path} L${x(pts.length-1)} ${H-pad} L${x(0)} ${H-pad} Z" fill="url(#chartArea)"/>`;
-    out += `<path d="${path}" fill="none" stroke="#c3f65d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
-    pts.forEach((p,i)=>{
-      out += `<circle cx="${x(i)}" cy="${y(p.value)}" r="5" fill="#111c23" stroke="#c3f65d" stroke-width="3"/>`;
-      const label = new Date(p.date+'T00:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
-      out += `<text x="${x(i)}" y="${H-10}" fill="#93a1b2" text-anchor="middle" font-size="10">${label}</text>`;
+    const raw=series.map((p,i)=>(i?'L':'M')+x(p.day)+' '+y(p.value)).join(' ');
+    out+='<path d="'+raw+'" fill="none" stroke="#73909b" stroke-opacity=".75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    series.forEach(p=>{
+      out+='<circle cx="'+x(p.day)+'" cy="'+y(p.value)+'" r="3.5" fill="#111c23" stroke="#94aab3" stroke-width="2"><title>'+p.date+': '+german(p.value)+' kg</title></circle>';
+    });
+    const averages=series.filter(p=>p.avg!==null);
+    // Zwischen Lücken >7 Tagen keine scheinbar durchgehende geglättete Linie zeichnen.
+    const groups=[];
+    averages.forEach(p=>{
+      if(!groups.length||p.day-groups[groups.length-1].at(-1).day>7)groups.push([p]);
+      else groups[groups.length-1].push(p);
+    });
+    groups.forEach(group=>{
+      const path=group.map((p,i)=>(i?'L':'M')+x(p.day)+' '+y(p.avg)).join(' ');
+      if(group.length>1){
+        out+='<path d="'+path+' L'+x(group.at(-1).day)+' '+(H-bottom)+' L'+x(group[0].day)+' '+(H-bottom)+' Z" fill="url(#area7)"/>';
+        out+='<path d="'+path+'" fill="none" stroke="#c3f65d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+      }
+      group.forEach(p=>{out+='<circle cx="'+x(p.day)+'" cy="'+y(p.avg)+'" r="3" fill="#c3f65d"><title>7-Tage-Ø: '+german(p.avg,2)+' kg</title></circle>';});
+    });
+    const ticks=rightDay===leftDay?[leftDay]:[leftDay,Math.round((leftDay+rightDay)/2),rightDay];
+    ticks.forEach(day=>{
+      const date=new Date(day*86400000).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',timeZone:'UTC'});
+      out+='<text x="'+x(day)+'" y="'+(H-15)+'" text-anchor="middle" fill="#90a8ad" font-size="11">'+date+'</text>';
     });
     svg.innerHTML=out;
   }
