@@ -229,3 +229,21 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
   .forge-plan-content{padding:0 12px 14px}
 }
 @media(prefers-reduced-motion:reduce){.forge-plan-chevron{transition:none}}
+
+/* FORGE 6.0.4 — slim, bounded bottom toolbar. */
+.tabs>.tab>.nav-icon,.tabs>.tab>.nav-icon>svg{
+  width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;
+  flex:0 0 19px;overflow:hidden
+}
+@media(max-width:700px){
+  nav.tabs{
+    height:67px;min-height:67px;max-height:67px;
+    grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(0,1fr);
+    align-items:center;padding:6px;gap:4px
+  }
+  nav.tabs>.tab{
+    min-height:49px;max-height:52px;height:49px;
+    padding:5px 2px;font-size:10px;line-height:1.1;gap:3px;overflow:hidden
+  }
+  .app{padding-bottom:calc(106px + env(safe-area-inset-bottom))}
+}
