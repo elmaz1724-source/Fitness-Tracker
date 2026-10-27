@@ -68,6 +68,14 @@ jobs:
           mkdir -p site
           cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js manifest.webmanifest sw.js icon.svg site/
           touch site/.nojekyll
+          node - <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('index.html','utf8');
+          const version=html.match(/<meta name="application-version" content="([^"]+)"/)?.[1] || 'unknown';
+          const info={app:'FORGE',version,commit:process.env.GITHUB_SHA,builtAt:new Date().toISOString()};
+          fs.writeFileSync('site/build-info.json',JSON.stringify(info,null,2));
+          console.log('Publishing',info);
+          NODE
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
