@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="6.0.3">
+  <meta name="application-version" content="6.0.4">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -347,6 +347,18 @@
       .planner-settings{flex-wrap:wrap}
       .planner-settings select{flex:1;min-width:150px}
     }
+
+    /* Compact nav safety rails are built into the document itself.
+       SVGs carry their own size attributes to prevent old cached CSS scaling them. */
+    nav.tabs{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(0,1fr)}
+    nav.tabs>.tab{min-width:0;overflow:hidden}
+    nav.tabs>.tab>.nav-icon{display:flex;align-items:center;justify-content:center;width:19px;height:19px;flex:none}
+    nav.tabs>.tab>.nav-icon>svg{width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;flex:none}
+    @media(max-width:700px){
+      nav.tabs{height:67px;max-height:67px;min-height:67px;grid-template-columns:repeat(4,minmax(0,1fr))}
+      nav.tabs>.tab{min-height:49px;max-height:52px;font-size:10px;padding:4px 1px;gap:3px}
+      .app{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
+    }
   </style>
   <!-- Feature and mobile design rules must load after the base inline styles. -->
   <link rel="stylesheet" href="./forge-extras.css">
@@ -361,11 +373,11 @@
       <div class="pill">● ZIEL 80–82 KG</div>
     </header>
 
-    <nav class="tabs" aria-label="Bereiche">
-      <button class="tab active" data-view="today" aria-label="Heute"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg></span>Heute</button>
-      <button class="tab" data-view="walking" aria-label="Walking"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.6 18.8c-1.8-1.4-2-4.4-.4-6.3l2-2.2c1.5-1.7 3.1-2.1 4.3-1.1 1.2.9 1.1 2.8-.1 4.5l-1.9 2.6c-1.4 1.9-2.6 3.6-3.9 2.5Z"/><path d="M5.6 7.6 4.7 6M8.5 6.3 8 4.4M11 7.1l.5-1.9"/><path d="M18.4 18.9c1.8-1.4 2-4.4.4-6.3l-2-2.2c-1.5-1.7-3.1-2.1-4.3-1.1"/></svg></span>Walking</button>
-      <button class="tab" data-view="progress" aria-label="Fortschritt"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m6 16 5-5 4 3 5-7"/><path d="M16 7h4v4"/></svg></span>Fortschritt</button>
-      <button class="tab" data-view="training" aria-label="Training"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m4.1 4.1 4 4M15.9 15.9l4 4"/><path d="M2 6 6 2M18 22l4-4M2 10l8-8M14 22l8-8"/></svg></span>Training</button>
+    <nav class="tabs" aria-label="Bereiche" style="grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(0,1fr)">
+      <button class="tab active" style="min-width:0;min-height:49px;max-height:52px;padding:5px 1px;flex-direction:column;gap:3px;line-height:1.15;font-size:10px" data-view="today" aria-label="Heute"><span class="nav-icon" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;min-width:19px;max-width:19px"><svg style="display:block;width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg></span>Heute</button>
+      <button class="tab" style="min-width:0;min-height:49px;max-height:52px;padding:5px 1px;flex-direction:column;gap:3px;line-height:1.15;font-size:10px" data-view="walking" aria-label="Walking"><span class="nav-icon" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;min-width:19px;max-width:19px"><svg style="display:block;width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.6 18.8c-1.8-1.4-2-4.4-.4-6.3l2-2.2c1.5-1.7 3.1-2.1 4.3-1.1 1.2.9 1.1 2.8-.1 4.5l-1.9 2.6c-1.4 1.9-2.6 3.6-3.9 2.5Z"/><path d="M5.6 7.6 4.7 6M8.5 6.3 8 4.4M11 7.1l.5-1.9"/><path d="M18.4 18.9c1.8-1.4 2-4.4.4-6.3l-2-2.2c-1.5-1.7-3.1-2.1-4.3-1.1"/></svg></span>Walking</button>
+      <button class="tab" style="min-width:0;min-height:49px;max-height:52px;padding:5px 1px;flex-direction:column;gap:3px;line-height:1.15;font-size:10px" data-view="progress" aria-label="Fortschritt"><span class="nav-icon" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;min-width:19px;max-width:19px"><svg style="display:block;width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m6 16 5-5 4 3 5-7"/><path d="M16 7h4v4"/></svg></span>Fortschritt</button>
+      <button class="tab" style="min-width:0;min-height:49px;max-height:52px;padding:5px 1px;flex-direction:column;gap:3px;line-height:1.15;font-size:10px" data-view="training" aria-label="Training"><span class="nav-icon" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px;min-width:19px;max-width:19px"><svg style="display:block;width:19px;height:19px;min-width:19px;max-width:19px;max-height:19px;flex:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 6.5 11 11"/><path d="m4.1 4.1 4 4M15.9 15.9l4 4"/><path d="M2 6 6 2M18 22l4-4M2 10l8-8M14 22l8-8"/></svg></span>Training</button>
     </nav>
 
     <section id="today" class="view active">
@@ -662,7 +674,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.0.3</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.0.4</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -674,7 +686,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 6.0.3</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 6.0.4</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
