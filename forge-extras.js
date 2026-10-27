@@ -66,6 +66,45 @@ $('#forgeCreatine').addEventListener('change',event=>{
  renderReminders();
 });
 
+// A true one-tap backup on the Today screen reuses the existing JSON export/import logic.
+const quickBackupStatus=$('#forgeQuickBackupFeedback');
+$('#forgeQuickExport').addEventListener('click',()=>{
+ const exportButton=$('#exportData');
+ if(!exportButton){quickBackupStatus.textContent='Datensicherung gerade nicht verfügbar.';return;}
+ try{
+   exportButton.click();
+   const message=$('#backupFeedback').textContent.trim();
+   quickBackupStatus.textContent=message
+     ?message+' Prüfe in Safari die heruntergeladene Datei und bewahre sie in „Dateien“ sicher auf.'
+     :'Backup angefordert. Prüfe in Safari deine Downloads und sichere die JSON-Datei.';
+ }catch(error){
+   quickBackupStatus.textContent='Der Download konnte nicht gestartet werden. Versuche es unter Fortschritt → Daten sichern.';
+ }
+});
+$('#forgeQuickRestore').addEventListener('click',()=>{
+ quickBackupStatus.textContent='Wähle deine FORGE-JSON-Datei. Bestehende Werte werden erst nach ausdrücklicher Bestätigung überschrieben.';
+ $('#importData').click();
+});
+// The original restore control lives in another tab; expose validation errors on Today too.
+const originalBackupStatus=$('#backupFeedback');
+if(originalBackupStatus&&typeof MutationObserver!=='undefined'){
+ new MutationObserver(()=>{
+  const message=originalBackupStatus.textContent.trim();
+  if(message&&message.startsWith('Import nicht möglich:'))quickBackupStatus.textContent=message;
+ }).observe(originalBackupStatus,{childList:true,characterData:true,subtree:true});
+}
+
+// The keyboard should not compete with a fixed bottom navigation bar on an iPhone.
+const canEdit=element=>element&&element.matches&&element.matches('input:not([type="checkbox"]):not([type="file"]), textarea, select');
+document.addEventListener('focusin',event=>{
+ if(canEdit(event.target))document.body.classList.add('forge-editing');
+});
+document.addEventListener('focusout',()=>{
+ setTimeout(()=>{
+  if(!canEdit(document.activeElement))document.body.classList.remove('forge-editing');
+ },0);
+});
+
 // Walking Autopilot: conservative planning, not treadmill control.
 let paceSuggestion=null;
 function renderAutoPace(){
