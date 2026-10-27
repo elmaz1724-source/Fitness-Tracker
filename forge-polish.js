@@ -42,5 +42,32 @@
  document.querySelectorAll('.daily').forEach(c=>c.addEventListener('change',render));
  const weightObserver=new MutationObserver(render);
  weightObserver.observe(latestWeight,{childList:true,subtree:true,characterData:true});
+ async function checkPagesBuild(){
+   const status=$('#forgeBuildStatus');
+   if(!status)return;
+   const embedded=document.querySelector('meta[name="application-version"]')?.getAttribute('content')||'unbekannt';
+   if(navigator.onLine===false){
+     status.textContent='Offline: FORGE '+embedded+' ist installiert. Online erneut öffnen, um die Veröffentlichungs-ID zu prüfen.';
+     return;
+   }
+   try{
+     const url='./build-info.json?check='+Date.now();
+     const response=await fetch(url,{cache:'no-store'});
+     if(!response.ok)throw new Error('build-info nicht erreichbar (HTTP '+response.status+')');
+     const build=await response.json();
+     if(build.app!=='FORGE'||typeof build.commit!=='string'||!/^[0-9a-f]{40}$/.test(build.commit)){
+       throw new Error('Build-Information ungültig');
+     }
+     if(build.version===embedded){
+       status.textContent='✓ GitHub Pages bestätigt: FORGE '+build.version+' · Commit '+build.commit.slice(0,9)+'. Die veröffentlichte Version stimmt mit dieser App überein.';
+     }else{
+       status.textContent='! Versionskonflikt: Website-Build '+build.version+', geladene App '+embedded+'. Bitte die Seite online neu laden.';
+     }
+   }catch(error){
+     status.textContent='! Veröffentlichung noch nicht verifiziert ('+error.message+'). Prüfe in GitHub den Pages-Workflow unter Actions.';
+   }
+ }
+ checkPagesBuild();
+ window.addEventListener('online',checkPagesBuild);
  render();
 })();
