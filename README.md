@@ -52,6 +52,14 @@ Ab Version 6 gibt es einen eigenen Deploy-Workflow:
 
 **Wichtig bei einem iPhone mit alter Version:** Zuerst deine Daten über **Fortschritt → Daten sichern → Backup exportieren** retten. Lösche nicht blind Browser-Website-Daten oder die installierte Web-App – gespeicherte Fitnesswerte liegen nur lokal. Danach Seite neu laden oder mit `?v=6` öffnen, falls noch ein zwischengespeichertes Dokument angezeigt wird.
 
+## Veröffentlichungsdiagnose ab FORGE 6.0.1
+
+Der Workflow versucht zunächst, die GitHub-Pages-Quelle auf **GitHub Actions** zu setzen. Falls GitHub die Umstellung über den Workflow-Token verweigert, erscheint im Workflow ein konkreter Fehler; in diesem Fall muss die Einstellung unter **Settings → Pages → Source → GitHub Actions** manuell vorgenommen werden.
+
+Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Commit-ID und Erstellungszeitpunkt. Unter **Training → Systemcheck auf deinem Gerät** prüft FORGE diese Datei und zeigt einen Versionskonflikt an. Es werden dafür keine Gewichts-, Trainings- oder Schrittdaten übertragen.
+
+Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
+
 ## Test auf dem iPhone
 
 1. FORGE in Safari öffnen, Seite neu laden.
@@ -64,4 +72,4 @@ Ab Version 6 gibt es einen eigenen Deploy-Workflow:
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **6.0** (Dashboard-/Mobile-Redesign und Pages-Workflow; iPhone-Browserprüfung steht noch aus).
+Aktuelle Version: **6.0.1** (Dashboard-/Mobile-Redesign und Pages-Workflow; iPhone-Browserprüfung steht noch aus).
