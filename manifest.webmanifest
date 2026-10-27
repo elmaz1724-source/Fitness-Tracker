@@ -1,0 +1,21 @@
+{
+  "name": "FORGE – Persönlicher Fitness Tracker",
+  "short_name": "FORGE",
+  "description": "Walking planen, Training dokumentieren und Fortschritte verfolgen – ohne Ernährungstracking.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d12",
+  "theme_color": "#090d12",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
