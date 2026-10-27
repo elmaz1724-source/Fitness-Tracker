@@ -4,14 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="6.0.1">
+  <meta name="application-version" content="6.0.2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
-  <link rel="stylesheet" href="./forge-extras.css">
-  <link rel="stylesheet" href="./forge-polish.css">
   <style>
     :root{
       --bg:#0b0f14;
@@ -350,6 +348,9 @@
       .planner-settings select{flex:1;min-width:150px}
     }
   </style>
+  <!-- Feature and mobile design rules must load after the base inline styles. -->
+  <link rel="stylesheet" href="./forge-extras.css">
+  <link rel="stylesheet" href="./forge-polish.css">
 </head>
 <body>
   <main class="app">
@@ -656,7 +657,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.0.1</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.0.2</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -668,7 +669,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 6.0.1</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 6.0.2</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 

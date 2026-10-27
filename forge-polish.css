@@ -179,3 +179,20 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
+
+/* iPhone bottom navigation: always one row of four equal items.
+   This stylesheet must be loaded after the base inline CSS. */
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-flow:row;align-items:stretch}
+.tabs>.tab{min-width:0;width:100%;white-space:nowrap;justify-content:center;text-align:center}
+@media(max-width:700px){
+  .tabs{
+    position:fixed;z-index:120;top:auto;left:50%;right:auto;
+    transform:translateX(-50%);width:min(calc(100vw - 24px),520px);
+    max-width:none;margin:0;bottom:calc(10px + env(safe-area-inset-bottom));
+    padding:6px;gap:4px;grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-rows:minmax(58px,auto);
+  }
+  .tabs>.tab{min-height:58px;padding:8px 1px;flex-direction:column;gap:3px;line-height:1.2;font-size:clamp(9px,2.6vw,11px)}
+  .tabs .nav-icon{font-size:21px;line-height:1}
+  .app{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+}

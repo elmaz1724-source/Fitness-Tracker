@@ -1,5 +1,5 @@
 /* FORGE offline shell. Dynamic fitness values stay in localStorage, never in this cache. */
-const CACHE='forge-shell-v6-0-1';
+const CACHE='forge-shell-v6-0-2';
 const SHELL=['./','./index.html','./forge-extras.css','./forge-extras.js','./forge-polish.css','./forge-polish.js','./manifest.webmanifest','./icon.svg'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));
