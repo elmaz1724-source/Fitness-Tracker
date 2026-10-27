@@ -51,7 +51,7 @@ jobs:
           const polishLink=html.indexOf('href="./forge-polish.css"');
           if (!(endBaseStyle>0 && extrasLink>endBaseStyle && polishLink>extrasLink))
             throw new Error('Feature stylesheets must load AFTER the inline CSS to prevent mobile nav regression');
-          const tabs=[...html.matchAll(/<button class="tab(?: active)?" data-view="([^"]+)"/g)].map(x=>x[1]);
+          const tabs=[...html.matchAll(/<button\b[^>]*class="tab(?: active)?"[^>]*data-view="([^"]+)"/g)].map(x=>x[1]);
           if (tabs.length!==4 || new Set(tabs).size!==4)
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
