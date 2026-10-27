@@ -7,6 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="stylesheet" href="./forge-extras.css">
   <style>
     :root{
       --bg:#0b0f14;
@@ -359,6 +362,7 @@
       <button class="tab active" data-view="today" aria-label="Heute"><span class="nav-icon" aria-hidden="true">◉</span>Heute</button>
       <button class="tab" data-view="walking" aria-label="Walking"><span class="nav-icon" aria-hidden="true">⌁</span>Walking</button>
       <button class="tab" data-view="progress" aria-label="Fortschritt"><span class="nav-icon" aria-hidden="true">↗</span>Fortschritt</button>
+      <button class="tab" data-view="training" aria-label="Training"><span class="nav-icon" aria-hidden="true">▥</span>Training</button>
     </nav>
 
     <section id="today" class="view active">
@@ -381,6 +385,12 @@
         <div class="planner-settings"><label for="plannerMode">Dein Tag</label>
           <select id="plannerMode"><option value="normal">Normaler Tag</option><option value="gym">Krafttrainingstag</option><option value="easy">Erholungstag</option></select>
         </div>
+        <div class="forge-auto" id="forgeAutoPace">
+          <strong>⚡ Walking-Autopilot</strong>
+          <p id="forgeAutoText">FORGE berechnet ein passendes Tempo aus deiner Zeit und den fehlenden Schritten.</p>
+          <button class="forge-sm-btn" id="forgeUseAuto" type="button">Empfohlenes Tempo übernehmen</button>
+          <div class="forge-mini" style="margin-top:8px">Empfehlung, keine Gerätesteuerung. Bei hoher Steigung bewusst locker bleiben.</div>
+        </div>
         <div class="planner-progress-track" id="plannerProgressTrack" role="progressbar" aria-label="Bereits absolvierte Schritte" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="plannerProgress" class="planner-progress-fill"></div></div>
         <div class="planner-progress-label"><span id="plannerDone">0 Schritte bisher</span><span>10.000 Ziel</span></div>
         <div class="planner-results" aria-live="polite">
@@ -393,6 +403,29 @@
         <div class="planner-error" id="plannerError" role="status"></div>
         <button type="button" class="btn planner-action" id="plannerApply">Vorschlag in den Walking-Rechner übernehmen</button>
         <p class="planner-note" id="plannerManual">Schritte werden vorerst manuell eingetragen und nur für heute in diesem Browser gespeichert. Der Vorschlag ist eine Planung – keine automatisch erfasste Aktivität.</p>
+      </section>
+      <section class="forge-section">
+        <div class="forge-heading"><div><div class="forge-kicker">QUICK LOG</div><h2>Eintragen in Sekunden</h2></div><span class="forge-chip">Heute</span></div>
+        <div class="forge-surface" id="forgeTodayTools">
+          <div class="forge-grid">
+            <label class="forge-field"><span>Schritte bisher</span><input id="forgeQuickSteps" type="number" min="0" max="50000" step="1" inputmode="numeric"></label>
+            <label class="forge-field"><span>Gewicht heute (kg)</span><input id="forgeQuickWeight" type="text" inputmode="decimal" placeholder="z. B. 92,4"></label>
+          </div>
+          <div class="forge-grid" style="margin-top:10px">
+            <button class="forge-sm-btn primary" type="button" id="forgeSaveSteps">Schritte speichern</button>
+            <button class="forge-sm-btn" type="button" id="forgeSaveWeight">Gewicht speichern</button>
+          </div>
+          <div class="forge-line"></div>
+          <label class="forge-checkbox"><input type="checkbox" id="forgeCreatine"> Kreatin heute eingenommen</label>
+          <div class="forge-feedback" id="forgeQuickStatus" role="status"></div>
+          <p class="forge-mini">Schritte werden als tatsächlich gelaufen erfasst. Keine Nährwert- oder Ernährungserfassung.</p>
+        </div>
+      </section>
+      <section class="forge-section" id="forgeSmartReminders">
+        <div class="forge-heading"><div><div class="forge-kicker">DEIN COACH</div><h2>Was heute noch ansteht</h2></div></div>
+        <div class="forge-surface"><div id="forgeReminderList"></div>
+          <p class="forge-mini" style="margin-top:11px">Hinweise beim Öffnen und nach Einträgen – keine Hintergrund-Push-Mitteilungen.</p>
+        </div>
       </section>
       <div class="grid4">
         <div class="card stat"><div class="label">Start</div><div class="value">93 kg</div></div>
@@ -545,6 +578,75 @@
           <div class="stat"><div class="label">Schritte</div><div class="value">10.000</div><div class="small">gesamt / Tag</div></div>
         </div>
         <div class="notice">Wenn dein 7-Tage-Trend mehrere Wochen deutlich unter etwa 0,5 kg Verlust liegt, erst Tracking und Schritte prüfen. Wenn er länger deutlich über etwa 0,9–1,0 kg liegt und Kraft oder Regeneration leiden, Defizit etwas verkleinern.</div>
+      </div>
+    </section>
+
+    <section id="training" class="view">
+      <div class="forge-kicker">TRAINING LOG</div>
+      <h2 style="font-size:27px;letter-spacing:-1px;margin:7px 0 6px">Stärker als gestern.</h2>
+      <p class="forge-muted" style="margin-bottom:16px">Übungen und Gewichte speichern – beim nächsten Mal automatisch vergleichen.</p>
+      <div class="forge-stats">
+        <div class="forge-tile"><span>Trainingstage (7 Tage)</span><b id="forgeWeekSessions">0 / 3</b></div>
+        <div class="forge-tile"><span>Gespeicherte Übungen</span><b id="forgeTotalSets">0</b></div>
+      </div>
+      <div class="forge-surface forge-section">
+        <div class="forge-heading"><h2>Übung eintragen</h2></div>
+        <div class="forge-grid">
+          <label class="forge-field"><span>Datum</span><input id="forgeWorkoutDate" type="date"></label>
+          <label class="forge-field"><span>Trainingstag</span><select id="forgeWorkoutType">
+            <option>Brust/Rücken</option><option>Schultern/Arme</option><option>Oberkörper</option><option>Sonstiges</option>
+          </select></label>
+        </div>
+        <label class="forge-field" style="margin-top:12px"><span>Übung</span>
+          <select id="forgeExercise"><option>Schrägbankdrücken KH</option><option>Brustpresse</option><option>Latzug</option>
+            <option>Rudern</option><option>Seitheben</option><option>Schulterdrücken</option><option>Bizepscurls</option>
+            <option>Trizepsdrücken</option><option value="custom">Andere Übung …</option></select>
+        </label>
+        <label class="forge-field" id="forgeCustomExerciseWrap" style="display:none;margin-top:10px">
+          <span>Übungsname</span><input type="text" id="forgeCustomExercise" maxlength="70" placeholder="Übung eingeben">
+        </label>
+        <div class="forge-grid-3" style="margin-top:12px">
+          <label class="forge-field"><span>Sätze</span><input id="forgeSets" type="number" value="3" min="1" max="12" inputmode="numeric"></label>
+          <label class="forge-field"><span>Wiederholungen</span><input id="forgeReps" type="number" value="8" min="1" max="100" inputmode="numeric"></label>
+          <label class="forge-field"><span>Gewicht (kg)</span><input id="forgeWeight" type="text" value="20" inputmode="decimal"></label>
+        </div>
+        <p id="forgePrevious" class="forge-tip">Noch keine vorherige Leistung für diese Übung.</p>
+        <button class="btn" id="forgeSaveWorkout" type="button">Übung speichern</button>
+        <div class="forge-feedback" id="forgeWorkoutFeedback" role="status"></div>
+      </div>
+      <div class="forge-section">
+        <div class="forge-heading"><h2>Trainingsverlauf</h2></div>
+        <div id="forgeWorkoutEntries"></div>
+      </div>
+      <div class="forge-section">
+        <div class="forge-heading"><h2>Deine Erinnerungen</h2></div>
+        <div class="forge-surface">
+          <p class="forge-muted" style="margin:0 0 14px">Wähle aus, welche Hinweise FORGE beim Öffnen anzeigen soll.</p>
+          <div style="display:grid;gap:12px">
+            <label class="forge-checkbox"><input id="forgeRemindWeight" type="checkbox"> Morgens ans Wiegen denken</label>
+            <label class="forge-checkbox"><input id="forgeRemindCreatine" type="checkbox"> Kreatin-Erinnerung</label>
+            <label class="forge-checkbox"><input id="forgeRemindSteps" type="checkbox"> Schritte im Blick behalten</label>
+          </div>
+          <p class="forge-mini" style="margin-top:13px">Keine Hintergrund-Benachrichtigungen oder festen Uhrzeiten.</p>
+        </div>
+      </div>
+      <div class="forge-section">
+        <div class="forge-heading"><h2>Daten importieren</h2></div>
+        <div class="forge-surface">
+          <p class="forge-muted" style="margin:0 0 12px">Importiere eine CSV-Datei mit Schritten und/oder Gewicht. Eine direkte Garmin-/Apple-Health-Verbindung ist noch nicht eingerichtet.</p>
+          <button class="forge-sm-btn" id="forgeImportButton" type="button">CSV-Datei auswählen</button>
+          <input type="file" id="forgeImportInput" accept=".csv,text/csv" hidden>
+          <p class="forge-import-help" style="margin:12px 0 0">Format: <code>date;steps;weight</code>, z. B. <code>2026-10-27;8000;92,4</code>. Nur Datum plus Schritte oder Gewicht genügt.</p>
+          <div id="forgeImportStatus" class="forge-feedback" role="status"></div>
+        </div>
+      </div>
+      <div class="forge-section">
+        <div class="forge-heading"><h2>FORGE als iPhone-App</h2></div>
+        <div class="forge-surface">
+          <p class="forge-muted">Öffne FORGE in Safari und wähle „Teilen“ → „Zum Home-Bildschirm“. Die App kann danach eigenständig starten und zuvor geladene Inhalte offline anzeigen.</p>
+          <button class="forge-sm-btn" id="forgeInstallButton" type="button" hidden>App installieren</button>
+          <p id="forgeInstallNote" class="forge-mini" style="margin:10px 0 0">Gespeicherte Werte bleiben lokal in deinem Browser. Nutze das Backup bei Gerätewechsel.</p>
+        </div>
       </div>
     </section>
 
@@ -1019,7 +1121,7 @@
   }
 
   // Lokale Backups: bestehende Keys bleiben unverändert, Migration nicht nötig.
-  const allowedKey=k=>/^fitness-(walking|week|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k);
+  const allowedKey=k=>/^fitness-(walking|week|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
   $('#exportData').addEventListener('click',()=>{
     const saved={};
     for(let i=0;i<localStorage.length;i++){
@@ -1050,5 +1152,6 @@
   renderWeights();
 })();
 </script>
+  <script src="./forge-extras.js" defer></script>
 </body>
 </html>
