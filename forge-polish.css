@@ -268,3 +268,29 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
  body.forge-editing nav.tabs{visibility:hidden;opacity:0;pointer-events:none}
 }
 @media(prefers-reduced-motion:reduce){body.forge-editing nav.tabs{transition:none}}
+
+
+/* FORGE 7.0 — Health Shortcuts bridge and local calendar export */
+.forge-sync-stats{margin:12px 0}
+.forge-sync-stats .forge-tile{background:linear-gradient(135deg,#1a3429,#132321);border-color:#3a6249}
+.forge-sync-date{font-size:19px!important;letter-spacing:-.4px}
+.forge-sync-how{padding:13px 14px;border-radius:14px;background:#111f22;border:1px solid #304743;margin:13px 0}
+.forge-sync-how>strong{display:block;font-size:13px;font-weight:850;margin-bottom:6px}
+.forge-sync-how ol{margin:9px 0 0;padding-left:21px;color:#b9cfc8;font-size:12px;line-height:1.65}
+.forge-sync-how li{padding-left:3px;margin:6px 0}
+.forge-sync-how b{color:#ecf7e8}
+.forge-sync-how code{background:#21372d;color:#d6ffa1;border-radius:5px;padding:2px 4px;overflow-wrap:anywhere}
+.forge-sync-subtitle{display:block;color:#e0f2df;font-size:14px;margin:0 0 8px}
+#forgeSyncSection .forge-sm-btn.primary,#forgeCalendarSection .forge-sm-btn.primary{width:100%;margin:3px 0 8px}
+.forge-reminder-config{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:10px;align-items:center;margin:16px 0 13px
+}
+.forge-reminder-config .forge-field input{min-height:44px}
+.forge-reminder-config .forge-checkbox{font-size:13px;min-height:46px}
+#forgeSyncSection .forge-feedback,#forgeCalendarSection .forge-feedback{overflow-wrap:anywhere}
+@media(max-width:380px){
+ .forge-sync-how{padding:12px 10px}
+ .forge-reminder-config{gap:8px}
+ .forge-reminder-config .forge-checkbox{font-size:12px}
+}
