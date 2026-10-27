@@ -130,6 +130,8 @@
     // Show the corresponding setup/status area so incoming links are understandable.
     const trainingTab=document.querySelector('.tab[data-view="training"]');
     if(trainingTab)trainingTab.click();
+    const section=$('#forgeSyncSection');
+    if(section)section.scrollIntoView({block:'start',behavior:'auto'});
     cleanHash();
     try{
       const item=parseBridgeHash(hash);
