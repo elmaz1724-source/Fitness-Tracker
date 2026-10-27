@@ -248,4 +248,48 @@ window.addEventListener('appinstalled',()=>{
 });
 if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 window.addEventListener('focus',()=>{renderReminders();renderAutoPace();});
+
+// Gerätediagnose ohne Zugriff auf Fitnesswerte im Bericht.
+$('#forgeDeviceCheck').addEventListener('click',async()=>{
+ const target=$('#forgeDeviceResults'),button=$('#forgeDeviceCheck');
+ button.disabled=true;target.replaceChildren();
+ const add=(kind,title,detail)=>{
+  const line=document.createElement('div');
+  line.className='forge-reminder';
+  line.style.borderColor=kind==='ok'?'#416846':kind==='warn'?'#756142':'#824647';
+  const state=kind==='ok'?'✓':kind==='warn'?'!':'×';
+  line.textContent=state+' '+title+' – '+detail;
+  target.appendChild(line);
+ };
+ try{
+  const token='forge-check-'+Date.now(),value='test-'+Math.random();
+  try{
+   localStorage.setItem(token,value);
+   const correct=localStorage.getItem(token)===value;
+   localStorage.removeItem(token);
+   if(correct)add('ok','Lokaler Speicher','Schreiben und Lesen funktionieren.');
+   else add('fail','Lokaler Speicher','Gespeicherte Werte konnten nicht korrekt gelesen werden.');
+  }catch(e){add('fail','Lokaler Speicher','Kein verlässlicher Speicherzugriff. Private-Browsing-Einstellungen prüfen.');}
+  if('serviceWorker' in navigator){
+   try{
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(reg&&reg.active)add('ok','Offline-Technik','Service Worker ist aktiv.');
+    else add('warn','Offline-Technik','Noch nicht aktiv. FORGE online neu öffnen.');
+   }catch(e){add('warn','Offline-Technik','Aktivierung konnte nicht geprüft werden.');}
+  }else add('warn','Offline-Technik','Dieser Browser unterstützt hier keine Service Worker.');
+  if('caches' in window){
+   try{
+    const base=new URL('./index.html',window.location.href);
+    const cached=await caches.match(base.href);
+    if(cached)add('ok','Offline-Startdatei','Im Browsercache vorhanden.');
+    else add('warn','Offline-Startdatei','Noch nicht im Cache. Öffne FORGE online erneut.');
+   }catch(e){add('warn','Offline-Startdatei','Cacheprüfung war nicht möglich.');}
+  }else add('warn','Offline-Startdatei','Cache API nicht verfügbar.');
+  const standalone=window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches;
+  if(standalone||navigator.standalone===true)add('ok','App-Modus','FORGE läuft als eigenständige Web-App.');
+  else add('warn','App-Modus','Aktuell im Browser geöffnet. Auf dem Home-Bildschirm installierbar.');
+ }finally{
+  button.disabled=false;
+ }
+});
 })();
