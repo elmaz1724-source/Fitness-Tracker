@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b0f14">
+  <meta name="theme-color" content="#090d12">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Fitness Tracker</title>
+  <title>FORGE — Fitness Tracker</title>
   <style>
     :root{
       --bg:#0b0f14;
@@ -157,25 +157,132 @@
       .walk-main{grid-column:1/-1}
       .week{grid-template-columns:repeat(4,1fr)}
     }
+  
+    /* FORGE — überarbeitete, mobile-first UI */
+    :root{
+      --bg:#090d12;--panel:#121920;--panel2:#1a242e;--line:#293540;
+      --text:#f3f8f9;--muted:#91a2ae;--accent:#c3f65d;--accent2:#88d95a;
+      --shadow:0 12px 36px rgba(0,0,0,.16);--radius:22px;
+    }
+    html{background:var(--bg)}
+    body{background:radial-gradient(ellipse 56% 25% at 80% -8%,rgba(162,229,89,.12),transparent 80%),#090d12;line-height:1.45}
+    .app{width:min(100%,1030px);padding:calc(22px + env(safe-area-inset-top)) 18px calc(50px + env(safe-area-inset-bottom))}
+    .topbar{margin-bottom:26px;align-items:center}
+    .brand{display:flex;gap:13px;align-items:center}
+    .brand-mark{display:grid;place-items:center;width:44px;height:44px;background:var(--accent);border-radius:14px;color:#101609;font-size:25px;font-weight:900;box-shadow:0 9px 25px #a6e95f22;flex-shrink:0}
+    .brand h1{font-size:23px;letter-spacing:-.9px;font-weight:900;line-height:1}
+    .brand p{font-size:12px;margin-top:7px}
+    .pill{background:#19231a;border-color:#31492a;white-space:nowrap;font-size:11px;letter-spacing:.02em}
+    .tabs{background:#111820e8;border:1px solid #2a3841;border-radius:18px;padding:5px;backdrop-filter:blur(25px);top:12px;margin-bottom:24px}
+    .tab{display:flex;gap:8px;align-items:center;justify-content:center;transition:background .2s,color .2s;border-radius:13px;font-size:13px}
+    .tab.active{background:var(--accent);color:#11170b;box-shadow:0 4px 15px #baf25317}
+    .nav-icon{font-size:18px;line-height:1}
+    .section-title{font-size:18px;margin:25px 0 12px;letter-spacing:-.5px;font-weight:850}
+    .card{background:linear-gradient(160deg,#151e26,#10171d);border:1px solid #2a3540;box-shadow:none;padding:19px}
+    .stat .value{font-size:25px;letter-spacing:-1px}
+    .grid4>.card.stat{min-height:104px}
+    .goal{background:#151e25;border-color:#2a3741;transition:border-color .15s,transform .15s}
+    .goal:has(.check:checked){border-color:#466438;background:linear-gradient(90deg,#1b3025,#172229)}
+    .check{border-color:#586671;width:26px;height:26px;cursor:pointer}
+    .check:checked{background:var(--accent);border-color:var(--accent)}
+    .check:checked::after{color:#14200a}
+    .progress{height:9px;background:#25323d}
+    .progress>div{background:linear-gradient(90deg,#76ce6c,#c3f65d)}
+    .macro{background:#111c23;border-color:#2a3740;border-radius:18px;padding:17px 9px}
+    .macro b{font-size:23px;letter-spacing:-.6px}
+    .checkpoint{background:linear-gradient(110deg,#1d3425,#13201e 68%,#111b23);border-color:#354e36;padding:23px}
+    .checkpoint .big{font-size:40px;color:var(--accent);letter-spacing:-1.5px}
+    .field span{font-weight:650;font-size:12px;margin-bottom:7px}
+    input,select{background:#0b1319;border-color:#2d3b45;min-height:50px;padding:11px 14px;border-radius:13px;font-size:16px}
+    input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #a5e96617}
+    .btn{background:var(--accent);color:#111b0d;border-radius:13px;transition:transform .15s,filter .15s}
+    .btn:active{transform:scale(.985)}
+    .btn.secondary{background:#1a2730;border-color:#31414a;color:#eef5f6}
+    .walk-main{background:linear-gradient(145deg,#263f29,#152a27);border-color:#3d653d}
+    .walk-main .big{font-size:37px;letter-spacing:-1.6px}
+    .walk-stat,.block{background:#121c23;border-color:#2b3943}
+    .walk-stat b{font-size:20px}
+    .notice,.feedback{background:#111d24;color:#bfccd1;border-color:#283a43}
+    .week{grid-template-columns:repeat(7,minmax(0,1fr))}
+    .day{min-height:76px;border-color:#2b3c43}
+    .day.done{background:#243b2a;border-color:#628c49}
+    .day:focus-visible,.tab:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    .chart{background:#111c23;border-color:#2a3b45}
+    .weight-item{background:#121d25;border-color:#2c3943}
+    .footer-note{margin-top:40px;color:#748993}
+    .hero-dash{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:25px 28px;border:1px solid #37533d;border-radius:26px;background:radial-gradient(circle at 90% 5%,#3d613336,transparent 55%),linear-gradient(130deg,#172621,#131b23);margin-bottom:16px;overflow:hidden}
+    .eyebrow{font-size:11px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent)}
+    .hero-dash h2{margin:8px 0 7px;font-size:clamp(25px,4vw,39px);line-height:1.13;letter-spacing:-1.2px}
+    .hero-dash p{margin:0;color:#a3b7ba;font-size:13px;max-width:450px}
+    .ring{--progress:0%;width:116px;height:116px;display:grid;place-items:center;background:conic-gradient(var(--accent) var(--progress),#2a3940 0);border-radius:50%;flex-shrink:0}
+    .ring-inner{width:94px;height:94px;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#172421}
+    .ring-inner strong{font-size:27px;letter-spacing:-1px;line-height:1.1}.ring-inner small{color:#a5b9b5;font-size:10px}
+    .section-lead{margin:0 0 17px;color:var(--muted);font-size:13px}
+    .walk-hero{grid-template-columns:1.25fr repeat(3,1fr)}
+    .inputrow{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .pace-control{display:flex;gap:8px}
+    .pace-control input{flex:1;min-width:0;font-weight:800;font-size:22px;letter-spacing:-.5px}
+    .speed-btn{width:50px;flex:0 0 50px;background:#26352c;border:1px solid #405942;color:var(--accent);border-radius:13px;font-size:24px;font-weight:700;min-height:50px;cursor:pointer}
+    .speed-btn:active{background:#37513b}
+    .speed-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+    .speed-chip{background:#1a2830;color:#bdccd0;border:1px solid #33454c;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:750;cursor:pointer}
+    .speed-chip.active{background:#293b27;color:var(--accent);border-color:#628454}
+    .helper{font-size:11px;color:var(--muted);margin-top:7px}
+    .error{color:#ffa797;min-height:16px;margin-top:6px;font-size:12px}
+    .goal-line{margin-top:13px;color:#bed0c4;font-size:13px;background:#1b2a26;border:1px solid #344a3c;border-radius:12px;padding:12px}
+    .goal-line strong{color:var(--accent)}
+    .mini-header{display:flex;justify-content:space-between;align-items:end;gap:12px}
+    .mini-header h2{font-size:28px;letter-spacing:-1px;margin:6px 0 9px;line-height:1.15}
+    .weight-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:4px 0 20px}
+    .summary-tile{padding:15px;background:#151e26;border:1px solid #2d3b44;border-radius:17px}
+    .summary-tile span{display:block;font-size:11px;color:#9aabb5}
+    .summary-tile b{display:block;font-size:22px;letter-spacing:-.6px;margin-top:8px}
+    .backup-tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+    .backup-tools .btn{font-size:13px}
+    @media(max-width:700px){
+      .app{padding:calc(18px + env(safe-area-inset-top)) 14px calc(112px + env(safe-area-inset-bottom))}
+      .topbar{margin-bottom:18px}.brand h1{font-size:21px}.brand-mark{width:40px;height:40px}
+      .pill{padding:7px 10px;font-size:10px}
+      .tabs{position:fixed;z-index:99;top:auto;bottom:calc(8px + env(safe-area-inset-bottom));left:12px;right:12px;max-width:520px;margin:0 auto;padding:6px;border-radius:21px;background:#162028f5;box-shadow:0 14px 50px #0009}
+      .tab{flex-direction:column;gap:2px;font-size:11px;min-height:57px}
+      .nav-icon{font-size:21px}
+      .hero-dash{padding:20px;gap:12px;border-radius:22px}.hero-dash h2{font-size:25px}
+      .ring{width:85px;height:85px}.ring-inner{width:67px;height:67px}.ring-inner strong{font-size:21px}.ring-inner small{font-size:9px}
+      .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .walk-hero{grid-template-columns:repeat(3,minmax(0,1fr))}.walk-main{grid-column:1/-1}
+      .walk-stat{padding:12px 9px}.walk-stat b{font-size:17px}.walk-stat .small{font-size:10px}
+      .blocks{grid-template-columns:repeat(3,minmax(0,1fr))}.block{padding:12px 8px}.block b{font-size:15px}.block .small{font-size:11px}
+      .inputrow{grid-template-columns:1fr 1fr;gap:12px}
+      .inputrow .speed-field{grid-column:1/-1}
+      .week{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+      .day{min-height:67px;border-radius:12px}.day .check{width:22px;height:22px;border-radius:7px}.day .check:checked::after{left:3px;top:-1px}
+      .weight-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .card{padding:15px}.section-title{margin-top:23px}
+      .macro b{font-size:19px}
+    }
+    @media(max-width:365px){.pill{display:none}.hero-dash{grid-template-columns:1fr auto}.hero-dash h2{font-size:22px}.ring{width:73px;height:73px}.ring-inner{width:57px;height:57px}}
   </style>
 </head>
 <body>
   <main class="app">
     <header class="topbar">
-      <div class="brand">
-        <h1>Fitness Tracker</h1>
-        <p>Cut · Muskelaufbau · Walking Pad</p>
+      <div class="brand"><div class="brand-mark" aria-hidden="true">↗</div>
+        <div><h1>FORGE <span style="color:var(--accent)">.</span></h1><p>Dein persönlicher Fitness Tracker</p></div>
       </div>
-      <div class="pill">Ziel: 80–82 kg</div>
+      <div class="pill">● ZIEL 80–82 KG</div>
     </header>
 
     <nav class="tabs" aria-label="Bereiche">
-      <button class="tab active" data-view="today">Heute</button>
-      <button class="tab" data-view="walking">Walking</button>
-      <button class="tab" data-view="progress">Fortschritt</button>
+      <button class="tab active" data-view="today" aria-label="Heute"><span class="nav-icon" aria-hidden="true">◉</span>Heute</button>
+      <button class="tab" data-view="walking" aria-label="Walking"><span class="nav-icon" aria-hidden="true">⌁</span>Walking</button>
+      <button class="tab" data-view="progress" aria-label="Fortschritt"><span class="nav-icon" aria-hidden="true">↗</span>Fortschritt</button>
     </nav>
 
     <section id="today" class="view active">
+      <div class="hero-dash">
+        <div><div class="eyebrow" id="todayDate">DEIN TAG</div><h2>Jeder Tag zählt.</h2><p>Dranbleiben statt perfekt sein. Erledige deine Ziele und sieh deinen Fortschritt.</p></div>
+        <div class="ring" id="dailyRing" aria-label="Tagesfortschritt"><div class="ring-inner"><strong id="ringScore">0/5</strong><small>erledigt</small></div></div>
+      </div>
       <div class="grid4">
         <div class="card stat"><div class="label">Start</div><div class="value">93 kg</div></div>
         <div class="card stat"><div class="label">Größe</div><div class="value">188 cm</div></div>
@@ -215,42 +322,40 @@
           <div class="big" id="heroSteps">10.000</div>
           <div style="color:var(--accent);font-weight:800;margin-top:6px">Schritte gesamt</div>
         </div>
-        <div class="walk-stat"><span class="small">Neigung</span><b>8°</b><span class="small">≈ 14,1 %</span></div>
+        <div class="walk-stat"><span class="small">Neigung</span><b id="heroIncline">8°</b><span class="small" id="heroInclinePct">≈ 14,1 %</span></div>
         <div class="walk-stat"><span class="small">Tempo</span><b id="heroPace">6,7 km/h</b></div>
         <div class="walk-stat"><span class="small">Zeit</span><b id="heroTime">≈ 68 Min.</b></div>
       </div>
 
       <div class="section-title">Walking-Pad-Rechner</div>
+      <p class="section-lead">Dein Tempo, deine Steigung, deine Schritte. Alle Werte sofort live berechnet.</p>
       <div class="card">
         <div class="inputrow">
-          <label class="field"><span>Tempo</span>
-            <select id="pace">
-              <option value="5">5,0 km/h</option>
-              <option value="5.5">5,5 km/h</option>
-              <option value="6.2">6,2 km/h</option>
-              <option value="6.7" selected>6,7 km/h</option>
-            </select>
-          </label>
-          <label class="field"><span>Walking-Pad-Schritte</span>
-            <input id="walkSteps" type="number" min="0" max="20000" step="500" value="10000">
-          </label>
-          <label class="field"><span>Schrittlänge</span>
-            <input id="stride" type="number" min="0.4" max="1.2" step="0.01" value="0.76">
-          </label>
+          <div class="field speed-field"><span>Dein Tempo in km/h</span>
+            <div class="pace-control"><button class="speed-btn" id="paceMinus" type="button" aria-label="0,1 km/h langsamer">−</button><input id="pace" type="text" inputmode="decimal" autocomplete="off" value="6,7" aria-label="Geschwindigkeit in km/h frei eingeben"><button class="speed-btn" id="pacePlus" type="button" aria-label="0,1 km/h schneller">+</button></div>
+            <div class="helper">Frei eingeben, z. B. 5,8 oder 6,35 km/h</div>
+            <div class="error" id="paceError" role="status"></div>
+          </div>
+          <label class="field"><span>Neigung (Grad)</span><input id="incline" type="number" inputmode="decimal" min="0" max="15" step="0.5" value="8"></label>
+          <label class="field"><span>Walking-Pad-Schritte</span><input id="walkSteps" type="number" inputmode="numeric" min="0" max="20000" step="100" value="10000"></label>
+          <label class="field"><span>Alltagsschritte</span><input id="otherSteps" type="number" inputmode="numeric" min="0" max="30000" step="100" value="0"></label>
+          <label class="field"><span>Schrittlänge (Meter)</span><input id="stride" type="number" inputmode="decimal" min="0.4" max="1.2" step="0.01" value="0.76"></label>
         </div>
+        <div class="speed-chips"><button class="speed-chip" data-pace="5" type="button">5,0 km/h</button><button class="speed-chip" data-pace="6.2" type="button">6,2 km/h</button><button class="speed-chip" data-pace="6.7" type="button">6,7 km/h</button></div>
         <div class="grid3" style="margin-top:12px">
           <div class="macro"><span class="small">Distanz</span><b id="distance">7,6 km</b></div>
           <div class="macro"><span class="small">Dauer</span><b id="duration">68 Min.</b></div>
           <div class="macro"><span class="small">Belastung</span><b id="load">Cardio</b></div>
         </div>
-        <div class="notice" id="walkNote">6,7 km/h bei 8° ist eher echtes Cardio. Solange Puls, Beine und Krafttraining gut bleiben, ist das okay.</div>
+        <div class="goal-line" id="walkGoalLine">10.000 Gesamtschritte geplant</div>
+        <div class="notice" id="walkNote">Belastung abhängig von Tempo und Steigung.</div>
       </div>
 
       <div class="section-title">3-Blöcke-Plan</div>
       <div class="blocks">
-        <div class="block"><div class="tag">BLOCK 1</div><b>3.000 Schritte</b><span class="small" id="b1">≈ 20 Min.</span><div class="small" style="margin-top:7px">morgens</div></div>
-        <div class="block"><div class="tag">BLOCK 2</div><b>3.000 Schritte</b><span class="small" id="b2">≈ 20 Min.</span><div class="small" style="margin-top:7px">mittags</div></div>
-        <div class="block"><div class="tag">BLOCK 3</div><b>4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
+        <div class="block"><div class="tag">BLOCK 1</div><b id="block1Steps">3.000 Schritte</b><span class="small" id="b1">≈ 20 Min.</span><div class="small" style="margin-top:7px">morgens</div></div>
+        <div class="block"><div class="tag">BLOCK 2</div><b id="block2Steps">3.000 Schritte</b><span class="small" id="b2">≈ 20 Min.</span><div class="small" style="margin-top:7px">mittags</div></div>
+        <div class="block"><div class="tag">BLOCK 3</div><b id="block3Steps">4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
       </div>
 
       <div class="section-title">Wochentracker</div>
@@ -263,6 +368,13 @@
     </section>
 
     <section id="progress" class="view">
+      <div class="mini-header"><div><div class="eyebrow">DEINE ENTWICKLUNG</div><h2>Der Weg ist das Ziel.</h2></div></div>
+      <div class="weight-summary">
+        <div class="summary-tile"><span>Letztes Gewicht</span><b id="currentWeight">—</b></div>
+        <div class="summary-tile"><span>Seit Start (93 kg)</span><b id="changeFromStart">—</b></div>
+        <div class="summary-tile"><span>Bis 82 kg</span><b id="weightRemaining">—</b></div>
+        <div class="summary-tile"><span>Messungen</span><b id="weightEntries">0</b></div>
+      </div>
       <div class="section-title">Gewicht eintragen</div>
       <div class="card">
         <div class="grid2">
@@ -280,6 +392,12 @@
 
       <div class="section-title">Einträge</div>
       <div class="weight-list" id="weightList"></div>
+      <div class="section-title">Daten sichern</div>
+      <div class="card"><div class="small">Alle Werte bleiben auf deinem Gerät. Sichere sie gelegentlich, besonders vor Browser- oder Handywechsel.</div>
+        <div class="backup-tools"><button type="button" class="btn secondary" id="exportData">Backup exportieren</button><button type="button" class="btn secondary" id="importData">Backup importieren</button></div>
+        <input id="importFile" type="file" accept="application/json,.json" hidden>
+        <div class="helper" id="backupFeedback" role="status"></div>
+      </div>
 
       <div class="section-title">Dein Rahmen</div>
       <div class="card">
@@ -292,7 +410,7 @@
     </section>
 
     <p class="footer-note">
-      Deine Daten werden nur lokal in diesem Browser gespeichert. 8° entsprechen rechnerisch ungefähr 14,1 % Steigung.
+      FORGE · Lokal gespeichert, ohne Account. Angaben zur Belastung sind Schätzwerte und kein Ersatz für Pulsmessungen.
     </p>
   </main>
 
@@ -312,8 +430,10 @@
     $$('.view').forEach(v => v.classList.toggle('active', v.id === btn.dataset.view));
   }));
 
-  // Daily goals
-  const dateKey = new Date().toISOString().slice(0,10);
+  // Daily goals – lokales Datum statt UTC
+  function localDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  const dateKey = localDate(new Date());
+  $('#todayDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();
   const dailyKey = 'fitness-daily-' + dateKey;
   const dailyState = storage.get(dailyKey, {});
   $$('.daily').forEach(c => {
@@ -329,39 +449,77 @@
     const done = $$('.daily').filter(x => x.checked).length;
     $('#scoreText').textContent = `· ${done}/5`;
     $('#dailyProgress').style.width = `${done/5*100}%`;
+    $('#dailyRing').style.setProperty('--progress',(done*20)+'%');
+    $('#ringScore').textContent=done+'/5';
   }
   updateDaily();
 
-  // Walking
-  const walkingPrefs = storage.get('fitness-walking', {pace:6.7,steps:10000,stride:.76});
-  $('#pace').value = String(walkingPrefs.pace);
-  $('#walkSteps').value = walkingPrefs.steps;
-  $('#stride').value = walkingPrefs.stride;
-
+  // Walking – frei einstellbares Tempo, Neigung und separate Alltagsschritte
+  const walkingPrefs = storage.get('fitness-walking', {pace:6.7,steps:10000,stride:.76,incline:8,other:0});
+  $('#pace').value = String(walkingPrefs.pace ?? 6.7).replace('.', ',');
+  $('#walkSteps').value = walkingPrefs.steps ?? 10000;
+  $('#stride').value = walkingPrefs.stride ?? .76;
+  $('#incline').value = walkingPrefs.incline ?? 8;
+  $('#otherSteps').value = walkingPrefs.other ?? 0;
+  function clamp(v,min,max,fallback){
+    if(!Number.isFinite(v))return fallback;
+    return Math.min(max,Math.max(min,v));
+  }
   function minutes(steps, pace, stride){ return (steps * stride / 1000) / pace * 60; }
   function fmt1(n){ return n.toFixed(1).replace('.', ','); }
-  function updateWalking(){
-    const pace = Math.max(1, Math.min(10, Number($('#pace').value) || 6.7));
-    const steps = Math.max(0, Math.min(20000, Number($('#walkSteps').value) || 0));
-    const stride = Math.max(.4, Math.min(1.2, Number($('#stride').value) || .76));
-    const km = steps * stride / 1000;
-    const mins = minutes(steps, pace, stride);
-    $('#heroSteps').textContent = Math.round(steps).toLocaleString('de-DE');
-    $('#heroPace').textContent = fmt1(pace) + ' km/h';
-    $('#heroTime').textContent = '≈ ' + Math.round(mins) + ' Min.';
-    $('#distance').textContent = fmt1(km) + ' km';
-    $('#duration').textContent = Math.round(mins) + ' Min.';
-    $('#b1').textContent = '≈ ' + Math.round(minutes(3000, pace, stride)) + ' Min.';
-    $('#b2').textContent = '≈ ' + Math.round(minutes(3000, pace, stride)) + ' Min.';
-    $('#b3').textContent = '≈ ' + Math.round(minutes(4000, pace, stride)) + ' Min.';
-    let load='Locker', note='Lockerer Bereich – gut geeignet, um Schritte zu sammeln.';
-    if(pace >= 6.5){ load='Cardio'; note='6,7 km/h bei 8° ist eher echtes Cardio. Solange Puls, Beine und Krafttraining gut bleiben, ist das okay.'; }
-    else if(pace >= 6){ load='Zügig'; note='Zügiges Tempo. Gut nutzbar, solange deine Regeneration nicht leidet.'; }
-    $('#load').textContent = load;
-    $('#walkNote').textContent = note;
-    storage.set('fitness-walking',{pace,steps,stride});
+  function fmt2(n){ return String(Math.round(n*100)/100).replace('.', ','); }
+  function parsedPace(){
+    const raw=$('#pace').value.trim().replace(',','.');
+    if(!/^\d+(\.\d{1,2})?$/.test(raw))return null;
+    const n=Number(raw);
+    return n>=0.5&&n<=12?n:null;
   }
-  ['pace','walkSteps','stride'].forEach(id => $('#'+id).addEventListener('input', updateWalking));
+  function setPace(n){
+    $('#pace').value=fmt2(clamp(n,0.5,12,6.7));
+    updateWalking();
+  }
+  function updateWalking(){
+    const pace=parsedPace();
+    $('#paceError').textContent=pace===null?'Bitte ein Tempo zwischen 0,5 und 12 km/h eingeben.':'';
+    $('#pace').setAttribute('aria-invalid',String(pace===null));
+    if(pace===null)return;
+    const steps=clamp(Number($('#walkSteps').value),0,20000,0);
+    const other=clamp(Number($('#otherSteps').value),0,30000,0);
+    const stride=clamp(Number($('#stride').value),.4,1.2,.76);
+    const incline=clamp(Number($('#incline').value),0,15,8);
+    const km=steps*stride/1000;
+    const mins=minutes(steps,pace,stride);
+    const total=Math.round(steps+other);
+    const remain=Math.max(0,10000-total);
+    const anglePct=Math.tan(incline*Math.PI/180)*100;
+    $('#heroSteps').textContent=total.toLocaleString('de-DE');
+    $('#heroPace').textContent=fmt2(pace)+' km/h';
+    $('#heroTime').textContent='≈ '+Math.round(mins)+' Min.';
+    $('#heroIncline').textContent=fmt1(incline)+'°';
+    $('#heroInclinePct').textContent='≈ '+fmt1(anglePct)+' %';
+    $('#distance').textContent=fmt2(km)+' km';
+    $('#duration').textContent=Math.round(mins)+' Min.';
+    const blockShares=[.3,.3,.4];
+    blockShares.forEach((share,i)=>{
+      const blockSteps=Math.round(steps*share);
+      $('#block'+(i+1)+'Steps').textContent=blockSteps.toLocaleString('de-DE')+' Schritte';
+      $('#b'+(i+1)).textContent='≈ '+Math.round(minutes(blockSteps,pace,stride))+' Min.';
+    });
+    $('#walkGoalLine').innerHTML=remain===0
+      ?'<strong>✓ Tagesziel erreicht!</strong> '+total.toLocaleString('de-DE')+' Gesamtschritte geplant.'
+      :'<strong>'+remain.toLocaleString('de-DE')+' Schritte</strong> bis zum Tagesziel von 10.000 · '+total.toLocaleString('de-DE')+' insgesamt geplant.';
+    let load='Locker',note='Lockeres Gehen – geeignet, um Bewegung in den Tag zu bringen.';
+    if(pace>=6.5||incline>=7){load='Intensiv';note='Bei diesem Tempo oder dieser Neigung kann die Einheit fordernd sein. Puls, Belastungsempfinden und Erholung beachten.';}
+    else if(pace>=5.7||incline>=3){load='Zügig';note='Zügiges Gehen. Die tatsächliche Belastung hängt auch von deiner Fitness und deinem Puls ab.';}
+    $('#load').textContent=load;
+    $('#walkNote').textContent=note;
+    document.querySelectorAll('.speed-chip').forEach(b=>b.classList.toggle('active',Math.abs(Number(b.dataset.pace)-pace)<.001));
+    storage.set('fitness-walking',{pace,steps,stride,incline,other});
+  }
+  ['pace','walkSteps','stride','incline','otherSteps'].forEach(id=>$('#'+id).addEventListener('input',updateWalking));
+  $('#paceMinus').addEventListener('click',()=>setPace((parsedPace()??6.7)-.1));
+  $('#pacePlus').addEventListener('click',()=>setPace((parsedPace()??6.7)+.1));
+  $$('.speed-chip').forEach(btn=>btn.addEventListener('click',()=>setPace(Number(btn.dataset.pace))));
   updateWalking();
 
   // Week
@@ -398,7 +556,7 @@
 
   // Weight tracking
   const dateInput = $('#weightDate');
-  dateInput.value = new Date().toISOString().slice(0,10);
+  dateInput.value = localDate(new Date());
   let weights = storage.get('fitness-weights', []);
   $('#addWeight').addEventListener('click', () => {
     const date = dateInput.value;
@@ -416,6 +574,11 @@
   });
 
   function renderWeights(){
+    const latest=weights.length?weights[weights.length-1].value:null;
+    $('#currentWeight').textContent=latest===null?'—':fmt1(latest)+' kg';
+    $('#changeFromStart').textContent=latest===null?'—':(latest-93>0?'+':'')+fmt1(latest-93)+' kg';
+    $('#weightRemaining').textContent=latest===null?'—':Math.max(0,latest-82).toFixed(1).replace('.',',')+' kg';
+    $('#weightEntries').textContent=String(weights.length);
     const list = $('#weightList');
     list.innerHTML = '';
     if(!weights.length){
@@ -478,15 +641,46 @@
       out += `<text x="${pad-8}" y="${yy+4}" fill="#93a1b2" text-anchor="end" font-size="11">${val.toFixed(1)}</text>`;
     });
     const path = pts.map((p,i)=>(i?'L':'M')+x(i)+' '+y(p.value)).join(' ');
-    out += `<path d="${path}" fill="none" stroke="#52d7ad" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+    out += '<defs><linearGradient id="chartArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#c3f65d" stop-opacity=".22"/><stop offset="100%" stop-color="#c3f65d" stop-opacity="0"/></linearGradient></defs>';
+    out += `<path d="${path} L${x(pts.length-1)} ${H-pad} L${x(0)} ${H-pad} Z" fill="url(#chartArea)"/>`;
+    out += `<path d="${path}" fill="none" stroke="#c3f65d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
     pts.forEach((p,i)=>{
-      out += `<circle cx="${x(i)}" cy="${y(p.value)}" r="5" fill="#0b0f14" stroke="#52d7ad" stroke-width="3"/>`;
+      out += `<circle cx="${x(i)}" cy="${y(p.value)}" r="5" fill="#111c23" stroke="#c3f65d" stroke-width="3"/>`;
       const label = new Date(p.date+'T00:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'});
       out += `<text x="${x(i)}" y="${H-10}" fill="#93a1b2" text-anchor="middle" font-size="10">${label}</text>`;
     });
     svg.innerHTML=out;
   }
 
+  // Lokale Backups: bestehende Keys bleiben unverändert, Migration nicht nötig.
+  const allowedKey=k=>/^fitness-(walking|week|weights|daily-\d{4}-\d{2}-\d{2})$/.test(k);
+  $('#exportData').addEventListener('click',()=>{
+    const saved={};
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);if(allowedKey(k))saved[k]=localStorage.getItem(k);
+    }
+    const blob=new Blob([JSON.stringify({app:'FORGE-Fitness-Tracker',version:1,exportedAt:new Date().toISOString(),data:saved},null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='fitness-backup-'+localDate(new Date())+'.json';a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    $('#backupFeedback').textContent='Backup erstellt. Bewahre die JSON-Datei sicher auf.';
+  });
+  $('#importData').addEventListener('click',()=>$('#importFile').click());
+  $('#importFile').addEventListener('change',async e=>{
+    const file=e.target.files&&e.target.files[0];if(!file)return;
+    try{
+      if(file.size>2e6)throw Error('Die Datei ist zu groß.');
+      const data=JSON.parse(await file.text());
+      if(data.app!=='FORGE-Fitness-Tracker'||!data.data||typeof data.data!=='object')throw Error('Kein gültiges Fitness-Backup.');
+      const entries=Object.entries(data.data).filter(([k,v])=>allowedKey(k)&&typeof v==='string');
+      if(!entries.length)throw Error('Keine gespeicherten Fitness-Daten enthalten.');
+      for(const [,v] of entries)JSON.parse(v);
+      if(!confirm('Vorhandene Werte mit den Backup-Daten überschreiben?'))return;
+      entries.forEach(([k,v])=>localStorage.setItem(k,v));
+      location.reload();
+    }catch(error){$('#backupFeedback').textContent='Import nicht möglich: '+error.message;}
+    finally{e.target.value='';}
+  });
   renderWeights();
 })();
 </script>
