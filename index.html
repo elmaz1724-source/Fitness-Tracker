@@ -761,7 +761,7 @@
     const hint=$('#walkingPlanHint');
     hint.hidden=false;
     hint.textContent='Vorschlag übernommen: '+plannerFmt(currentPlan.feasible)+' geplante Walking-Schritte bei '+fmt2(currentPlan.pace)+' km/h. Deine '+plannerFmt(currentPlan.steps)+' bisherigen Schritte sind getrennt erfasst. Geplante Schritte sind noch nicht gelaufen.';
-    const tab=$('.tab').find(b=>b.dataset.view==='walking');
+    const tab=$$('.tab').find(b=>b.dataset.view==='walking');
     if(tab)tab.click();
   });
   renderPlanner();
