@@ -58,8 +58,7 @@ jobs:
           echo "Pages source: ${MODE:-unknown}"
           if [ "$MODE" != "workflow" ]; then
             if ! gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow >/dev/null; then
-              echo '::error::Switch Settings → Pages → Source to GitHub Actions, then re-run this workflow.'
-              exit 1
+              echo '::warning::Workflow token cannot update Pages settings. Make sure Settings → Pages → Source is GitHub Actions. Continuing to configure-pages to avoid blocking permitted deployments.'
             fi
             echo 'Pages source updated to GitHub Actions.'
           fi
