@@ -196,3 +196,36 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
   .tabs .nav-icon{font-size:21px;line-height:1}
   .app{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 }
+
+
+/* FORGE 6.0.3 — Consistent iPhone tab icons and decluttered reference data */
+.tabs>.tab>.nav-icon{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;line-height:1}
+.tabs>.tab>.nav-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;overflow:visible}
+.forge-plan-reference{
+  margin-top:25px;border:1px solid #2a4041;background:linear-gradient(135deg,#142228,#101c20);
+  border-radius:17px;overflow:hidden;color:var(--text)
+}
+.forge-plan-reference summary{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:16px 19px;cursor:pointer;list-style:none;min-height:68px;user-select:none
+}
+.forge-plan-reference summary::-webkit-details-marker{display:none}
+.forge-plan-reference summary strong{display:block;font-weight:800;font-size:15px;letter-spacing:-.25px}
+.forge-plan-reference summary small{display:block;margin-top:3px;color:#91a6a8;font-size:11px}
+.forge-plan-chevron{font-size:23px;line-height:1;color:var(--accent);transition:transform .16s;flex-shrink:0}
+.forge-plan-reference[open] .forge-plan-chevron{transform:rotate(180deg)}
+.forge-plan-reference summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:15px}
+.forge-plan-content{padding:0 16px 17px}
+.forge-plan-content p{font-size:12px;color:#9fb6b6;line-height:1.5;margin:0 0 13px}
+.forge-plan-content .macro{padding:12px 7px}
+.forge-plan-content .macro b{font-size:17px}
+.forge-plan-reference + .section-title{margin-top:24px}
+@media(max-width:700px){
+  .tabs>.tab{overflow:hidden;text-overflow:clip}
+  .tabs>.tab>.nav-icon{flex-basis:22px;width:22px;height:22px}
+  .tabs>.tab>.nav-icon svg{width:21px;height:21px}
+  .forge-plan-reference{margin-top:22px}
+  .forge-plan-reference summary{padding:15px 16px}
+  .forge-plan-content{padding:0 12px 14px}
+}
+@media(prefers-reduced-motion:reduce){.forge-plan-chevron{transition:none}}
