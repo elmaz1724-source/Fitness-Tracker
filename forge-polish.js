@@ -22,7 +22,7 @@
    const target=$(selector);
    if(!target)return;
    const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-   target.scrollIntoView({behavior:reduce?'instant':'smooth',block:'center'});
+   target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
  };
  $('#forgeGoSteps').addEventListener('click',()=>{
    goTo('#forgeTodayTools');
@@ -39,7 +39,7 @@
  ['forgeSaveSteps','forgeSaveWeight','addWeight'].forEach(id=>{
    const b=$('#'+id);if(b)b.addEventListener('click',render);
  });
- $$('.daily').forEach(c=>c.addEventListener('change',render));
+ document.querySelectorAll('.daily').forEach(c=>c.addEventListener('change',render));
  const weightObserver=new MutationObserver(render);
  weightObserver.observe(latestWeight,{childList:true,subtree:true,characterData:true});
  render();
