@@ -1,0 +1,65 @@
+name: Publish FORGE to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: forge-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate source assets
+        run: |
+          set -e
+          test -f index.html
+          test -f forge-extras.css
+          test -f forge-extras.js
+          test -f forge-polish.css
+          test -f forge-polish.js
+          test -f manifest.webmanifest
+          test -f sw.js
+          test -f icon.svg
+          node --check forge-extras.js
+          node --check forge-polish.js
+          node --check sw.js
+          node - <<'NODE'
+          const fs = require('fs');
+          const vm = require('vm');
+          const html = fs.readFileSync('index.html','utf8');
+          const match = html.match(/<script>([\s\S]*?)<\/script>/);
+          if (!match) throw new Error('Main inline app script missing');
+          new vm.Script(match[1]);
+          const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
+          if (new Set(ids).size !== ids.length) throw new Error('Duplicate element ids');
+          const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
+          if (manifest.display !== 'standalone') throw new Error('PWA manifest missing standalone');
+          NODE
+      - name: Create static site bundle
+        run: |
+          mkdir -p site
+          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js manifest.webmanifest sw.js icon.svg site/
+          touch site/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="5.1.0">
+  <meta name="application-version" content="6.0.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="stylesheet" href="./forge-extras.css">
+  <link rel="stylesheet" href="./forge-polish.css">
   <style>
     :root{
       --bg:#0b0f14;
@@ -368,8 +369,13 @@
 
     <section id="today" class="view active">
       <div class="hero-dash">
-        <div><div class="eyebrow" id="todayDate">DEIN TAG</div><h2>Jeder Tag zählt.</h2><p>Dranbleiben statt perfekt sein. Erledige deine Ziele und sieh deinen Fortschritt.</p></div>
+        <div><div class="eyebrow" id="todayDate">DEIN TAG</div><h2>Jeder Tag zählt.</h2><p>Deine Bewegung, dein Training und deine Fortschritte – alles an einem Ort.</p><div class="forge-live-brief"><span class="forge-live-dot" aria-hidden="true"></span><span id="forgeLiveText">Deinen Tagesüberblick laden …</span></div></div>
         <div class="ring" id="dailyRing" aria-label="Tagesfortschritt"><div class="ring-inner"><strong id="ringScore">0/5</strong><small>erledigt</small></div></div>
+      </div>
+      <div class="forge-snapshot" aria-label="Deine Fitnesswerte auf einen Blick">
+        <div class="forge-snapshot-card is-primary"><div class="forge-snapshot-label">Bereits gelaufen</div><strong id="forgeSnapSteps">0</strong><button type="button" id="forgeGoSteps">Schritte eintragen ↗</button></div>
+        <div class="forge-snapshot-card"><div class="forge-snapshot-label">Bis 10.000</div><strong id="forgeSnapLeft">10.000</strong><button type="button" id="forgeGoWalking">Walking planen ↗</button></div>
+        <div class="forge-snapshot-card"><div class="forge-snapshot-label">Letztes Gewicht</div><strong id="forgeSnapWeight">—</strong><button type="button" id="forgeGoWeight">Fortschritt ↗</button></div>
       </div>
 
       <section class="planner" aria-labelledby="plannerTitle">
@@ -445,7 +451,7 @@
         <div class="progress"><div id="dailyProgress"></div></div>
       </div>
 
-      <div class="section-title">Makros</div>
+      <div class="section-title">Deine Planwerte <span class="small">· Keine Ernährungsaufzeichnung</span></div>
       <div class="grid3">
         <div class="macro"><span class="small">Protein</span><b>180 g</b></div>
         <div class="macro"><span class="small">Fett</span><b>70 g</b></div>
@@ -661,7 +667,7 @@
     </section>
 
     <p class="footer-note">
-      FORGE · Lokal gespeichert, ohne Account. Angaben zur Belastung sind Schätzwerte und kein Ersatz für Pulsmessungen.
+      <span class="forge-version">FORGE 6.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -1188,5 +1194,6 @@
 })();
 </script>
   <script src="./forge-extras.js" defer></script>
+  <script src="./forge-polish.js" defer></script>
 </body>
 </html>
