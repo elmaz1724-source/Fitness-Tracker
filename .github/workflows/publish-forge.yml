@@ -49,6 +49,20 @@ jobs:
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
           if (manifest.display !== 'standalone') throw new Error('PWA manifest missing standalone');
           NODE
+      - name: Ensure GitHub Pages uses workflow publishing
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          MODE="$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type' 2>/dev/null || true)"
+          echo "Pages source: ${MODE:-unknown}"
+          if [ "$MODE" != "workflow" ]; then
+            if ! gh api -X PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow >/dev/null; then
+              echo '::error::Switch Settings → Pages → Source to GitHub Actions, then re-run this workflow.'
+              exit 1
+            fi
+            echo 'Pages source updated to GitHub Actions.'
+          fi
       - name: Create static site bundle
         run: |
           mkdir -p site
