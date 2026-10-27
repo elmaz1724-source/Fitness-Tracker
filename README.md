@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 6.0:** Neue mobile Dashboard-Oberfläche, Tages-Schnellübersicht und verbesserte Navigation. Die bisherigen Tracking- und Speicherfunktionen bleiben unverändert.
+**Version 6.1:** Kompakte iPhone-Navigation, Schnell-Backup direkt im Quick Log, eindeutige Hinweise zu lokalen Daten und bessere Eingaben mit geöffneter Tastatur. Die bisherigen Tracking- und Speicherfunktionen bleiben unverändert.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -16,7 +16,7 @@ https://elmaz1724-source.github.io/Fitness-Tracker/
 - Kalenderwochentracker (montags automatisch neue Woche)
 - In-App-Erinnerungen, manuell ein- und ausschaltbar
 - Manueller CSV-Import von Schritten und Gewicht
-- Export und Import aller lokalen Fitnessdaten als JSON
+- Export und Import aller lokalen Fitnessdaten als JSON, jetzt auch direkt auf dem Startbildschirm (Quick Log)
 - Installierbare Web-App mit Offline-Shell
 
 **Nicht implementiert:** Ernährungstagebuch, automatische Apple-Health-/Garmin-Synchronisierung, echte Push-Erinnerungen oder automatische Tracking-Gerätedaten.
@@ -24,6 +24,8 @@ https://elmaz1724-source.github.io/Fitness-Tracker/
 ## Datenspeicherung
 
 Gespeichert wird ausschließlich in `localStorage` im Browser. Es gibt keinen Server und keinen Nutzer-Account. Ein Wechsel von Safari in den Home-Bildschirm-Modus oder zu einem anderen Gerät kann einen anderen lokalen Speicherbereich bedeuten: vorher **Backup exportieren**, danach **Backup importieren**.
+
+**Vor einer Neuinstallation der Home-Bildschirm-App oder dem Löschen von Safari-Daten:** Unter **Heute → Quick Log → Backup sichern** die JSON-Datei herunterladen und prüfen, dass sie in der Dateien-App tatsächlich gespeichert ist. Bei Bedarf über **Wiederherstellen** importieren. Der Import fragt vor dem Überschreiben vorhandener Werte nach Bestätigung.
 
 **Bestehende Keys bleiben erhalten**, z. B. `fitness-walking`, `fitness-weights`, `fitness-daily-YYYY-MM-DD` und `fitness-week`. Neu dazu kommen datierte `fitness-week-YYYY-MM-DD`- und `fitness-planner-YYYY-MM-DD`-Einträge sowie `forge-...`-Einträge. Alten Wochentracker übernimmt FORGE bei der ersten Migration, spätere Wochen beginnen wieder bei null.
 
@@ -72,4 +74,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **6.0.1** (Dashboard-/Mobile-Redesign und Pages-Workflow; iPhone-Browserprüfung steht noch aus).
+Aktuelle Version: **6.1.0** (Startbildschirm-Backup und kompakte iPhone-Eingabe; Live-Veröffentlichung nach dem Merge noch zu prüfen).

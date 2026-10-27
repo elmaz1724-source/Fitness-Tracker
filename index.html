@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="6.0.4">
+  <meta name="application-version" content="6.1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -439,6 +439,17 @@
           <label class="forge-checkbox"><input type="checkbox" id="forgeCreatine"> Kreatin heute eingenommen</label>
           <div class="forge-feedback" id="forgeQuickStatus" role="status"></div>
           <p class="forge-mini">Schritte werden als tatsächlich gelaufen erfasst. Keine Nährwert- oder Ernährungserfassung.</p>
+          <div class="forge-backup-mini" aria-label="Datensicherung">
+            <div class="forge-backup-lead">
+              <strong>Deine Daten schützen</strong>
+              <span>Auf diesem Gerät gespeichert – kein Cloud-Abgleich.</span>
+            </div>
+            <div class="forge-backup-actions">
+              <button id="forgeQuickExport" class="forge-sm-btn" type="button" aria-label="Alle FORGE-Daten als JSON-Datei sichern">Backup sichern</button>
+              <button id="forgeQuickRestore" class="forge-sm-btn" type="button" aria-label="Vorhandenes FORGE-Backup wiederherstellen">Wiederherstellen</button>
+            </div>
+            <div id="forgeQuickBackupFeedback" class="forge-feedback" role="status" aria-live="polite"></div>
+          </div>
         </div>
       </section>
       <section class="forge-section" id="forgeSmartReminders">
@@ -668,13 +679,13 @@
       <div class="forge-section">
         <div class="forge-heading"><h2>FORGE als iPhone-App</h2></div>
         <div class="forge-surface">
-          <p class="forge-muted">Öffne FORGE in Safari und wähle „Teilen“ → „Zum Home-Bildschirm“. Die App kann danach eigenständig starten und zuvor geladene Inhalte offline anzeigen.</p>
+          <p class="forge-muted">Öffne FORGE in Safari und wähle „Teilen“ → „Zum Home-Bildschirm“. Die App kann danach eigenständig starten und zuvor geladene Inhalte offline anzeigen. <strong>Wichtig:</strong> Exportiere zuvor ein Backup, falls deine Safari-Einträge in der installierten Web-App nicht erscheinen.</p>
           <button class="forge-sm-btn" id="forgeInstallButton" type="button" hidden>App installieren</button>
           <p id="forgeInstallNote" class="forge-mini" style="margin:10px 0 0">Gespeicherte Werte bleiben lokal in deinem Browser. Nutze das Backup bei Gerätewechsel.</p>
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.0.4</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v6.1.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -686,7 +697,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 6.0.4</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 6.1.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
