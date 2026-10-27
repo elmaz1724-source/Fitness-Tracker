@@ -46,6 +46,17 @@ jobs:
           new vm.Script(match[1]);
           const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
           if (new Set(ids).size !== ids.length) throw new Error('Duplicate element ids');
+          const endBaseStyle=html.indexOf('</style>');
+          const extrasLink=html.indexOf('href="./forge-extras.css"');
+          const polishLink=html.indexOf('href="./forge-polish.css"');
+          if (!(endBaseStyle>0 && extrasLink>endBaseStyle && polishLink>extrasLink))
+            throw new Error('Feature stylesheets must load AFTER the inline CSS to prevent mobile nav regression');
+          const tabs=[...html.matchAll(/<button class="tab(?: active)?" data-view="([^"]+)"/g)].map(x=>x[1]);
+          if (tabs.length!==4 || new Set(tabs).size!==4)
+            throw new Error('Expected exactly four navigation tabs');
+          const polish=fs.readFileSync('forge-polish.css','utf8');
+          if (!/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(polish))
+            throw new Error('Mobile navigation must use four equal columns');
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
           if (manifest.display !== 'standalone') throw new Error('PWA manifest missing standalone');
           NODE
