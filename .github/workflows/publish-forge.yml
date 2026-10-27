@@ -57,6 +57,14 @@ jobs:
           const polish=fs.readFileSync('forge-polish.css','utf8');
           if (!/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(polish))
             throw new Error('Mobile navigation must use four equal columns');
+          const nav=html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
+          if (!nav.includes('grid-template-columns:repeat(4,minmax(0,1fr))'))
+            throw new Error('Nav must retain an inline four-column fallback');
+          const fixedIcons=[...nav.matchAll(/<svg style="[^"]*width:19px;height:19px;[^"]*" viewBox=/g)];
+          if (fixedIcons.length!==4)
+            throw new Error('Each navigation SVG must have a fixed 19px inline size');
+          if (!/height:67px;max-height:67px;min-height:67px/.test(html))
+            throw new Error('Mobile toolbar requires a compact built-in height fallback');
           const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
           if (manifest.display !== 'standalone') throw new Error('PWA manifest missing standalone');
           NODE
