@@ -475,3 +475,82 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
  .forge-step-week-column{height:74px}
 }
 @media(prefers-reduced-motion:reduce){.forge-step-week-bar,.forge-walk-finish-btn{transition:none}}
+
+
+/* FORGE 7.4 — Mobile-first Walking: useful summary, details on demand. */
+.forge-walk-plan-card{
+  margin:13px 0 8px;padding:22px 23px 19px;border-radius:23px;
+  background:radial-gradient(ellipse 70% 90% at 0% 0%,rgba(165,246,108,.1),transparent),
+    linear-gradient(145deg,#1a3229,#132322 67%,#16252a);
+  border:1px solid #4b7250;box-shadow:0 12px 35px rgba(0,0,0,.12)
+}
+.forge-walk-plan-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.forge-walk-plan-top h2{font-size:22px;letter-spacing:-.7px;line-height:1.15;margin:5px 0 0}
+.forge-walk-plan-state{white-space:nowrap;border:1px solid #3d6049;border-radius:99px;
+  color:#b9d4c0;background:#233b30;padding:7px 9px;font-size:10px;font-weight:800}
+.forge-walk-plan-main{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 16px}
+.forge-walk-plan-time,.forge-walk-plan-count{min-width:0;background:#12251f;border:1px solid #345446;
+  padding:14px 15px;border-radius:16px}
+.forge-walk-plan-time{background:#243f2c;border-color:#537b4d}
+.forge-walk-plan-time small,.forge-walk-plan-count small{display:block;font-size:11px;color:#b4c9bc;margin-bottom:8px}
+.forge-walk-plan-time strong{display:block;font-size:clamp(24px,4.3vw,34px);color:#d9ff9a;
+  letter-spacing:-1px;line-height:1.1;white-space:nowrap}
+.forge-walk-plan-count strong{font-size:clamp(24px,4vw,32px);color:#f4fbf2;line-height:1.1;
+  letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.forge-walk-plan-meta{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
+.forge-walk-plan-meta>span:not(.forge-walk-plan-incline-pct){display:flex;flex-direction:column;
+  border:1px solid #345347;border-radius:11px;padding:8px 10px;background:#142820;min-width:75px}
+.forge-walk-plan-meta small{font-size:10px;color:#a4bdaf;margin-bottom:3px}
+.forge-walk-plan-meta strong{font-size:12px;font-weight:850;color:#e3f4dc;white-space:nowrap}
+.forge-walk-plan-incline-pct{font-size:10px;color:#9dbdac}
+#forgeWalkPlanSubtitle{font-size:12px;color:#c2d4c4;line-height:1.55;margin:14px 0 0}
+.forge-walk-plan-outcome{display:flex;justify-content:space-between;align-items:center;gap:9px;
+  margin-top:16px;border-top:1px solid #355747;padding-top:13px}
+.forge-walk-plan-outcome span{font-size:11px;color:#b5cdb9;max-width:220px;line-height:1.3}
+.forge-walk-plan-outcome strong{color:#deffc0;font-size:20px;font-variant-numeric:tabular-nums}
+.forge-walk-details{margin:12px 0;border:1px solid #334b47;border-radius:18px;
+  background:linear-gradient(130deg,#16262a,#111e24);overflow:hidden}
+.forge-walk-details>summary{display:flex;align-items:center;gap:12px;padding:17px 18px;min-height:74px;
+  list-style:none;cursor:pointer;user-select:none}
+.forge-walk-details>summary::-webkit-details-marker{display:none}
+.forge-walk-details-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;
+  background:#294238;border:1px solid #3c5d4c;color:#d9f6ce;border-radius:11px;font-size:17px}
+.forge-walk-details>summary>span:nth-child(2){min-width:0;flex:1}
+.forge-walk-details>summary strong{display:block;color:#e8f5e6;font-size:14px;line-height:1.2}
+.forge-walk-details>summary small{display:block;color:#9bb7ae;font-size:11px;margin-top:4px;line-height:1.4}
+.forge-walk-details-chevron{font-size:22px;color:#c8f58d;transition:transform .18s;flex:none}
+.forge-walk-details[open] .forge-walk-details-chevron{transform:rotate(180deg)}
+.forge-walk-details>summary:focus-visible{outline:2px solid #d6ff9d;outline-offset:-4px;border-radius:16px}
+.forge-walk-details-body{padding:0 17px 17px}
+.forge-walk-details-body>.section-title:first-child{margin-top:8px}
+.forge-walk-details-body .card{margin-bottom:12px}
+.forge-walk-details-body .blocks{margin-bottom:3px}
+.forge-walk-details-body .forge-step-week{margin-top:9px}
+.forge-walk-details-body #weekGrid{margin-top:0}
+.forge-walk-history-details{margin-bottom:25px}
+@media(max-width:700px){
+ .forge-walk-plan-card{padding:17px 15px 15px;margin-top:10px;border-radius:20px}
+ .forge-walk-plan-top h2{font-size:19px}
+ .forge-walk-plan-state{font-size:9px;padding:7px 8px}
+ .forge-walk-plan-main{margin:15px 0 12px;gap:7px}
+ .forge-walk-plan-time,.forge-walk-plan-count{padding:13px 10px;border-radius:13px}
+ .forge-walk-plan-time strong{font-size:clamp(21px,6.8vw,30px)}
+ .forge-walk-plan-count strong{font-size:clamp(21px,6vw,28px)}
+ .forge-walk-plan-meta>span:not(.forge-walk-plan-incline-pct){min-width:0;padding:8px 9px;flex:1}
+ .forge-walk-plan-meta strong{font-size:11px}
+ .forge-walk-plan-incline-pct{display:none}
+ .forge-walk-plan-outcome strong{font-size:18px}
+ .forge-walk-details{border-radius:16px}
+ .forge-walk-details>summary{padding:13px 14px;gap:9px;min-height:64px}
+ .forge-walk-details-icon{width:32px;height:32px;flex-basis:32px;font-size:15px}
+ .forge-walk-details>summary strong{font-size:13px}
+ .forge-walk-details>summary small{font-size:10px}
+ .forge-walk-details-body{padding:0 12px 13px}
+ .forge-walk-details-body .card{padding:14px}
+}
+@media(max-width:370px){
+ .forge-walk-plan-state{white-space:normal;max-width:105px;text-align:center}
+ .forge-walk-plan-time strong{font-size:21px}
+ .forge-walk-plan-count strong{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){.forge-walk-details-chevron{transition:none}}
