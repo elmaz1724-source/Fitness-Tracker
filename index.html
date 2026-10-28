@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="7.1.0">
+  <meta name="application-version" content="7.2.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -523,11 +523,25 @@
     </section>
 
     <section id="walking" class="view">
+      <div class="forge-walk-sync" aria-label="Dein heutiger Schrittstand">
+        <div class="forge-walk-sync-heading"><span>DEIN HEUTIGER STAND</span><span class="forge-walk-sync-source">↔ Mit „Heute“ verbunden</span></div>
+        <div class="forge-walk-sync-values">
+          <div><small>Schon gelaufen</small><strong id="walkingDone">0</strong></div>
+          <div><small>Fehlen bis 10.000</small><strong id="walkingRemaining">10.000</strong></div>
+        </div>
+        <div id="walkingProgressTrack" class="forge-walk-sync-progress" role="progressbar" aria-label="Tatsächlich gelaufene Schritte" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="walkingProgressFill"></div></div>
+        <p id="walkingSyncNote">Deine bisherigen Schritte werden automatisch aus „Heute“ übernommen.</p>
+      </div>
+      <div class="forge-walk-mode" role="group" aria-label="Art der Walking-Planung">
+        <button id="walkModeRemaining" type="button" aria-pressed="true">Fehlende Schritte auffüllen</button>
+        <button id="walkModeCustom" type="button" aria-pressed="false">Eigene Einheit planen</button>
+      </div>
+      <p class="forge-walk-mode-note" id="walkingModeHint">FORGE plant automatisch genau die Schritte, die dir noch bis zu 10.000 fehlen.</p>
       <div class="walk-hero">
         <div class="walk-main">
-          <div class="small">TAGESZIEL</div>
+          <div class="small">BISHER + GEPLANT</div>
           <div class="big" id="heroSteps">10.000</div>
-          <div style="color:var(--accent);font-weight:800;margin-top:6px">Geplante Gesamtschritte</div>
+          <div style="color:var(--accent);font-weight:800;margin-top:6px">Voraussichtlicher Tagesstand</div>
         </div>
         <div class="walk-stat"><span class="small">Neigung</span><b id="heroIncline">8°</b><span class="small" id="heroInclinePct">≈ 14,1 %</span></div>
         <div class="walk-stat"><span class="small">Tempo</span><b id="heroPace">6,7 km/h</b></div>
@@ -545,8 +559,8 @@
             <div class="error" id="paceError" role="status"></div>
           </div>
           <label class="field"><span>Neigung (Grad)</span><input id="incline" type="number" inputmode="decimal" min="0" max="15" step="0.5" value="8"></label>
-          <label class="field"><span>Walking-Pad-Schritte</span><input id="walkSteps" type="number" inputmode="numeric" min="0" max="20000" step="100" value="10000"></label>
-          <label class="field"><span>Alltagsschritte</span><input id="otherSteps" type="number" inputmode="numeric" min="0" max="30000" step="100" value="0"></label>
+          <label class="field"><span>Zusätzliche Walking-Pad-Schritte</span><input id="walkSteps" type="number" inputmode="numeric" min="0" max="20000" step="100" value="10000"></label>
+          <label class="field"><span>Weitere geplante Schritte (außer Pad)</span><input id="otherSteps" type="number" inputmode="numeric" min="0" max="30000" step="100" value="0"></label>
           <label class="field"><span>Schrittlänge (Meter)</span><input id="stride" type="number" inputmode="decimal" min="0.4" max="1.2" step="0.01" value="0.76"></label>
         </div>
         <div class="speed-chips"><button class="speed-chip" data-pace="5" type="button">5,0 km/h</button><button class="speed-chip" data-pace="6.2" type="button">6,2 km/h</button><button class="speed-chip" data-pace="6.7" type="button">6,7 km/h</button></div>
@@ -555,7 +569,7 @@
           <div class="macro"><span class="small">Dauer</span><b id="duration">68 Min.</b></div>
           <div class="macro"><span class="small">Belastung</span><b id="load">Cardio</b></div>
         </div>
-        <div class="goal-line" id="walkGoalLine">10.000 Gesamtschritte geplant – einschließlich zukünftiger Walking-Einheit</div>
+        <div class="goal-line" id="walkGoalLine">Deine bereits gelaufenen und zusätzlich geplanten Schritte werden getrennt berücksichtigt.</div>
         <div class="notice" id="walkNote">Belastung abhängig von Tempo und Steigung.</div>
       </div>
 
@@ -753,7 +767,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.1.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.2.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -765,7 +779,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 7.1.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 7.2.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -811,6 +825,14 @@
 
   // Walking – frei einstellbares Tempo, Neigung und separate Alltagsschritte
   const walkingPrefs = storage.get('fitness-walking', {pace:6.7,steps:10000,stride:.76,incline:8,other:0});
+  // Shared source of truth: steps already walked today live in the dated planner record.
+  // Walking configurations are NOT step measurements and must not double-count them.
+  function actualDailySteps(){
+    const stored=storage.get('fitness-planner-'+dateKey,{});
+    const n=Number(stored&&stored.steps);
+    return Number.isSafeInteger(n)&&n>=0&&n<=50000?n:0;
+  }
+  let walkMode=walkingPrefs.mode==='custom'?'custom':'remaining';
   $('#pace').value = String(walkingPrefs.pace ?? 6.7).replace('.', ',');
   $('#walkSteps').value = walkingPrefs.steps ?? 10000;
   $('#stride').value = walkingPrefs.stride ?? .76;
@@ -834,6 +856,30 @@
     updateWalking();
   }
   function updateWalking(){
+    const done=actualDailySteps();
+    const missing=Math.max(0,10000-done);
+    const actualPct=Math.round(Math.min(100,done/10000*100));
+    $('#walkingDone').textContent=done.toLocaleString('de-DE');
+    $('#walkingRemaining').textContent=missing.toLocaleString('de-DE');
+    $('#walkingProgressFill').style.width=actualPct+'%';
+    $('#walkingProgressTrack').setAttribute('aria-valuenow',String(actualPct));
+    $('#walkingSyncNote').textContent=missing===0
+      ?'Dein Schrittziel ist bereits erreicht. Zusätzliches Walking ist freiwillig.'
+      :'Die '+done.toLocaleString('de-DE')+' bereits gelaufenen Schritte kommen aus „Heute“. Dir fehlen noch '+missing.toLocaleString('de-DE')+'.';
+    const auto=walkMode==='remaining';
+    $('#walkModeRemaining').setAttribute('aria-pressed',String(auto));
+    $('#walkModeCustom').setAttribute('aria-pressed',String(!auto));
+    $('#walkModeRemaining').classList.toggle('active',auto);
+    $('#walkModeCustom').classList.toggle('active',!auto);
+    $('#walkSteps').readOnly=auto;
+    $('#otherSteps').readOnly=auto;
+    if(auto){
+      $('#walkSteps').value=String(missing);
+      $('#otherSteps').value='0';
+    }
+    $('#walkingModeHint').textContent=auto
+      ?(missing===0?'Keine weiteren Schritte für dein Ziel nötig. Du kannst trotzdem eine eigene Einheit planen.':'Automatisch '+missing.toLocaleString('de-DE')+' zusätzliche Walking-Pad-Schritte eingeplant. Tempo und Neigung kannst du anpassen.')
+      :'Deine eigenen Walking-Pad- und weiteren geplanten Schritte werden zusätzlich zu den '+done.toLocaleString('de-DE')+' schon gelaufenen Schritten berechnet.';
     const pace=parsedPace();
     $('#paceError').textContent=pace===null?'Bitte ein Tempo zwischen 0,5 und 12 km/h eingeben.':'';
     $('#pace').setAttribute('aria-invalid',String(pace===null));
@@ -844,7 +890,7 @@
     const incline=clamp(Number($('#incline').value),0,15,8);
     const km=steps*stride/1000;
     const mins=minutes(steps,pace,stride);
-    const total=Math.round(steps+other);
+    const total=Math.round(done+steps+other);
     const remain=Math.max(0,10000-total);
     const anglePct=Math.tan(incline*Math.PI/180)*100;
     $('#heroSteps').textContent=total.toLocaleString('de-DE');
@@ -860,17 +906,31 @@
       $('#block'+(i+1)+'Steps').textContent=blockSteps.toLocaleString('de-DE')+' Schritte';
       $('#b'+(i+1)).textContent='≈ '+Math.round(minutes(blockSteps,pace,stride))+' Min.';
     });
-    $('#walkGoalLine').innerHTML=remain===0
-      ?'<strong>✓ Geplantes Tagesziel erreicht!</strong> '+total.toLocaleString('de-DE')+' Schritte insgesamt vorgesehen. Walking-Pad-Schritte sind erst nach der Einheit wirklich absolviert.'
-      :'<strong>'+remain.toLocaleString('de-DE')+' geplante Schritte</strong> bis zu 10.000 · '+total.toLocaleString('de-DE')+' Schritte einschließlich der noch nicht absolvierten Walking-Einheit.';
+    $('#walkGoalLine').textContent=remain===0
+      ?'✓ Mit dieser Planung erreichst du '+total.toLocaleString('de-DE')+' Schritte: '+done.toLocaleString('de-DE')+' schon gelaufen + '+steps.toLocaleString('de-DE')+' Walking-Pad + '+other.toLocaleString('de-DE')+' weitere geplant. Geplante Schritte zählen erst nach dem Gehen.'
+      :'Nach dieser Planung fehlen noch '+remain.toLocaleString('de-DE')+' Schritte. '+done.toLocaleString('de-DE')+' sind bereits gelaufen, '+steps.toLocaleString('de-DE')+' am Walking-Pad und '+other.toLocaleString('de-DE')+' zusätzlich geplant.';
     let load='Locker',note='Lockeres Gehen – geeignet, um Bewegung in den Tag zu bringen.';
     if(pace>=6.5||incline>=7){load='Intensiv';note='Bei diesem Tempo oder dieser Neigung kann die Einheit fordernd sein. Puls, Belastungsempfinden und Erholung beachten.';}
     else if(pace>=5.7||incline>=3){load='Zügig';note='Zügiges Gehen. Die tatsächliche Belastung hängt auch von deiner Fitness und deinem Puls ab.';}
-    $('#load').textContent=load;
-    $('#walkNote').textContent=note;
+    $('#load').textContent=steps===0?'Keine Einheit':load;
+    $('#walkNote').textContent=steps===0?'Du brauchst keine Walking-Einheit, um dein Tagesziel zu erreichen.':note;
     document.querySelectorAll('.speed-chip').forEach(b=>b.classList.toggle('active',Math.abs(Number(b.dataset.pace)-pace)<.001));
-    storage.set('fitness-walking',{pace,steps,stride,incline,other});
+    // In automatic mode preserve original manually planned steps rather than replacing them.
+    const next={...walkingPrefs,pace,stride,incline,mode:walkMode};
+    if(!auto){next.steps=steps;next.other=other;}
+    Object.assign(walkingPrefs,next);
+    storage.set('fitness-walking',next);
   }
+  function selectWalkingMode(mode){
+    walkMode=mode;
+    if(mode==='custom'){
+      $('#walkSteps').value=String(walkingPrefs.steps??10000);
+      $('#otherSteps').value=String(walkingPrefs.other??0);
+    }
+    updateWalking();
+  }
+  $('#walkModeRemaining').addEventListener('click',()=>selectWalkingMode('remaining'));
+  $('#walkModeCustom').addEventListener('click',()=>selectWalkingMode('custom'));
   ['pace','walkSteps','stride','incline','otherSteps'].forEach(id=>$('#'+id).addEventListener('input',updateWalking));
   $('#paceMinus').addEventListener('click',()=>setPace((parsedPace()??6.7)-.1));
   $('#pacePlus').addEventListener('click',()=>setPace((parsedPace()??6.7)+.1));
@@ -970,8 +1030,9 @@
   $('#plannerApply').addEventListener('click',()=>{
     if(!currentPlan||currentPlan.feasible<=0)return;
     // Nur ausdrücklicher Klick überträgt die vorgeschlagenen, NOCH NICHT absolvierten Schritte.
+    selectWalkingMode('custom');
     $('#walkSteps').value=String(currentPlan.feasible);
-    $('#otherSteps').value=String(currentPlan.steps);
+    $('#otherSteps').value='0';
     $('#pace').value=fmt2(currentPlan.pace);
     updateWalking();
     const hint=$('#walkingPlanHint');
@@ -981,6 +1042,9 @@
     if(tab)tab.click();
   });
   renderPlanner();
+  // Any saved change from Today/Quick Log must refresh Walking immediately.
+  // Register after renderPlanner's listener so its validated daily value is persisted first.
+  $('#plannerSteps').addEventListener('input',updateWalking);
 
   // Wochentracker: Kalenderwoche (Mo–So). Bestehender "fitness-week"-Key bleibt erhalten.
   const days = ['Mo','Di','Mi','Do','Fr','Sa','So'];
