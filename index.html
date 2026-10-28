@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="7.0.0">
+  <meta name="application-version" content="7.1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -385,20 +385,48 @@
         <div><div class="eyebrow" id="todayDate">DEIN TAG</div><h2>Jeder Tag zählt.</h2><p>Deine Bewegung, dein Training und deine Fortschritte – alles an einem Ort.</p><div class="forge-live-brief"><span class="forge-live-dot" aria-hidden="true"></span><span id="forgeLiveText">Deinen Tagesüberblick laden …</span></div></div>
         <div class="ring" id="dailyRing" aria-label="Tagesfortschritt"><div class="ring-inner"><strong id="ringScore">0/5</strong><small>erledigt</small></div></div>
       </div>
-      <div class="forge-snapshot" aria-label="Deine Fitnesswerte auf einen Blick">
-        <div class="forge-snapshot-card is-primary"><div class="forge-snapshot-label">Bereits gelaufen</div><strong id="forgeSnapSteps">0</strong><button type="button" id="forgeGoSteps">Schritte eintragen ↗</button></div>
-        <div class="forge-snapshot-card"><div class="forge-snapshot-label">Bis 10.000</div><strong id="forgeSnapLeft">10.000</strong><button type="button" id="forgeGoWalking">Walking planen ↗</button></div>
-        <div class="forge-snapshot-card"><div class="forge-snapshot-label">Letztes Gewicht</div><strong id="forgeSnapWeight">—</strong><button type="button" id="forgeGoWeight">Fortschritt ↗</button></div>
-      </div>
+      <section class="forge-steps-card" id="forgeStepsCenter" aria-labelledby="forgeStepTitle">
+        <div class="forge-step-head">
+          <div><div class="forge-kicker">DEIN SCHRITTZÄHLER</div><h2 id="forgeStepTitle">Wie weit bist du heute?</h2></div>
+          <span class="forge-step-goal">Ziel: 10.000</span>
+        </div>
+        <div class="forge-step-stats" aria-live="polite">
+          <div class="forge-step-stat">
+            <span>Schon gelaufen</span><strong id="forgeSnapSteps" class="forge-step-done">0</strong><small>Schritte</small>
+          </div>
+          <div class="forge-step-stat">
+            <span>Noch bis zum Ziel</span><strong id="forgeSnapLeft">10.000</strong><small>Schritte</small>
+          </div>
+        </div>
+        <div class="forge-step-bar-head"><span>Dein Fortschritt</span><strong id="forgeStepPercent">0 %</strong></div>
+        <div id="forgeStepProgress" class="forge-step-progress" role="progressbar" aria-label="Tatsächlich gelaufene Schritte von 10.000" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="forgeStepFill"></div></div>
+        <p id="forgeStepNote" class="forge-step-note">Trage deinen aktuellen Schrittstand ein. FORGE berechnet den Rest.</p>
+        <div class="forge-step-entry">
+          <label for="forgeStepInput">Wie viele Schritte hast du bisher?</label>
+          <div class="forge-step-entry-row">
+            <input id="forgeStepInput" type="number" inputmode="numeric" min="0" max="50000" step="1" placeholder="z. B. 5000" aria-describedby="forgeStepEntryHint">
+            <button id="forgeStepSave" class="forge-step-save" type="button">Speichern</button>
+          </div>
+          <p id="forgeStepEntryHint" class="forge-step-hint">Gib deinen <strong>Gesamtstand</strong> ein, nicht nur zusätzliche Schritte. Es wird nur gespeichert, was du schon gelaufen bist.</p>
+          <div id="forgeStepFeedback" class="forge-step-feedback" role="status" aria-live="polite"></div>
+        </div>
+        <div class="forge-step-links">
+          <button id="forgeGoWalking" type="button">Walking-Vorschlag ansehen <span aria-hidden="true">↗</span></button>
+          <button id="forgeGoSteps" type="button">Stand ändern <span aria-hidden="true">✎</span></button>
+        </div>
+        <div class="forge-step-weight"><span>Letztes Gewicht: <strong id="forgeSnapWeight">—</strong></span><button type="button" id="forgeGoWeight">Fortschritt ansehen ↗</button></div>
+      </section>
 
-      <section class="planner" aria-labelledby="plannerTitle">
+      <details class="planner forge-collapsible-planner" id="forgePlannerDetails">
+        <summary class="forge-planner-summary"><span class="forge-planner-summary-text"><strong>Walking-Planer</strong><small>Optional: Dauer & Tempo berechnen</small></span><span class="forge-planner-arrow" aria-hidden="true">⌄</span></summary>
+        <div class="forge-planner-inner">
         <div class="planner-top">
           <div><div class="planner-kicker">✦ SMART DAILY PLANNER</div><h2 id="plannerTitle">Dein Tag. Dein Tempo.</h2>
-          <p>Trage deine heutigen Schritte ein. FORGE plant den Rest – passend zu deiner verfügbaren Zeit.</p></div>
+          <p>FORGE übernimmt deinen Schrittstand von oben. Hier kannst du die restliche Walking-Zeit und das Tempo planen.</p></div>
           <div class="planner-mark" aria-hidden="true">⌁</div>
         </div>
         <div class="planner-fields">
-          <label><span>Bereits gelaufene Schritte</span><input id="plannerSteps" type="number" inputmode="numeric" min="0" max="50000" step="1" value="0" aria-describedby="plannerManual"></label>
+          <input id="plannerSteps" type="hidden" value="0">
           <label><span>Zeit fürs Walking (Min.)</span><input id="plannerTime" type="number" inputmode="numeric" min="0" max="240" step="1" value="30"></label>
           <label><span>Tempo (km/h)</span><input id="plannerPace" type="text" inputmode="decimal" autocomplete="off" value="6,7" aria-label="Geplante Geschwindigkeit in km/h"></label>
         </div>
@@ -423,22 +451,21 @@
         <div class="planner-error" id="plannerError" role="status"></div>
         <button type="button" class="btn planner-action" id="plannerApply">Vorschlag in den Walking-Rechner übernehmen</button>
         <p class="planner-note" id="plannerManual">Schritte werden vorerst manuell eingetragen und nur für heute in diesem Browser gespeichert. Der Vorschlag ist eine Planung – keine automatisch erfasste Aktivität.</p>
-      </section>
+        </div>
+      </details>
       <section class="forge-section">
-        <div class="forge-heading"><div><div class="forge-kicker">QUICK LOG</div><h2>Eintragen in Sekunden</h2></div><span class="forge-chip">Heute</span></div>
+        <div class="forge-heading"><div><div class="forge-kicker">QUICK LOG</div><h2>Gewicht, Kreatin & Backup</h2></div><span class="forge-chip">Heute</span></div>
         <div class="forge-surface" id="forgeTodayTools">
-          <div class="forge-grid">
-            <label class="forge-field"><span>Schritte bisher</span><input id="forgeQuickSteps" type="number" min="0" max="50000" step="1" inputmode="numeric"></label>
+          <input id="forgeQuickSteps" type="hidden" value="0">
+          <button id="forgeSaveSteps" type="button" hidden>Schritte speichern</button>
+          <div class="forge-quick-weight-row">
             <label class="forge-field"><span>Gewicht heute (kg)</span><input id="forgeQuickWeight" type="text" inputmode="decimal" placeholder="z. B. 92,4"></label>
-          </div>
-          <div class="forge-grid" style="margin-top:10px">
-            <button class="forge-sm-btn primary" type="button" id="forgeSaveSteps">Schritte speichern</button>
             <button class="forge-sm-btn" type="button" id="forgeSaveWeight">Gewicht speichern</button>
           </div>
           <div class="forge-line"></div>
           <label class="forge-checkbox"><input type="checkbox" id="forgeCreatine"> Kreatin heute eingenommen</label>
           <div class="forge-feedback" id="forgeQuickStatus" role="status"></div>
-          <p class="forge-mini">Schritte werden als tatsächlich gelaufen erfasst. Keine Nährwert- oder Ernährungserfassung.</p>
+          <p class="forge-mini">Deine Schritte trägst du oben im Schrittzähler ein. Hier findest du Gewicht, Kreatin und deine Datensicherung.</p>
           <div class="forge-backup-mini" aria-label="Datensicherung">
             <div class="forge-backup-lead">
               <strong>Deine Daten schützen</strong>
@@ -726,7 +753,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.0.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.1.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -738,7 +765,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 7.0.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 7.1.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 

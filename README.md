@@ -1,16 +1,16 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.0:** Alle sieben Alltagsbereiche sind jetzt nutzbar: Smart Daily Planner, Walking-Autopilot, Trainingslog, Quick Log, Erinnerungen, Datenimport inklusive Apple-Kurzbefehle-Brücke und installierbare iPhone-Web-App. Ernährungstracking bleibt ausgeschaltet.
+**Version 7.1:** Die Schritte stehen jetzt im Mittelpunkt: Ein zentrales Feld für den bereits gelaufenen Gesamtstand, automatische Restschritte bis 10.000, Fortschrittsanzeige und ein optional aufklappbarer Walking-Planer. Alle sieben Alltagsbereiche bleiben erhalten. Kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
 
 ## Funktionen
 
-- Tägliche Checkliste und persönlicher Smart Daily Planner
+- Tägliche Checkliste, großer Schrittzähler mit verbleibenden Schritten bis 10.000 und optionaler Smart Daily Planner
 - Walking-Pad-Rechner (frei einstellbares Tempo und Steigung), 3-Blöcke-Plan
 - Walking-Autopilot mit vorsichtigen Tempoempfehlungen, keine Gerätesteuerung
-- Quick Log für **bereits gelaufene** Schritte, Gewicht und Kreatin
+- Zentrale Schritteingabe unter **Heute**; Quick Log für Gewicht, Kreatin und Backup
 - Gewichtsverlauf mit 7-Tage-Durchschnitt, Wochenvergleich und Zielprognosen
 - Trainingsjournal mit Sätzen, Wiederholungen, Gewichten und Vorwertvergleich
 - Kalenderwochentracker (montags automatisch neue Woche)
@@ -21,6 +21,14 @@ https://elmaz1724-source.github.io/Fitness-Tracker/
 - Installierbare Web-App mit Offline-Shell
 
 **Nicht implementiert:** Ernährungstagebuch, unsichtbare direkte HealthKit-/Garmin-Cloud-Synchronisierung, eigene Web-Push-Server. Kurzbefehle können Health-Daten auslesen und mit einem Link an FORGE übergeben, benötigen aber zum tatsächlichen Import das Öffnen der Website sowie eine Bestätigung. Kalendererinnerungen laufen nach dem Import über die Kalender-App, nicht über FORGE-Push.
+
+## Schritte einfach erfassen
+
+Im Bereich **Heute → Dein Schrittzähler** steht der aktuelle Gesamtstand. Gib in **Wie viele Schritte hast du bisher?** die **insgesamt bereits gegangenen Schritte** ein, z. B. `5000`, und tippe auf **Speichern**. FORGE zeigt dir sofort `5000` von `10000` und `5000` noch fehlende Schritte an. Bei `10500` zeigt FORGE das Ziel als erreicht an, ohne negative Restwerte.
+
+Es gibt auf dem Startbildschirm **keine zweite sichtbare Schritteingabe**. Quick Log kümmert sich um Gewicht, Kreatin und Backups. Über den optional aufklappbaren **Walking-Planer** kannst du die restliche Gehzeit berechnen; er verwendet genau denselben bereits gespeicherten Schrittstand.
+
+Die Speicherung nutzt wie bisher ausschließlich `fitness-planner-YYYY-MM-DD`. Alte Tageswerte, Gewichtsdaten und Fitness-Einträge bleiben erhalten. Nach einem Apple-Kurzbefehle-Import sind die übergebenen Schritte im gleichen zentralen Schrittzähler zu sehen.
 
 ## Apple Health über Kurzbefehle (ohne Server)
 
@@ -105,4 +113,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.0.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
+Aktuelle Version: **7.1.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
