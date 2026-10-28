@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.2:** „Heute“ und „Walking“ verwenden denselben bereits gelaufenen Tagesstand. Im Walking-Rechner kannst du automatisch alle noch fehlenden Schritte bis 10.000 einplanen oder eine eigene Walking-Einheit festlegen. Bestehende Einstellungen, Backups und alle sieben Funktionsbereiche bleiben erhalten. Kein Ernährungstracking.
+**Version 7.3:** Der Walking-Bereich bietet nach einer Einheit einen sicheren Schnellzugriff auf die bestehende Schritteingabe und eine 7-Tage-Übersicht mit tatsächlich erfassten Schritten. Geplante Schritte werden nicht als gelaufen gezählt. Die bisherigen Funktionen und Daten bleiben erhalten; kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -41,6 +41,12 @@ Der **Schrittzähler unter Heute** bleibt die einzige Stelle, an der du deinen t
 - Der optionale Walking-Planer unter Heute kann eine individuelle Einheit weiterhin ausdrücklich in den Walking-Rechner übertragen. Dabei wird der bereits gelaufene Stand nicht doppelt gezählt.
 
 Die **Quelle der tatsächlich absolvierten Schritte** ist unverändert `fitness-planner-YYYY-MM-DD`. Eingaben aus Quick Log bzw. aus einem Apple-Kurzbefehle-Import verwenden weiterhin diesen gespeicherten Tageswert. Tempo, Neigung und Schrittlänge bleiben individuell einstellbar.
+
+## Walking abgeschlossen und Schritte im Rückblick
+
+Nach einer Walking-Einheit im Bereich **Walking** auf **Schrittstand aktualisieren** tippen. FORGE öffnet dann automatisch den zentralen Schrittzähler unter **Heute**. Trage dort den **tatsächlich gemessenen Gesamtstand** ein (z. B. aus Apple Health bzw. Apple Watch). FORGE addiert **keine geplanten Schritte von selbst**, denn diese könnten in Apple Health bereits enthalten sein. Damit wird eine versehentliche Doppelzählung verhindert.
+
+Direkt im Walking-Bereich siehst du auch die **letzten 7 Kalendertage** als kleine Balkenübersicht. Erfasst wird ausschließlich `fitness-planner-YYYY-MM-DD`: tatsächliche Gesamtstände, nicht geplante Walking-Pad-Einheiten. Nicht erfasste Tage bleiben als fehlend markiert und werden **nicht als null Schritte** in den Durchschnitt eingerechnet. Die Übersicht zeigt die Zahl der erfassten Tage, deren Durchschnitt und die Tage mit mindestens 10.000 Schritten. Neue Werte aktualisieren die Übersicht sofort.
 
 ## Apple Health über Kurzbefehle (ohne Server)
 
@@ -125,4 +131,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.2.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
+Aktuelle Version: **7.3.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
