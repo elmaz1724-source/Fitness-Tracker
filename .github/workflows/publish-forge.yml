@@ -58,6 +58,19 @@ jobs:
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          // Walking completion must never create a second source of actual steps.
+          for(const id of ['forgeFinishWalking','forgeStepWeekBars','forgeStepWeekAvg',
+                           'forgeStepWeekGoal','forgeStepWeekCount']){
+            if(!ids.includes(id))throw new Error('Post-walking or history element missing: '+id);
+          }
+          if(!match[1].includes("$('#forgeFinishWalking').addEventListener('click'")
+             || !match[1].includes("$('#forgeGoSteps')"))
+             throw new Error('Walking completion must link to the canonical Today input');
+          if(!match[1].includes("const stored=storage.get('fitness-planner-'+key,null)"))
+             throw new Error('Seven-day step chart must read dated actual step records');
+          if(!match[1].includes("renderStepWeek();"))
+             throw new Error('Seven-day chart must rerender when steps change');
+
           // Walking must share the actual step count saved by Today, not count old
           // standalone Walking preferences as completed steps.
           for (const id of ['walkingDone','walkingRemaining','walkingProgressTrack',
