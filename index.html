@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="7.3.0">
+  <meta name="application-version" content="7.4.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -537,18 +537,45 @@
         <button id="walkModeCustom" type="button" aria-pressed="false">Eigene Einheit planen</button>
       </div>
       <p class="forge-walk-mode-note" id="walkingModeHint">FORGE plant automatisch genau die Schritte, die dir noch bis zu 10.000 fehlen.</p>
-      <div class="walk-hero">
-        <div class="walk-main">
-          <div class="small">BISHER + GEPLANT</div>
-          <div class="big" id="heroSteps">10.000</div>
-          <div style="color:var(--accent);font-weight:800;margin-top:6px">Voraussichtlicher Tagesstand</div>
+      <section class="forge-walk-plan-card" aria-labelledby="forgeWalkPlanTitle">
+        <div class="forge-walk-plan-top">
+          <div><div class="forge-kicker">DEIN WALKING-VORSCHLAG</div>
+            <h2 id="forgeWalkPlanTitle">Deine nächste Einheit</h2></div>
+          <span class="forge-walk-plan-state">Noch nicht gelaufen</span>
         </div>
-        <div class="walk-stat"><span class="small">Neigung</span><b id="heroIncline">8°</b><span class="small" id="heroInclinePct">≈ 14,1 %</span></div>
-        <div class="walk-stat"><span class="small">Tempo</span><b id="heroPace">6,7 km/h</b></div>
-        <div class="walk-stat"><span class="small">Zeit</span><b id="heroTime">≈ 68 Min.</b></div>
-      </div>
-
+        <div class="forge-walk-plan-main">
+          <div class="forge-walk-plan-time"><small>Geschätzte Gehzeit</small>
+            <strong id="heroTime">≈ 68 Min.</strong></div>
+          <div class="forge-walk-plan-count"><small>Geplante Pad-Schritte</small>
+            <strong id="forgeWalkNeeded">10.000</strong></div>
+        </div>
+        <div class="forge-walk-plan-meta">
+          <span><small>Distanz</small><strong id="forgeWalkDistance">7,60 km</strong></span>
+          <span><small>Tempo</small><strong id="heroPace">6,7 km/h</strong></span>
+          <span><small>Neigung</small><strong id="heroIncline">8,0°</strong></span>
+          <span class="forge-walk-plan-incline-pct" id="heroInclinePct">≈ 14,1 %</span>
+        </div>
+        <p id="forgeWalkPlanSubtitle">Deine Schritte von heute sind bereits berücksichtigt. Die zusätzliche Einheit ist nur geplant.</p>
+        <div class="forge-walk-plan-outcome"><span>Voraussichtlicher Tagesstand nach der Einheit</span>
+          <strong id="heroSteps">10.000</strong></div>
+      </section>
       <div id="walkingPlanHint" class="notice" hidden></div>
+
+      <section class="forge-walk-finish" aria-labelledby="forgeFinishTitle">
+        <div><div class="forge-kicker">NACH DEINEM WALKING</div>
+          <h2 id="forgeFinishTitle">Einheit geschafft?</h2>
+          <p>Trage danach deinen <strong>tatsächlich gemessenen Gesamtstand</strong> bei „Heute“ ein. Das verhindert, dass Schritte deiner Apple Watch doppelt gezählt werden.</p>
+        </div>
+        <button type="button" id="forgeFinishWalking" class="forge-walk-finish-btn">Schrittstand aktualisieren <span aria-hidden="true">↗</span></button>
+      </section>
+      <details class="forge-walk-details" id="forgeWalkAdvanced">
+        <summary>
+          <span class="forge-walk-details-icon" aria-hidden="true">⚙</span>
+          <span><strong>Einstellungen & 3-Blöcke-Plan</strong>
+            <small>Tempo, Neigung, eigene Schritte und Schrittlänge</small></span>
+          <span class="forge-walk-details-chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="forge-walk-details-body">
       <div class="section-title">Walking-Pad-Rechner</div>
       <p class="section-lead">Dein Tempo, deine Steigung, deine Schritte. Alle Werte sofort live berechnet.</p>
       <div class="card">
@@ -580,13 +607,16 @@
         <div class="block"><div class="tag">BLOCK 3</div><b id="block3Steps">4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
       </div>
 
-      <section class="forge-walk-finish" aria-labelledby="forgeFinishTitle">
-        <div><div class="forge-kicker">NACH DEINEM WALKING</div>
-          <h2 id="forgeFinishTitle">Einheit geschafft?</h2>
-          <p>Trage danach deinen <strong>tatsächlich gemessenen Gesamtstand</strong> bei „Heute“ ein. Das verhindert, dass Schritte deiner Apple Watch doppelt gezählt werden.</p>
         </div>
-        <button type="button" id="forgeFinishWalking" class="forge-walk-finish-btn">Schrittstand aktualisieren <span aria-hidden="true">↗</span></button>
-      </section>
+      </details>
+      <details class="forge-walk-details forge-walk-history-details" id="forgeWalkHistory">
+        <summary>
+          <span class="forge-walk-details-icon" aria-hidden="true">▥</span>
+          <span><strong>Wochenverlauf ansehen</strong>
+            <small>Deine Schritte der letzten 7 Tage & Wochentracker</small></span>
+          <span class="forge-walk-details-chevron" aria-hidden="true">⌄</span>
+        </summary>
+        <div class="forge-walk-details-body">
       <section class="forge-step-week" aria-labelledby="forgeWeekStepsTitle">
         <div class="forge-step-week-head"><div><div class="forge-kicker">DEINE BEWEGUNG</div>
           <h2 id="forgeWeekStepsTitle">Letzte 7 Tage</h2></div>
@@ -607,6 +637,8 @@
         <div class="small" id="weekStatus" style="margin-top:9px">0 von 7 Tagen</div>
         <button class="btn secondary" id="resetWeek" style="margin-top:12px">Woche zurücksetzen</button>
       </div>
+        </div>
+      </details>
     </section>
 
     <section id="progress" class="view">
@@ -787,7 +819,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.3.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.4.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -799,7 +831,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 7.3.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 7.4.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -956,6 +988,13 @@
     const incline=clamp(Number($('#incline').value),0,15,8);
     const km=steps*stride/1000;
     const mins=minutes(steps,pace,stride);
+    $('#forgeWalkNeeded').textContent=Math.round(steps).toLocaleString('de-DE');
+    $('#forgeWalkDistance').textContent=fmt2(km)+' km';
+    $('#forgeWalkPlanTitle').textContent=steps===0?'Tagesziel bereits erreicht':'Deine nächste Walking-Einheit';
+    $('#forgeWalkPlanSubtitle').textContent=steps===0
+      ?'Du brauchst keine zusätzlichen Pad-Schritte für dein Tagesziel. Optional kannst du eine eigene Einheit planen.'
+      :(auto?'Der Rest bis zu 10.000 ist automatisch eingeplant.':'Das ist deine individuell geplante Einheit.')
+        +' Diese Schritte zählen erst, wenn du sie tatsächlich gegangen bist.';
     const total=Math.round(done+steps+other);
     const remain=Math.max(0,10000-total);
     const anglePct=Math.tan(incline*Math.PI/180)*100;
@@ -989,6 +1028,7 @@
   }
   function selectWalkingMode(mode){
     walkMode=mode;
+    $('#forgeWalkAdvanced').open=mode==='custom';
     if(mode==='custom'){
       $('#walkSteps').value=String(walkingPrefs.steps??10000);
       $('#otherSteps').value=String(walkingPrefs.other??0);
@@ -1000,7 +1040,9 @@
   ['pace','walkSteps','stride','incline','otherSteps'].forEach(id=>$('#'+id).addEventListener('input',updateWalking));
   $('#paceMinus').addEventListener('click',()=>setPace((parsedPace()??6.7)-.1));
   $('#pacePlus').addEventListener('click',()=>setPace((parsedPace()??6.7)+.1));
-  $$('.speed-chip').forEach(btn=>btn.addEventListener('click',()=>setPace(Number(btn.dataset.pace))));
+  document.querySelectorAll('.speed-chip').forEach(btn=>btn.addEventListener('click',()=>setPace(Number(btn.dataset.pace))));
+  // Reopen editable controls when the user left FORGE in custom-plan mode.
+  $('#forgeWalkAdvanced').open=walkMode==='custom';
   updateWalking();
 
   // Smart Daily Planner: nur neue Schlüssel, alte Daten werden nicht verändert.

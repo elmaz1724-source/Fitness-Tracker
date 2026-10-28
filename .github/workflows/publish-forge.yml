@@ -58,6 +58,21 @@ jobs:
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          // Walking focus mode: all old controls stay mounted inside optional details.
+          for(const [id,opening] of [
+             ['forgeWalkAdvanced','<details class="forge-walk-details" id="forgeWalkAdvanced">'],
+             ['forgeWalkHistory','<details class="forge-walk-details forge-walk-history-details" id="forgeWalkHistory">']
+          ]){
+            if(!ids.includes(id)||!html.includes(opening))
+              throw new Error('Accessible Walking details missing: '+id);
+          }
+          if(!html.includes('id="forgeWalkNeeded"')||!html.includes('id="forgeWalkDistance"')
+             ||!html.includes('id="forgeWalkPlanSubtitle"'))
+             throw new Error('Walking quick summary is incomplete');
+          if(!match[1].includes("$('#forgeWalkAdvanced').open=mode==='custom'"))
+             throw new Error('Custom Walking mode must reveal editable options');
+          if(!match[1].includes("$('#forgeWalkNeeded').textContent="))
+             throw new Error('Walking quick summary must update from the same calculation');
           // Walking completion must never create a second source of actual steps.
           for(const id of ['forgeFinishWalking','forgeStepWeekBars','forgeStepWeekAvg',
                            'forgeStepWeekGoal','forgeStepWeekCount']){

@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.3:** Der Walking-Bereich bietet nach einer Einheit einen sicheren Schnellzugriff auf die bestehende Schritteingabe und eine 7-Tage-Übersicht mit tatsächlich erfassten Schritten. Geplante Schritte werden nicht als gelaufen gezählt. Die bisherigen Funktionen und Daten bleiben erhalten; kein Ernährungstracking.
+**Version 7.4:** Die iPhone-Ansicht für Walking ist deutlich kompakter. Schon gelaufene und fehlende Schritte, geschätzte Gehzeit und nächste Einheit stehen sofort im Fokus; Tempo, Neigung, Schrittlänge, der 3-Blöcke-Plan und Wochenverlauf sind aufklappbar. Die bisherigen Funktionen und Daten bleiben erhalten; kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -41,6 +41,18 @@ Der **Schrittzähler unter Heute** bleibt die einzige Stelle, an der du deinen t
 - Der optionale Walking-Planer unter Heute kann eine individuelle Einheit weiterhin ausdrücklich in den Walking-Rechner übertragen. Dabei wird der bereits gelaufene Stand nicht doppelt gezählt.
 
 Die **Quelle der tatsächlich absolvierten Schritte** ist unverändert `fitness-planner-YYYY-MM-DD`. Eingaben aus Quick Log bzw. aus einem Apple-Kurzbefehle-Import verwenden weiterhin diesen gespeicherten Tageswert. Tempo, Neigung und Schrittlänge bleiben individuell einstellbar.
+
+## Walking auf dem iPhone: kompakt statt überladen
+
+Der Bereich **Walking** zeigt zuerst:
+- Tatsächlich gelaufene und noch fehlende Schritte bis zum Tagesziel.
+- **Fehlende Schritte auffüllen** oder **Eigene Einheit planen**.
+- Eine hervorgehobene Karte mit **geschätzter Gehzeit**, zusätzlichen Walking-Pad-Schritten, Tempo, Distanz, Neigung und voraussichtlichem Tagesstand.
+- Den Button **Schrittstand aktualisieren**, um nach der Einheit den echten Gesamtstand unter Heute zu erfassen.
+
+Die umfangreichen Optionen sind standardmäßig **geschlossen**, aber weiterhin vollständig vorhanden: Unter **Einstellungen & 3-Blöcke-Plan** findest du Tempo, Neigung, Schrittlänge, eigene Schrittzahlen und die Aufteilung der Walking-Einheit. Wenn du **Eigene Einheit planen** auswählst, wird dieser Bereich automatisch geöffnet. Zurück zum automatischen Modus schließt ihn wieder.
+
+Auch **Wochenverlauf ansehen** ist optional aufklappbar. Dahinter liegen die sieben tatsächlichen Tageswerte und der bisherige manuelle Wochentracker. Es werden keine Daten verschoben oder gelöscht; die gleichen lokalen Speicher-Keys bleiben bestehen.
 
 ## Walking abgeschlossen und Schritte im Rückblick
 
@@ -131,4 +143,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.3.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
+Aktuelle Version: **7.4.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
