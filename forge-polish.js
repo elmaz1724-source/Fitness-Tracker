@@ -1,4 +1,4 @@
-/* FORGE 6 — presentation only. Never overwrites workouts, weight or daily data. */
+/* FORGE 7.1 — focused daily steps UX; reuses existing persistent fitness planner. */
 (()=>{
  'use strict';
  const $=selector=>document.querySelector(selector);
@@ -7,16 +7,23 @@
  const num=n=>Math.max(0,Math.min(50000,Number(n)||0));
  const formatted=n=>Math.round(n).toLocaleString('de-DE');
  const render=()=>{
-   const done=num(steps.value),left=Math.max(0,10000-done);
+   const done=num(steps.value),left=Math.max(0,10000-done),percent=Math.min(100,Math.round(done/10000*100));
    const weight=latestWeight.textContent.trim();
    $('#forgeSnapSteps').textContent=formatted(done);
    $('#forgeSnapLeft').textContent=formatted(left);
    $('#forgeSnapWeight').textContent=weight==='—'?'—':weight;
+   $('#forgeStepPercent').textContent=percent+' %';
+   $('#forgeStepFill').style.width=percent+'%';
+   $('#forgeStepProgress').setAttribute('aria-valuenow',String(percent));
+   $('#forgeStepNote').textContent=left===0
+     ?'Ziel erreicht! Du bist heute '+formatted(done)+' Schritte gelaufen.'
+     :'Du hast '+formatted(done)+' Schritte geschafft. Nur noch '+formatted(left)+' bis zu deinem Tagesziel.';
+   const edit=$('#forgeStepInput');
+   if(document.activeElement!==edit)edit.value=String(done);
    const finished=Number(String($('#ringScore').textContent).split('/')[0])||0;
-   const tip=left===0
-     ?'Dein Schrittziel ist erreicht. Ein bisschen Regeneration zählt ebenfalls.'
+   $('#forgeLiveText').textContent=left===0
+     ?'Schrittziel erreicht! '+finished+' von 5 Tageszielen abgehakt.'
      :formatted(left)+' Schritte bis zu deinem Ziel · '+finished+' von 5 Tageszielen abgehakt.';
-   $('#forgeLiveText').textContent=tip;
  };
  const goTo=selector=>{
    const target=$(selector);
@@ -24,11 +31,38 @@
    const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
    target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
  };
- $('#forgeGoSteps').addEventListener('click',()=>{
-   goTo('#forgeTodayTools');
-   if(window.innerWidth>600)$('#forgeQuickSteps')?.focus({preventScroll:true});
+ const stepInput=$('#forgeStepInput'),feedback=$('#forgeStepFeedback');
+ function updateSteps(){
+   const raw=stepInput.value.trim(),value=Number(raw);
+   if(!/^\d+$/.test(raw)||!Number.isSafeInteger(value)||value<0||value>50000){
+     feedback.textContent='Bitte gib eine ganze Schrittzahl zwischen 0 und 50.000 ein.';
+     feedback.classList.add('error');
+     return;
+   }
+   // Reuse the existing save path: localStorage key, planner and all dependent views.
+   $('#forgeQuickSteps').value=String(value);
+   $('#forgeSaveSteps').click();
+   const saved=Number(steps.value)===value;
+   feedback.textContent=saved
+     ?formatted(value)+' Schritte gespeichert. Bis 10.000 fehlen noch '+formatted(Math.max(0,10000-value))+'.'
+     :'Der Wert konnte nicht gespeichert werden. Prüfe deine Eingabe.';
+   feedback.classList.toggle('error',!saved);
+   render();
+   stepInput.blur();
+ }
+ $('#forgeStepSave').addEventListener('click',updateSteps);
+ stepInput.addEventListener('keydown',event=>{
+   if(event.key==='Enter'){event.preventDefault();updateSteps();}
  });
- $('#forgeGoWalking').addEventListener('click',()=>goTo('#plannerTitle'));
+ $('#forgeGoSteps').addEventListener('click',()=>{
+   goTo('#forgeStepsCenter');
+   stepInput.focus({preventScroll:true});
+   stepInput.select();
+ });
+ $('#forgeGoWalking').addEventListener('click',()=>{
+   $('#forgePlannerDetails').open=true;
+   goTo('#forgePlannerDetails');
+ });
  $('#forgeGoWeight').addEventListener('click',()=>{
    const tab=$('.tab[data-view="progress"]');
    if(tab)tab.click();
