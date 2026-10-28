@@ -421,3 +421,57 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
  .forge-walk-mode button{font-size:11px;padding:11px 4px}
 }
 @media(prefers-reduced-motion:reduce){#walkingProgressFill{transition:none}}
+
+
+/* FORGE 7.3 — Walk completed flow and factual seven-day movement. */
+.forge-walk-finish{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  border:1px solid #456747;border-radius:19px;padding:18px 20px;margin:23px 0 17px;
+  background:linear-gradient(130deg,#1d372b,#122329 90%)}
+.forge-walk-finish h2{font-size:19px;letter-spacing:-.55px;margin:5px 0 6px}
+.forge-walk-finish p{font-size:12px;line-height:1.55;color:#b6cdbb;margin:0;max-width:530px}
+.forge-walk-finish p strong{color:#d8f7cd}
+.forge-walk-finish-btn{min-width:190px;max-width:220px;border:0;border-radius:13px;
+  background:#c9ff6a;color:#1d2c14;font-size:12px;font-weight:900;line-height:1.35;
+  padding:14px 13px;cursor:pointer;flex-shrink:0;transition:filter .15s}
+.forge-walk-finish-btn:hover{filter:brightness(1.05)}
+.forge-step-week{margin:12px 0 26px;border-radius:20px;background:linear-gradient(145deg,#16232a,#101b20);
+  border:1px solid #304944;padding:19px 19px 15px}
+.forge-step-week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:19px}
+.forge-step-week h2{font-size:20px;letter-spacing:-.7px;margin:5px 0 0}
+.forge-step-week-badge{font-size:10px;font-weight:850;color:#d9f8c5;border:1px solid #4d7350;
+  background:#254030;padding:7px 11px;border-radius:30px;max-width:46%;text-align:right}
+.forge-step-week-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:0 0 13px}
+.forge-step-week-day{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:#90a7a8;text-align:center;font-variant-numeric:tabular-nums}
+.forge-step-week-label{font-size:11px;font-weight:800}
+.forge-step-week-day.today .forge-step-week-label{color:#d7ffa7}
+.forge-step-week-column{height:105px;width:100%;display:flex;align-items:flex-end;justify-content:center;
+  border-radius:9px;background:#1b2a2d;overflow:hidden;padding:3px}
+.forge-step-week-bar{width:100%;background:#689b70;border-radius:6px 6px 3px 3px;
+  min-height:3px;transition:height .2s}
+.forge-step-week-bar.completed{background:linear-gradient(180deg,#d0ff81,#85c96a)}
+.forge-step-week-bar.missing{background:#39504d}
+.forge-step-week-day small{font-size:10px;font-weight:750;color:#c3d7d0;white-space:nowrap}
+.forge-step-week-day.today small{color:#d3f7ac}
+.forge-step-week-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;
+  border-top:1px solid #334646;padding-top:12px;font-size:12px;color:#c7dacc}
+.forge-step-week-footer span:first-child{font-weight:850}
+.forge-step-week-note{font-size:11px;line-height:1.5;color:#91a9aa;margin:10px 0 0}
+@media(max-width:700px){
+ .forge-walk-finish{display:block;padding:16px;margin:21px 0 14px}
+ .forge-walk-finish-btn{min-width:0;max-width:none;width:100%;margin-top:14px}
+ .forge-step-week{padding:16px 12px 13px;margin:9px 0 22px}
+ .forge-step-week-bars{gap:5px}
+ .forge-step-week-column{height:86px;border-radius:7px}
+ .forge-step-week-head{gap:8px}
+ .forge-step-week-badge{font-size:9px;padding:6px 8px}
+ .forge-step-week-day small{font-size:9px;letter-spacing:-.3px}
+ .forge-step-week-label{font-size:10px}
+ .forge-step-week-footer{font-size:11px}
+}
+@media(max-width:360px){
+ .forge-step-week-bars{gap:3px}
+ .forge-step-week-day small{font-size:8.5px}
+ .forge-step-week-column{height:74px}
+}
+@media(prefers-reduced-motion:reduce){.forge-step-week-bar,.forge-walk-finish-btn{transition:none}}
