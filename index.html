@@ -1040,7 +1040,9 @@
   ['pace','walkSteps','stride','incline','otherSteps'].forEach(id=>$('#'+id).addEventListener('input',updateWalking));
   $('#paceMinus').addEventListener('click',()=>setPace((parsedPace()??6.7)-.1));
   $('#pacePlus').addEventListener('click',()=>setPace((parsedPace()??6.7)+.1));
-  $$('.speed-chip').forEach(btn=>btn.addEventListener('click',()=>setPace(Number(btn.dataset.pace))));
+  $('.speed-chip').forEach(btn=>btn.addEventListener('click',()=>setPace(Number(btn.dataset.pace))));
+  // Reopen editable controls when the user left FORGE in custom-plan mode.
+  $('#forgeWalkAdvanced').open=walkMode==='custom';
   updateWalking();
 
   // Smart Daily Planner: nur neue Schlüssel, alte Daten werden nicht verändert.
