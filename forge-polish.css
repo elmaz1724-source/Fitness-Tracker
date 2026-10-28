@@ -382,3 +382,42 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 @media(prefers-reduced-motion:reduce){
  #forgeStepFill,.forge-planner-arrow{transition:none}
 }
+
+
+/* FORGE 7.2 — today and walking share one actual step count. */
+.forge-walk-sync{padding:19px 20px;margin-bottom:13px;border-radius:21px;
+ background:linear-gradient(137deg,#193329,#122322);border:1px solid #436b4c}
+.forge-walk-sync-heading{display:flex;align-items:center;justify-content:space-between;gap:9px;
+ margin-bottom:14px;color:#cdfa98;font-size:11px;font-weight:900;letter-spacing:1.3px}
+.forge-walk-sync-source{color:#b2d8b4;border:1px solid #3c6749;background:#21372d;
+ padding:6px 10px;border-radius:999px;font-size:10px;letter-spacing:0;white-space:nowrap}
+.forge-walk-sync-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.forge-walk-sync-values>div{background:#11231f;border:1px solid #365244;border-radius:13px;padding:13px}
+.forge-walk-sync-values small{display:block;color:#a3bdb0;font-size:11px;margin-bottom:4px}
+.forge-walk-sync-values strong{display:block;color:#f0f6ef;font-size:clamp(26px,6vw,34px);
+ font-weight:900;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.forge-walk-sync-values>div:first-child strong{color:#c8ff7e}
+.forge-walk-sync-progress{margin-top:14px;height:10px;border-radius:100px;
+ background:#304e3f;overflow:hidden}
+#walkingProgressFill{height:100%;width:0%;border-radius:100px;
+ background:linear-gradient(90deg,#8fd975,#c9ff6a);transition:width .2s ease}
+#walkingSyncNote{margin:12px 0 0;font-size:12px;line-height:1.55;color:#c0d5c3}
+.forge-walk-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+ background:#111c21;border:1px solid #293c3e;border-radius:14px;padding:5px}
+.forge-walk-mode button{min-width:0;border:0;border-radius:10px;padding:11px 8px;
+ background:transparent;color:#9fb5b2;font-size:12px;font-weight:850;
+ cursor:pointer;line-height:1.3}
+.forge-walk-mode button.active{background:#c9ff6a;color:#1d2d13;
+ box-shadow:0 4px 13px #00000025}
+.forge-walk-mode-note{color:#a8c4b6;font-size:12px;line-height:1.55;margin:11px 4px 16px}
+#walkSteps[readonly],#otherSteps[readonly]{background:#152827;color:#c7e9bc;
+ opacity:.78;cursor:not-allowed}
+#walkGoalLine{line-height:1.55}
+@media(max-width:700px){
+ .forge-walk-sync{padding:16px;margin-bottom:11px}
+ .forge-walk-sync-values>div{padding:12px}
+ .forge-walk-sync-heading{font-size:10px}
+ .forge-walk-sync-source{font-size:9px;padding:5px 7px}
+ .forge-walk-mode button{font-size:11px;padding:11px 4px}
+}
+@media(prefers-reduced-motion:reduce){#walkingProgressFill{transition:none}}
