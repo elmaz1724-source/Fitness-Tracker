@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090d12">
-  <meta name="application-version" content="7.2.0">
+  <meta name="application-version" content="7.3.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -580,6 +580,26 @@
         <div class="block"><div class="tag">BLOCK 3</div><b id="block3Steps">4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
       </div>
 
+      <section class="forge-walk-finish" aria-labelledby="forgeFinishTitle">
+        <div><div class="forge-kicker">NACH DEINEM WALKING</div>
+          <h2 id="forgeFinishTitle">Einheit geschafft?</h2>
+          <p>Trage danach deinen <strong>tatsächlich gemessenen Gesamtstand</strong> bei „Heute“ ein. Das verhindert, dass Schritte deiner Apple Watch doppelt gezählt werden.</p>
+        </div>
+        <button type="button" id="forgeFinishWalking" class="forge-walk-finish-btn">Schrittstand aktualisieren <span aria-hidden="true">↗</span></button>
+      </section>
+      <section class="forge-step-week" aria-labelledby="forgeWeekStepsTitle">
+        <div class="forge-step-week-head"><div><div class="forge-kicker">DEINE BEWEGUNG</div>
+          <h2 id="forgeWeekStepsTitle">Letzte 7 Tage</h2></div>
+          <span id="forgeStepWeekGoal" class="forge-step-week-badge">Noch keine Einträge</span>
+        </div>
+        <div id="forgeStepWeekBars" class="forge-step-week-bars" aria-label="Tatsächlich erfasste Schritte der letzten sieben Kalendertage"></div>
+        <div class="forge-step-week-footer">
+          <span id="forgeStepWeekAvg">Ø noch keine Werte</span>
+          <span id="forgeStepWeekCount">0 Tage erfasst</span>
+        </div>
+        <p class="forge-step-week-note">Nur gespeicherte Tagesstände. Tage ohne Eintrag bleiben leer und zählen nicht als 0 Schritte. Geplante Walking-Schritte zählen nicht.</p>
+      </section>
+
       <div class="section-title">Wochentracker</div>
       <div class="card">
         <div class="week" id="weekGrid"></div>
@@ -767,7 +787,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.2.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v7.3.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -779,7 +799,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 7.2.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 7.3.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -855,8 +875,54 @@
     $('#pace').value=fmt2(clamp(n,0.5,12,6.7));
     updateWalking();
   }
+  function renderStepWeek(){
+    const zone=$('#forgeStepWeekBars');
+    zone.replaceChildren();
+    let count=0,sum=0,hits=0;
+    const now=new Date(dateKey+'T12:00:00');
+    for(let daysAgo=6;daysAgo>=0;daysAgo--){
+      const day=new Date(now);
+      day.setDate(now.getDate()-daysAgo);
+      const key=localDate(day);
+      const stored=storage.get('fitness-planner-'+key,null);
+      const value=stored&&typeof stored==='object'&&!Array.isArray(stored)?stored.steps:undefined;
+      const valid=typeof value==='number'&&Number.isSafeInteger(value)&&value>=0&&value<=50000;
+      const steps=valid?value:null;
+      if(valid){count++;sum+=steps;if(steps>=10000)hits++;}
+      const item=document.createElement('div');
+      item.className='forge-step-week-day'+(daysAgo===0?' today':'')+(valid?' recorded':'');
+      const label=document.createElement('span');
+      label.className='forge-step-week-label';
+      label.textContent=day.toLocaleDateString('de-DE',{weekday:'short'}).replace('.','');
+      const area=document.createElement('div');
+      area.className='forge-step-week-column';
+      const bar=document.createElement('div');
+      bar.className='forge-step-week-bar'+(valid&&steps>=10000?' completed':'');
+      bar.style.height=valid?Math.max(3,Math.round(Math.min(100,steps/10000*100)))+'%':'3px';
+      if(!valid)bar.classList.add('missing');
+      area.appendChild(bar);
+      const number=document.createElement('small');
+      number.textContent=valid?Math.round(steps).toLocaleString('de-DE'):'—';
+      item.append(label,area,number);
+      item.setAttribute('aria-label',day.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'})+
+        ': '+(valid?steps.toLocaleString('de-DE')+' tatsächlich erfasste Schritte':'keine Schrittdaten'));
+      zone.appendChild(item);
+    }
+    $('#forgeStepWeekGoal').textContent=count?hits+' von '+count+' Tagen Ziel erreicht':'Noch keine Einträge';
+    $('#forgeStepWeekAvg').textContent=count?'Ø '+Math.round(sum/count).toLocaleString('de-DE')+' Schritte':'Ø noch keine Werte';
+    $('#forgeStepWeekCount').textContent=count+' von 7 Tagen erfasst';
+  }
+  $('#forgeFinishWalking').addEventListener('click',()=>{
+    const todayTab=$$('.tab').find(tab=>tab.dataset.view==='today');
+    if(todayTab)todayTab.click();
+    // Reuse the one canonical edit field: never add planned or estimated steps to the daily total.
+    const shortcut=$('#forgeGoSteps');
+    if(shortcut)shortcut.click();
+  });
+
   function updateWalking(){
     const done=actualDailySteps();
+    renderStepWeek();
     const missing=Math.max(0,10000-done);
     const actualPct=Math.round(Math.min(100,done/10000*100));
     $('#walkingDone').textContent=done.toLocaleString('de-DE');
