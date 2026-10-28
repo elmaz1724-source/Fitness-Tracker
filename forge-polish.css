@@ -294,3 +294,91 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
  .forge-reminder-config{gap:8px}
  .forge-reminder-config .forge-checkbox{font-size:12px}
 }
+
+
+/* FORGE 7.1 — One clear step counter, with advanced planning on demand. */
+#today>.forge-steps-card{order:1}
+.forge-steps-card{
+ margin:3px 0 8px;padding:22px 23px 18px;
+ background:radial-gradient(ellipse 65% 85% at 5% 0%,rgba(171,247,106,.115),transparent),
+ linear-gradient(140deg,#182b25,#121e24 67%);
+ border:1px solid #456449;border-radius:24px;box-shadow:0 11px 30px #0000001a
+}
+.forge-step-head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:21px}
+.forge-step-head h2{font-size:23px;letter-spacing:-.9px;line-height:1.2;margin:5px 0 0}
+.forge-step-goal{background:#223a2e;color:#d4f7bd;border:1px solid #456c4b;border-radius:100px;
+ font-weight:850;font-size:11px;padding:8px 10px;white-space:nowrap;align-self:start}
+.forge-step-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:19px}
+.forge-step-stat{min-width:0;padding:12px 15px;border-radius:16px;background:#102123;border:1px solid #304943}
+.forge-step-stat span,.forge-step-stat small{display:block;color:#9fb8b4;font-size:11px;font-weight:650}
+.forge-step-stat strong{display:block;font-size:clamp(31px,4.8vw,43px);letter-spacing:-1.7px;
+ color:#f2f8f1;line-height:1.15;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.forge-step-stat strong.forge-step-done{color:#ccff81}
+.forge-step-bar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ font-size:12px;color:#b6cabc;margin-bottom:8px}
+.forge-step-bar-head strong{color:#d5f8b0;font-weight:850}
+.forge-step-progress{height:11px;border-radius:100px;overflow:hidden;background:#30453b;border:1px solid #405a48}
+#forgeStepFill{width:0;height:100%;background:linear-gradient(90deg,#82c96d,#d0ff78);border-radius:inherit;transition:width .2s ease}
+.forge-step-note{font-size:12px;color:#d5e5d5;line-height:1.5;margin:10px 0 18px}
+.forge-step-entry{background:#0e1a20;border:1px solid #344a46;border-radius:16px;padding:15px}
+.forge-step-entry>label{display:block;font-size:12px;color:#c8dacd;font-weight:800;margin-bottom:10px}
+.forge-step-entry-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
+.forge-step-entry-row input{width:100%;min-width:0;min-height:50px;border:1px solid #3a5250;
+ border-radius:12px;background:#0c151a;color:#eff8ec;padding:10px 13px;
+ font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;outline:none}
+.forge-step-entry-row input:focus{border-color:#b5f56e;box-shadow:0 0 0 3px #c9ff6a1a}
+.forge-step-save{background:#c9ff6a;color:#183111;border:0;border-radius:12px;font-weight:900;
+ padding:0 22px;font-size:13px;cursor:pointer;min-width:109px}
+.forge-step-save:active{transform:scale(.98)}
+.forge-step-hint{color:#97aaa8;font-size:11px;line-height:1.45;margin:10px 0 0}
+.forge-step-hint strong{color:#c8dfc6}
+.forge-step-feedback{color:#b8ecc6;font-size:12px;margin-top:8px;line-height:1.4}
+.forge-step-feedback:empty{display:none}
+.forge-step-feedback.error{color:#ffb1a9}
+.forge-step-links{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:14px}
+.forge-step-links button,.forge-step-weight button{border:0;background:transparent;color:#bff287;
+ font-weight:800;font-size:12px;padding:5px 0;cursor:pointer}
+.forge-step-links button:last-child{color:#abbdbe}
+.forge-step-weight{display:flex;align-items:center;justify-content:space-between;gap:10px;
+ font-size:11px;color:#9fb4ae;border-top:1px solid #344a44;margin-top:11px;padding-top:12px}
+.forge-step-weight strong{color:#e7f4e3;font-size:13px}
+.forge-quick-weight-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px}
+.forge-quick-weight-row>.forge-field{min-width:0}
+.forge-quick-weight-row>.forge-sm-btn{height:45px;white-space:nowrap}
+/* Collapse the advanced planner: the simple step input remains visible above it. */
+#today>.forge-collapsible-planner{order:3}
+.forge-collapsible-planner{padding:0!important;background:#14251f;border:1px solid #395943;margin:9px 0 0;border-radius:19px}
+.forge-collapsible-planner>summary{list-style:none;cursor:pointer;display:flex;
+ align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;min-height:72px}
+.forge-collapsible-planner>summary::-webkit-details-marker{display:none}
+.forge-planner-summary-text strong{display:block;color:#e7f5e4;font-size:15px;letter-spacing:-.35px}
+.forge-planner-summary-text small{display:block;color:#a1bdb0;font-size:11px;margin-top:3px}
+.forge-planner-arrow{color:#c9ff6a;font-size:23px;line-height:1;transition:transform .2s}
+.forge-collapsible-planner[open] .forge-planner-arrow{transform:rotate(180deg)}
+.forge-collapsible-planner>summary:focus-visible{outline:2px solid #c9ff6a;outline-offset:-4px;border-radius:17px}
+.forge-planner-inner{padding:0 18px 20px}
+.forge-planner-inner .planner-top{margin-top:7px}
+.forge-planner-inner .planner-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.forge-planner-inner .planner-fields>input[type="hidden"]{display:none}
+.forge-planner-inner .planner-fields>label{grid-column:auto!important}
+@media(max-width:700px){
+ .forge-steps-card{padding:19px 15px 15px;margin:2px 0 5px;border-radius:21px}
+ .forge-step-head h2{font-size:20px}
+ .forge-step-head{margin-bottom:15px}
+ .forge-step-goal{font-size:10px;padding:7px 9px}
+ .forge-step-stats{gap:7px;margin-bottom:14px}
+ .forge-step-stat{padding:12px 11px}
+ .forge-step-stat strong{font-size:clamp(29px,8vw,37px)}
+ .forge-step-entry{padding:12px}
+ .forge-step-entry-row input{font-size:19px;min-height:48px}
+ .forge-step-save{min-width:96px;padding:0 14px}
+ .forge-step-weight{flex-wrap:wrap}
+ .forge-quick-weight-row{grid-template-columns:1fr}
+ .forge-quick-weight-row>.forge-sm-btn{width:100%}
+ .forge-planner-inner{padding:0 14px 17px}
+ .forge-collapsible-planner>summary{padding:15px 16px}
+ .forge-planner-inner .planner-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+ #forgeStepFill,.forge-planner-arrow{transition:none}
+}
