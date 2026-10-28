@@ -58,6 +58,19 @@ jobs:
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          // Walking must share the actual step count saved by Today, not count old
+          // standalone Walking preferences as completed steps.
+          for (const id of ['walkingDone','walkingRemaining','walkingProgressTrack',
+                            'walkModeRemaining','walkModeCustom','walkingModeHint']) {
+            if (!ids.includes(id)) throw new Error('Today/Walking sync widget missing: '+id);
+          }
+          if (!match[1].includes("storage.get('fitness-planner-'+dateKey")
+              || !match[1].includes("$('#plannerSteps').addEventListener('input',updateWalking)"))
+            throw new Error('Walking must update from Today’s dated step record');
+          if (!match[1].includes('const total=Math.round(done+steps+other)'))
+            throw new Error('Walking summary must combine actual with future steps only once');
+          if (!match[1].includes("if(!auto){next.steps=steps;next.other=other;}"))
+            throw new Error('Automatic Walking mode must preserve saved custom plan preferences');
           // A single visible step entry point avoids conflicting, duplicate inputs.
           if (!/<input id="forgeStepInput" type="number"/.test(html))
             throw new Error('Simple visible step entry missing from Today');

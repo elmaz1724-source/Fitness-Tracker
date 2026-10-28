@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.1:** Die Schritte stehen jetzt im Mittelpunkt: Ein zentrales Feld für den bereits gelaufenen Gesamtstand, automatische Restschritte bis 10.000, Fortschrittsanzeige und ein optional aufklappbarer Walking-Planer. Alle sieben Alltagsbereiche bleiben erhalten. Kein Ernährungstracking.
+**Version 7.2:** „Heute“ und „Walking“ verwenden denselben bereits gelaufenen Tagesstand. Im Walking-Rechner kannst du automatisch alle noch fehlenden Schritte bis 10.000 einplanen oder eine eigene Walking-Einheit festlegen. Bestehende Einstellungen, Backups und alle sieben Funktionsbereiche bleiben erhalten. Kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -29,6 +29,18 @@ Im Bereich **Heute → Dein Schrittzähler** steht der aktuelle Gesamtstand. Gib
 Es gibt auf dem Startbildschirm **keine zweite sichtbare Schritteingabe**. Quick Log kümmert sich um Gewicht, Kreatin und Backups. Über den optional aufklappbaren **Walking-Planer** kannst du die restliche Gehzeit berechnen; er verwendet genau denselben bereits gespeicherten Schrittstand.
 
 Die Speicherung nutzt wie bisher ausschließlich `fitness-planner-YYYY-MM-DD`. Alte Tageswerte, Gewichtsdaten und Fitness-Einträge bleiben erhalten. Nach einem Apple-Kurzbefehle-Import sind die übergebenen Schritte im gleichen zentralen Schrittzähler zu sehen.
+
+## Walking übernimmt Schritte aus „Heute“
+
+Der **Schrittzähler unter Heute** bleibt die einzige Stelle, an der du deinen tatsächlich gelaufenen Tagesstand einträgst. Sobald du den Wert speicherst, aktualisieren sich im Bereich **Walking** sofort „Schon gelaufen“, „Fehlen bis 10.000“, der Fortschrittsbalken sowie die geplante Walking-Pad-Dauer.
+
+- **Fehlende Schritte auffüllen (Standard):** FORGE plant automatisch genau die Schritte, die noch bis 10.000 fehlen. Beispiel: 5.000 gelaufen → 5.000 Walking-Pad-Schritte geplant. Bei bereits erreichten 10.000 → 0 zusätzlich.
+- **Eigene Einheit planen:** Du kannst die Walking-Pad-Schritte und weitere **zukünftig geplante** Schritte selbst festlegen. Bereits gelaufene Schritte werden automatisch zusätzlich berücksichtigt und nicht nochmals eingetragen.
+- Die komplette Walking-Statistik unterscheidet **bereits gelaufene** und **erst geplante** Schritte. Das geplante Ergebnis wird nicht als tatsächlich erreicht behandelt.
+- Die früheren frei gewählten Walking-Pad- und weiteren Schrittzahlen bleiben unter `fitness-walking` gespeichert; beim Umschalten in den Automatikmodus werden sie nicht überschrieben.
+- Der optionale Walking-Planer unter Heute kann eine individuelle Einheit weiterhin ausdrücklich in den Walking-Rechner übertragen. Dabei wird der bereits gelaufene Stand nicht doppelt gezählt.
+
+Die **Quelle der tatsächlich absolvierten Schritte** ist unverändert `fitness-planner-YYYY-MM-DD`. Eingaben aus Quick Log bzw. aus einem Apple-Kurzbefehle-Import verwenden weiterhin diesen gespeicherten Tageswert. Tempo, Neigung und Schrittlänge bleiben individuell einstellbar.
 
 ## Apple Health über Kurzbefehle (ohne Server)
 
@@ -113,4 +125,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.1.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
+Aktuelle Version: **7.2.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
