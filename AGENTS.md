@@ -5,7 +5,7 @@
 FORGE is a **static, offline-capable mobile-first fitness tracker** hosted by GitHub Pages. The app consists of `index.html`, `forge-extras.css`, `forge-polish.css`, `forge-extras.js`, `forge-polish.js`, `forge-integrations.js`, `manifest.webmanifest` and `sw.js`. It does not use a React/Expo build pipeline.
 
 - Communicate with the user in German. Work in small, testable changes. Avoid claiming that a GitHub commit proves a public Pages deployment or a real-device test.
-- Preserve the existing **dark navy/green and lime FORGE identity**, soft rounded cards, four-tab navigation, the single source of truth for today's steps, and existing workflows.
+- Preserve the existing **dark navy/green and lime FORGE identity**, soft rounded cards, three visible core tabs (four only in the archived advanced view), the single source of truth for today's steps, and existing workflows.
 - **Do not implement nutrition logging** unless explicitly requested.
 - **Never discard or rename existing localStorage data** or alter backup/import schemas without an explicit compatibility and migration strategy. Existing keys include `fitness-planner-YYYY-MM-DD`, `fitness-walking`, `fitness-weights`, `fitness-week`, date-scoped `fitness-daily-*`, and `forge-*` settings, workouts and integrations.
 - Already walked steps and planned future steps must remain separate; never credit planned walking as completed. Health imports require informed user confirmation.
@@ -47,7 +47,7 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 
 ## FORGE UI/UX quality bar
 
-1. Keep **Heute → Walking → Fortschritt → Training** as four compact bottom tabs. Maintain 44–48px or greater interactive touch targets *where feasible* without making the entire bar oversize. Never let the bar wrap to a second row.
+1. **FORGE 8 is Back to Basics.** Show exactly **Heute → Walking → Fortschritt** by default. Make **Training** and other extras available only through a conscious **Weitere Funktionen öffnen** action. Never add a fourth primary tab in basic mode. In advanced mode the existing fourth Training tab remains intact. Maintain 44–48px or greater interactive touch targets *where feasible* without making the entire bar oversize. Never let the bar wrap to a second row.
 2. The step counter under Heute owns completed steps; Walking displays its computed remainder, projected duration, and an explicitly planned-not-done state.
 3. Make prominent numbers stable using `font-variant-numeric: tabular-nums`. Support narrow 320–390px phones, large text, long German labels, zero, 10,000+, and missing historical records.
 4. Inputs on iOS must not auto-zoom on focus; provide at least 16px text for actively editable fields on touch-sized viewports. Never disable page zoom or pinch-to-zoom.
@@ -57,10 +57,22 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 8. Keep essential actions reachable with the iOS keyboard shown and the fixed navigation in view or intentionally hidden. Use safe-area padding. Test landscape and installed-PWA mode.
 9. Real-world user screenshots take precedence over theoretical pixel-perfect tests. Confirm any deployment at the published URL, not merely by commit success.
 
+## Product reset: FORGE 8 Back to Basics
+
+The user explicitly wants FORGE to stop accumulating features. The product's core purpose is **track actual steps, show missing steps to 10,000, calculate Walking-Pad time from speed and incline, and review weight progress**.
+
+- Default body mode is `forge-basics`. **Do not reintroduce** daily checklists, calories, macro references, coaching reminders, extra dashboards, multi-step planning widgets, training logs, Health integration setup, imports, forecasts or other advanced tools into the basic view.
+- Show **Heute** (one current-day steps entry), **Walking** (already walked, still missing, speed/incline, estimated time), **Fortschritt** (simple weight entry/chart).
+- Old modules remain mounted for backward compatibility and are reached by the explicit top-right **Weitere Funktionen öffnen** menu. This is a reversible presentation change, **not a data migration**. Do not silently delete historical workout, weight, reminder, backup or walking configuration records.
+- The automatic missing-step Walking mode must be used for calculations in basics even if the archived user preference is a custom plan; the archived custom values must survive toggling advanced mode.
+- No new settings or feature sprawl without the user's explicit approval. Always question whether a suggested addition simplifies the core task. Prefer **removing visible complexity** over adding another switch or card.
+- Backups should stay accessible in the basic header menu. A Health Shortcut import must temporarily expose the advanced Training view without putting health measurement fragments in browser history.
+- Every new release must test `node scripts/test-basics.mjs` and `node scripts/test-navigation.mjs` plus persistent storage compatibility.
+
 ## Familiar navigation conventions (Jakob's Law)
 
 - Treat familiarity as a usability goal, **not** as a requirement to clone Instagram, TikTok or YouTube. Official guidance: Nielsen Norman Group (Jakob's Law) and Apple Human Interface Guidelines (tab bars).
-- Keep the existing **four** top-level areas in this order: **Heute, Walking, Fortschritt, Training**. Do not add a fifth **Profil** tab until FORGE really has user accounts or profile-centric workflows.
+- Keep **three visible primary destinations by default:** **Heute, Walking, Fortschritt**. The old Training tab can appear only after an intentional switch to advanced mode; all old data remains intact. Do not add a Profil tab or new destination without a product reason.
 - Use bottom navigation for destinations, **not actions**. Step entry belongs to the step counter and workout entry to Training. Avoid a forced central plus button.
 - The top-right `#forgeHeaderMenu` is the predictable access point for secondary options. Its buttons navigate to the real sections for reminders, Health integration, backups and app installation – never duplicate data-entry forms.
 - Preserve browser-native gestures rather than hijacking touch input: native swipe/back should work *where the browser supports it* by recording tab visits with History API; do not promise an iOS Home Screen PWA has the same gesture behavior as Safari.
@@ -74,7 +86,7 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 2. Select **1–3 relevant** skills and state which ones you applied in the PR/report. For animation-only audits, follow the skill's read-only rules before modifying source.
 3. Make a prioritized short plan: impact, evidence, risk, change and verification.
 4. Prefer a small feature branch and PR. Keep localStorage, backup keys, data ownership and existing calculations intact.
-5. Run `node scripts/verify-agent-skills.mjs`, `node --check` for standalone scripts and syntax-check the inline HTML script. Run smoke tests for all four tabs, persistent step values, manual/automatic Walking, backup and the offline shell.
+5. Run `node scripts/verify-agent-skills.mjs`, `node --check` for standalone scripts and syntax-check the inline HTML script. Run smoke tests for the three visible basic tabs and the archived fourth Training view, persistent step values, simple Walking pace/incline controls, manual/automatic advanced Walking, backup, Health shortcuts and the offline shell.
 6. Review focus, touch behavior, accessibility, reduced motion, 320px layout and long labels. Record **what was actually tested**; do not claim genuine Safari/device results from code inspection.
 7. Update version and service-worker cache only when an app update is deployed. Never include `.agents/` or `docs/` in the Pages site bundle.
 8. Document what changed, the specific skills used, any remaining risks, and what should be improved next.
