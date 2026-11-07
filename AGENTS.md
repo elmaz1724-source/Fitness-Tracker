@@ -5,7 +5,7 @@
 FORGE is a **static, offline-capable mobile-first fitness tracker** hosted by GitHub Pages. The app consists of `index.html`, `forge-extras.css`, `forge-polish.css`, `forge-extras.js`, `forge-polish.js`, `forge-integrations.js`, `manifest.webmanifest` and `sw.js`. It does not use a React/Expo build pipeline.
 
 - Communicate with the user in German. Work in small, testable changes. Avoid claiming that a GitHub commit proves a public Pages deployment or a real-device test.
-- Preserve the existing **dark navy/green and lime FORGE identity**, soft rounded cards, three visible core tabs (four only in the archived advanced view), the single source of truth for today's steps, and existing workflows.
+- Preserve the **Midnight Blue** FORGE identity (dark navy surfaces, readable blue accents such as `#6aadff`, soft rounded cards), three visible core tabs (four only in the archived advanced view), the single source of truth for today's steps, and existing workflows. Do not reintroduce the former lime-green highlight system without a user request.
 - **Do not implement nutrition logging** unless explicitly requested.
 - **Never discard or rename existing localStorage data** or alter backup/import schemas without an explicit compatibility and migration strategy. Existing keys include `fitness-planner-YYYY-MM-DD`, `fitness-walking`, `fitness-weights`, `fitness-week`, date-scoped `fitness-daily-*`, and `forge-*` settings, workouts and integrations.
 - Already walked steps and planned future steps must remain separate; never credit planned walking as completed. Health imports require informed user confirmation.
@@ -56,6 +56,18 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 7. Avoid sticky hover artefacts on touch: hover effects should be guarded by `@media (hover:hover) and (pointer:fine)`. Keep touch feedback immediate without deleting existing active states.
 8. Keep essential actions reachable with the iOS keyboard shown and the fixed navigation in view or intentionally hidden. Use safe-area padding. Test landscape and installed-PWA mode.
 9. Real-world user screenshots take precedence over theoretical pixel-perfect tests. Confirm any deployment at the published URL, not merely by commit success.
+
+## FORGE 8.1 visual identity and design-quality standard
+
+The user explicitly prefers **blue rather than lime green**. Preserve the `Midnight Blue` theme across the three basic views and the archived UI:
+- Canvas/background: `#0a101b` with restrained navy-blue gradients; surfaces: `#111d2b` / `#172638`; brand accent: `#6aadff`; secondary accent: `#448ef5`; large text: `#f5f8ff`; secondary text: `#9caec4`.
+- Blue must be coherent across `index.html` (inline CSS and chart colors), `forge-polish.css`, `forge-extras.css`, PWA `icon.svg`, and `manifest.webmanifest`. Semantic warnings and errors may remain amber/red.
+- **Heute**: one central saved step input, reached steps, remaining steps, one blue progress bar. Do not add cards.
+- **Walking**: actual steps, remaining steps, **duration estimate first**, then speed and incline inputs. Do not duplicate those inputs in the basic summary. Explain that incline raises exertion, not the estimate of walking duration itself.
+- **Fortschritt**: weight snapshot, single weight entry form and weight chart, no speculative forecast in basics.
+- Buttons must have adequate contrast and 44px+ touch targets on iPhone; preserve keyboard focus and motion reduction.
+- Apply `emil-design-eng` and `mobile-native` for UI changes, plus `break-ui` for unusual values. Favor subtraction and hierarchy over decorative effects.
+- A new version must pass `node scripts/test-blue-theme.mjs`, plus all previous regression checks before merging. Do not modify saved data keys just for palette or layout.
 
 ## Product reset: FORGE 8 Back to Basics
 
