@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 8.0 – Back to Basics:** FORGE konzentriert sich wieder auf drei Dinge: aktuelle Schritte und Rest bis 10.000, Walking-Pad-Zeit aus Tempo/Neigung und einen klaren Gewichtsverlauf. Drei sichtbare Tabs. Zusätzliche Funktionen sind nur über „Weitere Funktionen öffnen“ erreichbar; alle bisherigen Daten bleiben erhalten.
+**Version 8.1 – Midnight Blue:** FORGE bleibt Back to Basics und bekommt ein konsequent navyblaues Design statt Lime-Grün. Die drei Ansichten Heute, Walking und Fortschritt haben eine einheitliche Hierarchie, gut lesbare Zahlen, blaue Aktionen und ein angepasstes App-Icon. Alle bisherigen Fitnessdaten und Funktionen bleiben erhalten.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,22 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## FORGE 8.1 – Midnight Blue Design
+
+Der Nutzer bevorzugt Blau statt dem bisherigen Lime-Grün. Die neue visuelle Richtung basiert auf **Midnight Blue**: dunkles Navy (`#0a101b`), blaue Highlights (`#6aadff`), sekundäres Blau (`#448ef5`) und gut lesbare helle Typografie (`#f5f8ff`). Die Farbpalette wurde auch in Diagramme, Schaltflächen, Mikrointeraktionen, PWA-Manifest und App-Icon übertragen.
+
+| Bildschirm | Was besser ist |
+| --- | --- |
+| **Heute** | Klarer Fokus auf bereits gelaufene und fehlende Schritte, ein blauer Fortschrittsbalken und ein eindeutiger Speichern-Button |
+| **Walking** | Die berechnete **Gehzeit** steht nun oberhalb der Eingaben; Tempo und Neigung erscheinen nur an einer Stelle. Nebenangaben wurden optisch zurückgenommen |
+| **Fortschritt** | Gewichtskarte, Eingabe und Trenddiagramm verwenden das gleiche ruhigere Navy-Blau-System |
+
+**Berechnungshinweis:** Die voraussichtliche Gehzeit hängt von Schrittlänge, Tempo und noch fehlenden Schritten ab. Die Neigung bestimmt die Belastung, verändert in dieser Formel aber **nicht** die Zeitberechnung. Wir nennen beide Werte deshalb bewusst separat.
+
+**Keine Datenmigration:** Die laufenden Speicherformate `fitness-planner-YYYY-MM-DD`, `fitness-walking`, `fitness-weights` und die Backup-Formate bleiben unverändert. Versteckte erweiterte Ansichten bleiben erreichbar, verwenden aber dieselbe blaue Markenfarbe. Kein Ernährungstracking.
+
+**Qualitätsprüfung:** Der Design-Regressionstest `node scripts/test-blue-theme.mjs` wird zusammen mit den bisherigen FORGE-Tests in GitHub Actions ausgeführt. Das Farbsystem respektiert Kontrast und reduzierte Bewegung; reale Safari-Ansichten sind nach Auslieferung zusätzlich auf dem iPhone zu kontrollieren.
+
 ## FORGE 8.0 — Back to Basics
 
 Die App wurde bewusst auf ihren ursprünglichen Zweck zurückgeführt. Beim normalen Öffnen sind nur noch **drei Tabs** sichtbar:
@@ -192,4 +208,4 @@ Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **8.0.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
+Aktuelle Version: **8.1.0** (Midnight Blue, verfeinerte drei Hauptansichten und konsistente PWA-Farben; echter iPhone-Sichttest nach Veröffentlichung noch offen).
