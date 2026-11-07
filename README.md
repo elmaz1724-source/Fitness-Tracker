@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.4:** Die iPhone-Ansicht für Walking ist deutlich kompakter. Schon gelaufene und fehlende Schritte, geschätzte Gehzeit und nächste Einheit stehen sofort im Fokus; Tempo, Neigung, Schrittlänge, der 3-Blöcke-Plan und Wochenverlauf sind aufklappbar. Die bisherigen Funktionen und Daten bleiben erhalten; kein Ernährungstracking.
+**Version 7.5:** Die bestehenden FORGE-Funktionen werden mit 17 projektlokalen Codex-Design-Skills unterstützt. Kleine, gezielte Verbesserungen für iPhone-Touch, barrierearme Navigation, konsistente Bewegungen und flüssigere Schritt-Fortschrittsanzeigen. Alle bisherigen Daten und Berechnungen bleiben erhalten; kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,19 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## Codex-Agent-Skills und UI-Qualitätsleitfaden
+
+Alle **17 Skill-Einstiegspunkte** aus [emilkowalski/skills](https://github.com/emilkowalski/skills) sind mit ihren neun ergänzenden Markdown-Dateien projektlokal unter `.agents/skills/` eingebunden. Dazu kommen die zwei unveränderten Cheatsheets, Upstream-README und MIT-Lizenz in `docs/emil-kowalski/`.
+
+- Codex-Regeln und Auswahl je nach Aufgabe: [AGENTS.md](AGENTS.md).
+- Exakter Installationsstatus und Einschränkungen: [docs/SKILLS_INSTALLATION.md](docs/SKILLS_INSTALLATION.md).
+- Priorisierte App-Analyse und nächste Schritte: [docs/FORGE_UI_AUDIT_2026-11-07.md](docs/FORGE_UI_AUDIT_2026-11-07.md).
+- Integritätsprüfung ohne zusätzliche Pakete: `node scripts/verify-agent-skills.mjs` (auch im Pages-Workflow).
+
+**Installationstransparenz:** Der offizielle CLI-Versuch mit `npx skills@latest add emilkowalski/skills --skill '*' --agent codex` scheiterte in der Assistenz-Laufzeit wegen `EAI_AGAIN` (NPM-DNS). Die Originaldateien wurden stattdessen über den verbundenen GitHub-Zugang unverändert in das Projekt übernommen und mit ihren Upstream-Git-Hashes verifiziert. Die tatsächliche Skill-Erkennung in einer lokalen Codex-Sitzung muss nach Checkout/Neustart dort geprüft werden.
+
+Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation, klare Touch-/Fokuszustände und zwei Schrittfortschrittsbalken mit compositorfreundlicher `transform`-Animation. App-Daten werden dafür nicht umgeschrieben.
+
 ## Test auf dem iPhone
 
 1. FORGE in Safari öffnen, Seite neu laden.
@@ -143,4 +156,4 @@ Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentli
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.4.0** (sieben Alltagsfunktionen, Health-Kurzbefehle-Brücke und Kalenderexport; Live-Veröffentlichung nach dem Merge zu prüfen).
+Aktuelle Version: **7.5.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
