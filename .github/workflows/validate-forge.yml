@@ -1,0 +1,58 @@
+name: Validate FORGE before merging
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Skills, UI and data compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+      - name: Verify exact upstream skill sources and Codex instructions
+        run: node scripts/verify-agent-skills.mjs
+      - name: Check app source syntax
+        run: |
+          set -e
+          node --check forge-extras.js
+          node --check forge-polish.js
+          node --check forge-integrations.js
+          node --check sw.js
+          node --check scripts/verify-agent-skills.mjs
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const vm = require('node:vm');
+          const html = fs.readFileSync('index.html','utf8');
+          const inline = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
+          if (!inline) throw new Error('Missing app script');
+          new vm.Script(inline);
+          const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
+          if (ids.length !== new Set(ids).size) throw new Error('Duplicate DOM IDs');
+          for(const id of ['forgeStepFill','walkingProgressFill','forgeStepsCenter',
+                           'forgeWalkAdvanced','forgeWalkHistory','forgeQuickExport']) {
+            if (!ids.includes(id)) throw new Error('Existing FORGE control missing: '+id);
+          }
+          const nav = html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
+          if ((nav.match(/data-view="/g)||[]).length !== 4) throw new Error('Four tabs required');
+          if (!nav.includes('aria-current="page"')) throw new Error('Accessible current tab missing');
+          const css = fs.readFileSync('forge-polish.css','utf8');
+          const polish = fs.readFileSync('forge-polish.js','utf8');
+          if (!polish.includes("$('#forgeStepFill').style.transform=")
+             || !inline.includes("$('#walkingProgressFill').style.transform="))
+              throw new Error('Step progress should avoid layout-animated width');
+          if (!css.includes('@media (hover:hover) and (pointer:fine)'))
+              throw new Error('Hover effects should require a hover-capable pointer');
+          if (!css.includes('.planner-settings select{font-size:16px}'))
+              throw new Error('Touch input zoom prevention missing');
+          if ((css.match(/\{/g)||[]).length !== (css.match(/\}/g)||[]).length)
+              throw new Error('Unbalanced stylesheet braces');
+          const manifest = JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
+          if (manifest.display !== 'standalone') throw new Error('PWA standalone mode missing');
+          console.log('FORGE pre-merge checks passed: '+ids.length+' DOM elements');
+          NODE
