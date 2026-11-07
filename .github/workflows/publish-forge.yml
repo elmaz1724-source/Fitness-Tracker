@@ -77,7 +77,7 @@ jobs:
              !html.includes('<div class="forge-advanced-view">')||
              !html.includes('grid-template-columns:repeat(var(--forge-tab-count,4)')||
              !match[1].includes("const auto=walkMode==='remaining'||document.body.classList.contains('forge-basics')")||
-             !basics.includes("pace.dispatchEvent(new Event('input'"))
+             !basics.includes('function refreshWalking()')
              )throw new Error('Back-to-basics interface or shared Walking logic missing');
           for(const id of ['forgeHeaderMenu','forgeReminderSettings','forgeBackupSettings','forgeInstallSettings']){
             if(!ids.includes(id))throw new Error('Settings shortcut target is missing: '+id);
