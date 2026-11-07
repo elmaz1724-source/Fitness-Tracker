@@ -32,6 +32,7 @@ jobs:
           test -f forge-polish.css
           test -f forge-polish.js
           test -f forge-navigation.js
+          test -f forge-basics.js
           test -f forge-integrations.js
           test -f manifest.webmanifest
           test -f sw.js
@@ -39,6 +40,7 @@ jobs:
           node --check forge-extras.js
           node --check forge-polish.js
           node --check forge-navigation.js
+          node --check forge-basics.js
           node --check scripts/test-navigation.mjs
           node scripts/test-navigation.mjs
           node --check forge-integrations.js
@@ -65,6 +67,16 @@ jobs:
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
           const navigation=fs.readFileSync('forge-navigation.js','utf8');
+          const basics=fs.readFileSync('forge-basics.js','utf8');
+          for(const id of ['forgeBasicsToggle','forgeBasicsBackup','forgeBasicsPace','forgeBasicsIncline']){
+            if(!ids.includes(id))throw new Error('Lean FORGE control missing: '+id);
+          }
+          if(!html.includes('<body class="forge-basics">')||
+             !html.includes('<div class="forge-advanced-view">')||
+             !html.includes('grid-template-columns:repeat(var(--forge-tab-count,4)')||
+             !match[1].includes("const auto=walkMode==='remaining'||document.body.classList.contains('forge-basics')")||
+             !basics.includes("pace.dispatchEvent(new Event('input'"))
+             )throw new Error('Back-to-basics interface or shared Walking logic missing');
           for(const id of ['forgeHeaderMenu','forgeReminderSettings','forgeBackupSettings','forgeInstallSettings']){
             if(!ids.includes(id))throw new Error('Settings shortcut target is missing: '+id);
           }
@@ -148,8 +160,8 @@ jobs:
           if (!/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(polish))
             throw new Error('Mobile navigation must use four equal columns');
           const nav=html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
-          if (!nav.includes('grid-template-columns:repeat(4,minmax(0,1fr))'))
-            throw new Error('Nav must retain an inline four-column fallback');
+          if (!nav.includes('grid-template-columns:repeat(var(--forge-tab-count,4),minmax(0,1fr))'))
+            throw new Error('Nav must retain the shared three/four-column fallback');
           const fixedIcons=[...nav.matchAll(/<svg style="[^"]*width:19px;height:19px;[^"]*" viewBox=/g)];
           if (fixedIcons.length!==4)
             throw new Error('Each navigation SVG must have a fixed 19px inline size');
@@ -174,7 +186,7 @@ jobs:
       - name: Create static site bundle
         run: |
           mkdir -p site
-          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js forge-navigation.js forge-integrations.js manifest.webmanifest sw.js icon.svg site/
+          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js forge-navigation.js forge-basics.js forge-integrations.js manifest.webmanifest sw.js icon.svg site/
           touch site/.nojekyll
           node - <<'NODE'
           const fs=require('fs');
