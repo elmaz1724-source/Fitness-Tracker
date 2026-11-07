@@ -22,6 +22,7 @@ jobs:
           set -e
           node --check forge-extras.js
           node --check forge-polish.js
+          node --check forge-navigation.js
           node --check forge-integrations.js
           node --check sw.js
           node --check scripts/verify-agent-skills.mjs
@@ -41,6 +42,16 @@ jobs:
           const nav = html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
           if ((nav.match(/data-view="/g)||[]).length !== 4) throw new Error('Four tabs required');
           if (!nav.includes('aria-current="page"')) throw new Error('Accessible current tab missing');
+          const navigation = fs.readFileSync('forge-navigation.js','utf8');
+          for (const id of ['forgeHeaderMenu','forgeReminderSettings','forgeBackupSettings','forgeInstallSettings']) {
+            if (!ids.includes(id)) throw new Error('Missing settings shortcut: '+id);
+          }
+          if ([...html.matchAll(/data-forge-menu-target="([^"]+)"/g)].some(x=>!ids.includes(x[1])))
+            throw new Error('Settings menu contains a broken target');
+          if (!navigation.includes("window.addEventListener('popstate'") ||
+              !navigation.includes("history.pushState(") ||
+              !navigation.includes("location.hash.startsWith('#forge-sync?')"))
+            throw new Error('Browser history navigation is missing or unsafe for Health fragment imports');
           const css = fs.readFileSync('forge-polish.css','utf8');
           const polish = fs.readFileSync('forge-polish.js','utf8');
           if (!polish.includes("$('#forgeStepFill').style.transform=")
