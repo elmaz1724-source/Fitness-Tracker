@@ -26,6 +26,8 @@ jobs:
           node --check forge-basics.js
           node --check scripts/test-basics.mjs
           node scripts/test-basics.mjs
+          node --check scripts/test-blue-theme.mjs
+          node scripts/test-blue-theme.mjs
           node --check scripts/test-navigation.mjs
           node scripts/test-navigation.mjs
           node --check forge-integrations.js
