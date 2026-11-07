@@ -670,9 +670,9 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 .forge-basics #progress .mini-header{margin-bottom:16px}
 .forge-basics #training{display:none!important}
 .forge-basics .forge-header-panel button[data-forge-menu-view]{display:none!important}
-:not(.forge-basics) .forge-basics-walking-controls{display:none!important}
-:not(.forge-basics) .forge-basics-menu-action{display:none!important}
-:not(.forge-basics) .forge-basics-menu-note{display:none!important}
+body:not(.forge-basics) .forge-basics-walking-controls{display:none!important}
+body:not(.forge-basics) .forge-basics-menu-action{display:none!important}
+body:not(.forge-basics) .forge-basics-menu-note{display:none!important}
 
 .forge-basics-walking-controls{
  margin:12px 0 2px;padding:16px 17px;background:#172720;
