@@ -31,12 +31,14 @@ jobs:
           test -f forge-extras.js
           test -f forge-polish.css
           test -f forge-polish.js
+          test -f forge-navigation.js
           test -f forge-integrations.js
           test -f manifest.webmanifest
           test -f sw.js
           test -f icon.svg
           node --check forge-extras.js
           node --check forge-polish.js
+          node --check forge-navigation.js
           node --check forge-integrations.js
           node --check sw.js
           node --check scripts/verify-agent-skills.mjs
@@ -60,6 +62,17 @@ jobs:
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          const navigation=fs.readFileSync('forge-navigation.js','utf8');
+          for(const id of ['forgeHeaderMenu','forgeReminderSettings','forgeBackupSettings','forgeInstallSettings']){
+            if(!ids.includes(id))throw new Error('Settings shortcut target is missing: '+id);
+          }
+          for(const target of [...html.matchAll(/data-forge-menu-target="([^"]+)"/g)].map(m=>m[1])){
+            if(!ids.includes(target))throw new Error('Settings shortcut points to missing target: '+target);
+          }
+          if(!navigation.includes("window.addEventListener('popstate'") ||
+             !navigation.includes("history.pushState(") ||
+             !navigation.includes("location.hash.startsWith('#forge-sync?')"))
+             throw new Error('Safe browser-back navigation must be present and preserve Health imports');
           // UI quality gates from mobile-native and animation-performance.
           const polishJS=fs.readFileSync('forge-polish.js','utf8');
           if (!html.includes('aria-current="page"') || !match[1].includes("setAttribute('aria-current', 'page')"))
@@ -159,7 +172,7 @@ jobs:
       - name: Create static site bundle
         run: |
           mkdir -p site
-          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js forge-integrations.js manifest.webmanifest sw.js icon.svg site/
+          cp index.html forge-extras.css forge-extras.js forge-polish.css forge-polish.js forge-navigation.js forge-integrations.js manifest.webmanifest sw.js icon.svg site/
           touch site/.nojekyll
           node - <<'NODE'
           const fs=require('fs');
