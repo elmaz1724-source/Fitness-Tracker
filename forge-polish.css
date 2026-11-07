@@ -708,3 +708,193 @@ body:not(.forge-basics) .forge-basics-menu-note{display:none!important}
  .forge-basics-walking-fields{gap:7px}
  .forge-basics-walking-fields input{padding-inline:8px}
 }
+
+
+/* FORGE 8.1 — Midnight Blue core UI. No new features, no tracking changes.
+   Design focus: 1 primary task per view, clean hierarchy, strong readable numbers. */
+:root{
+  --bg:#0a101b;
+  --panel:#111d2b;
+  --panel2:#172638;
+  --line:#2a405a;
+  --text:#f5f8ff;
+  --muted:#9caec4;
+  --accent:#6aadff;
+  --accent2:#448ef5;
+  --forge-blue-soft:#96caff;
+  --forge-blue-strong:#3c82ea;
+}
+html{background:#0a101b}
+body.forge-basics{
+  background:
+    radial-gradient(ellipse 85% 30% at 50% -9%,rgba(64,126,217,.16),transparent 76%),
+    linear-gradient(180deg,#0c1422 0%,#0a101b 67%,#0a101b 100%);
+}
+.forge-basics .topbar{margin-bottom:18px}
+.forge-basics .brand-mark{
+  background:linear-gradient(145deg,#8ac5ff,#448ef5);
+  color:#0a1b31;
+  box-shadow:0 8px 22px rgba(57,121,224,.18);
+}
+.forge-basics .forge-header-menu>summary{
+  background:#162537;
+  border-color:#344e6a;
+  color:#badcff;
+}
+.forge-basics .forge-header-panel{
+  background:#152235;
+  border-color:#385477;
+}
+.forge-basics .tabs{
+  background:rgba(15,27,43,.97);
+  border-color:#2a4361;
+}
+.forge-basics .tab.active{
+  background:linear-gradient(135deg,#81c0ff,#549af4);
+  color:#09203a;
+  box-shadow:0 3px 14px rgba(53,126,230,.18);
+}
+.forge-basics .tab:not(.active){color:#a7b7cb}
+.forge-basics #today .forge-steps-card,
+.forge-basics #walking .forge-walk-sync,
+.forge-basics #walking .forge-walk-plan-card,
+.forge-basics #walking .forge-basics-walking-controls,
+.forge-basics #progress .card,
+.forge-basics #progress .chart,
+.forge-basics #progress .summary-tile{
+  box-shadow:0 12px 28px rgba(3,9,18,.15);
+  border-color:#304a67;
+}
+.forge-basics #today .forge-steps-card,
+.forge-basics #walking .forge-walk-plan-card{
+  background:radial-gradient(ellipse 80% 65% at 0% 0%,rgba(77,149,255,.12),transparent 72%),
+    linear-gradient(145deg,#17273b,#101b2a 80%);
+  border-radius:22px;
+}
+.forge-basics #today .forge-step-head h2{font-size:clamp(20px,3.5vw,24px);line-height:1.18}
+.forge-basics #today .forge-step-goal{
+  background:#203751;border-color:#3b5e85;color:#b8dcff;
+  letter-spacing:.1px;
+}
+.forge-basics #today .forge-step-stat{
+  background:#111f30;
+  border-color:#2e4662;
+}
+.forge-basics #today .forge-step-stat .forge-step-done{color:#88c5ff}
+.forge-basics #today .forge-step-progress{
+  background:#23374e;
+  border-color:#304a68;
+}
+.forge-basics #today #forgeStepFill,
+.forge-basics #walking #walkingProgressFill{
+  background:linear-gradient(90deg,#367fec,#83c4ff);
+  box-shadow:none;
+}
+.forge-basics #today .forge-step-bar-head strong{color:#9bcfff}
+.forge-basics #today .forge-step-entry{
+  background:#101b2a;
+  border-color:#2e4761;
+}
+.forge-basics #today .forge-step-entry-row input,
+.forge-basics #walking .forge-basics-walking-fields input{
+  background:#0d1725;color:#f4f8ff;border-color:#36516d;
+}
+.forge-basics #today .forge-step-entry-row input:focus,
+.forge-basics #walking .forge-basics-walking-fields input:focus{
+  border-color:#74b8ff;
+  box-shadow:0 0 0 3px rgba(103,167,244,.15);
+}
+.forge-basics #today .forge-step-save,
+.forge-basics #walking .forge-walk-finish-btn{
+  background:#6aadff;
+  color:#0b223e;
+  font-weight:900;
+}
+.forge-basics #today .forge-step-links button,
+.forge-basics #today .forge-step-weight button{color:#9fcaff}
+.forge-basics #today .forge-step-weight{
+  border-top-color:#314761;
+  color:#a8bbd0;
+}
+
+/* Walking: show real step status, estimated time, then controls. */
+.forge-basics #walking.view.active{display:flex;flex-direction:column}
+.forge-basics #walking .forge-walk-sync{order:0}
+.forge-basics #walking .forge-walk-plan-card{order:1}
+.forge-basics #walking .forge-basics-walking-controls{order:2}
+.forge-basics #walking .forge-walk-finish{order:3}
+.forge-basics #walking .forge-walk-sync{
+  background:linear-gradient(130deg,#16273b,#111d2d);
+}
+.forge-basics #walking .forge-walk-sync-source{
+  color:#b3d7ff;background:#1d3550;border-color:#315475;
+}
+.forge-basics #walking .forge-walk-sync-values>div{
+  background:#101f30;border-color:#2d4765;
+}
+.forge-basics #walking .forge-walk-sync-values>div:first-child strong{color:#88c5ff}
+.forge-basics #walking .forge-walk-sync-progress{background:#233b56}
+.forge-basics #walking .forge-walk-plan-time{
+  background:#1c3554;
+  border-color:#3e6899;
+}
+.forge-basics #walking .forge-walk-plan-time strong{color:#b8dcff}
+.forge-basics #walking .forge-walk-plan-count{
+  background:#122236;
+  border-color:#344f70;
+}
+.forge-basics #walking .forge-walk-plan-meta>span:not(:first-child){display:none!important}
+.forge-basics #walking .forge-walk-plan-meta>span:first-child{
+  background:#13253a;border-color:#2f4c69;padding:8px 12px;
+}
+.forge-basics #walking .forge-basics-walking-controls{
+  background:#132235;border-radius:18px;
+}
+.forge-basics #walking .forge-basics-walking-controls h2{margin-bottom:12px}
+.forge-basics #walking .forge-walk-finish{
+  background:#131f30;
+  border-color:#2c4462;
+  box-shadow:none;
+  margin-top:12px;
+}
+.forge-basics #walking .forge-walk-finish h2{font-size:17px}
+.forge-basics #walking .forge-walk-finish p{max-width:400px}
+
+/* Weight: one summary, one input, one factual trend. */
+.forge-basics #progress .mini-header h2{font-size:clamp(22px,4vw,27px)}
+.forge-basics #progress .weight-summary .summary-tile{
+  background:#142235;border-radius:17px;
+}
+.forge-basics #progress .weight-summary .summary-tile b{
+  color:#e5f1ff;font-variant-numeric:tabular-nums;
+}
+.forge-basics #progress .section-title{font-size:17px;letter-spacing:-.3px}
+.forge-basics #progress .card{
+  background:#121e2d;
+  border-radius:18px;
+}
+.forge-basics #progress #addWeight{
+  background:#6aadff;color:#0c2139;
+  min-height:48px;
+}
+.forge-basics #progress .chart{
+  background:#111e2e;
+  border-radius:18px;
+}
+.forge-basics #progress .feedback{color:#adc3db}
+@media(max-width:700px){
+  .forge-basics #today .forge-steps-card{padding:18px 15px 16px}
+  .forge-basics #walking .forge-walk-plan-card{padding:18px 15px}
+  .forge-basics #walking .forge-walk-finish{padding:15px}
+  .forge-basics #progress #addWeight{width:100%}
+}
+@media(max-width:370px){
+  .forge-basics #today .forge-step-head{gap:7px}
+  .forge-basics #today .forge-step-goal{font-size:9px;padding:7px}
+  .forge-basics #today .forge-step-stat{padding-inline:10px}
+  .forge-basics #walking .forge-walk-plan-main{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  .forge-basics #today #forgeStepFill,
+  .forge-basics #walking #walkingProgressFill{transition:none}
+}
