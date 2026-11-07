@@ -21,12 +21,18 @@
 
   tabs.forEach(tab=>tab.addEventListener('click',()=>{
     const view=tab.dataset.view;
-    if(restoring||!valid.has(view)||location.hash.startsWith('#forge-sync?'))return;
+    if(restoring||!valid.has(view))return;
     if(!window.history||typeof history.pushState!=='function')return;
     const current=history.state&&typeof history.state==='object'?history.state:{};
     if(current.forgeView===view)return;
     try{
-      history.pushState({...current,forgeView:view},'',location.href);
+      if(location.hash.startsWith('#forge-sync?')){
+        // The Health bridge opens Training programmatically. Update the current
+        // state only: never add a separate back-history entry with health values.
+        history.replaceState({...current,forgeView:view},'',location.href);
+      }else{
+        history.pushState({...current,forgeView:view},'',location.href);
+      }
     }catch{/* Do not block tab navigation if the host rejects history changes. */}
   }));
 
