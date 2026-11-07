@@ -23,6 +23,8 @@ jobs:
           node --check forge-extras.js
           node --check forge-polish.js
           node --check forge-navigation.js
+          node --check scripts/test-navigation.mjs
+          node scripts/test-navigation.mjs
           node --check forge-integrations.js
           node --check sw.js
           node --check scripts/verify-agent-skills.mjs
