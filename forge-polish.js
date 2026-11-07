@@ -13,7 +13,8 @@
    $('#forgeSnapLeft').textContent=formatted(left);
    $('#forgeSnapWeight').textContent=weight==='—'?'—':weight;
    $('#forgeStepPercent').textContent=percent+' %';
-   $('#forgeStepFill').style.width=percent+'%';
+   // Compositor-only animation: preserve the exact percentage while avoiding layout on each update.
+   $('#forgeStepFill').style.transform='scaleX('+(percent/100)+')';
    $('#forgeStepProgress').setAttribute('aria-valuenow',String(percent));
    $('#forgeStepNote').textContent=left===0
      ?'Ziel erreicht! Du bist heute '+formatted(done)+' Schritte gelaufen.'

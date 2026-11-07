@@ -39,6 +39,8 @@ jobs:
           node --check forge-polish.js
           node --check forge-integrations.js
           node --check sw.js
+          node --check scripts/verify-agent-skills.mjs
+          node scripts/verify-agent-skills.mjs
           node - <<'NODE'
           const fs = require('fs');
           const vm = require('vm');
@@ -58,6 +60,18 @@ jobs:
             throw new Error('Expected exactly four navigation tabs');
           const polish=fs.readFileSync('forge-polish.css','utf8');
           const integrations=fs.readFileSync('forge-integrations.js','utf8');
+          // UI quality gates from mobile-native and animation-performance.
+          const polishJS=fs.readFileSync('forge-polish.js','utf8');
+          if (!html.includes('aria-current="page"') || !match[1].includes("setAttribute('aria-current', 'page')"))
+            throw new Error('Selected navigation must be exposed to assistive technologies');
+          if (!polishJS.includes("$('#forgeStepFill').style.transform='scaleX('")
+              || !match[1].includes("$('#walkingProgressFill').style.transform='scaleX('"))
+            throw new Error('Step progress must animate with compositor-only transforms');
+          if (!polish.includes('transform-origin:left center;transition:transform')
+              || !polish.includes('@media (hover:hover) and (pointer:fine)'))
+            throw new Error('Mobile motion and pointer capability styles missing');
+          if (!polish.includes('.planner-settings select{font-size:16px}'))
+            throw new Error('iPhone planner select must avoid focus zoom');
           // Walking focus mode: all old controls stay mounted inside optional details.
           for(const [id,opening] of [
              ['forgeWalkAdvanced','<details class="forge-walk-details" id="forgeWalkAdvanced">'],
