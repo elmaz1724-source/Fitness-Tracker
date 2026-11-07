@@ -898,3 +898,13 @@ body.forge-basics{
   .forge-basics #today #forgeStepFill,
   .forge-basics #walking #walkingProgressFill{transition:none}
 }
+
+
+/* The estimated Walking duration intentionally does not treat incline as speed. */
+.forge-basics .forge-basics-help{
+  margin:12px 2px 0;
+  font-size:11px;
+  color:#9fb5cf;
+  line-height:1.55;
+  max-width:62ch;
+}
