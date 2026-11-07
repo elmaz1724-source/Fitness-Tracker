@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.5:** Die bestehenden FORGE-Funktionen werden mit 17 projektlokalen Codex-Design-Skills unterstützt. Kleine, gezielte Verbesserungen für iPhone-Touch, barrierearme Navigation, konsistente Bewegungen und flüssigere Schritt-Fortschrittsanzeigen. Alle bisherigen Daten und Berechnungen bleiben erhalten; kein Ernährungstracking.
+**Version 7.6:** FORGE nutzt bewusst vertraute iPhone-Navigationsmuster: vier stabile Tabs, einen neuen Einstellungszugang oben rechts und Browser-Zurück zwischen zuvor geöffneten Bereichen. Alle bisherigen Fitnessfunktionen und Daten bleiben erhalten; kein Ernährungstracking.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,22 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## Navigation nach Jakob's Law (FORGE 7.6)
+
+Die Nielsen Norman Group beschreibt mit **Jakob's Law**, warum Nutzer eine vertraute App-Navigation erwarten. FORGE übernimmt nur die passenden Muster, nicht die Oberfläche von Instagram/TikTok/YouTube.
+
+| Vorher | Jetzt | Warum |
+| --- | --- | --- |
+| Vier Tabs: Heute, Walking, Fortschritt, Training | **Dieselben vier Tabs** bleiben unverändert, mit Heute ganz links | Hauptnavigation muss stabil und leicht lernbar sein |
+| Erinnerungen, Health, Backup und Systemcheck über mehrere Bereiche verteilt | **Einstellungen-Symbol oben rechts** öffnet Schnellzugriffe zu den vorhandenen Abschnitten | Sekundäre Einstellungen nicht als neuer Tab |
+| Tabwechsel hatten keine Browser-Historie | Tabwechsel werden per **History API** erfasst, Browser-Zurück kann wieder den vorherigen Tab anzeigen | Vertrautes Zurück-Verhalten ohne eigene Swipe-Geste |
+| Keine verpflichtende Profilverwaltung | **Kein künstlicher Profil-Tab** | Die Web-App benötigt aktuell kein Konto |
+| Schritte, Training und Backup haben bereits eigene Aktionen | **Keine zusätzliche zentrale Plus-Schaltfläche** | Aktionen dort, wo ihre Inhalte hingehören |
+
+**Bedienung:** Oben rechts das Zahnrad öffnen und *Erinnerungen*, *Health & Daten*, *Datensicherung* oder *iPhone-App & System* auswählen. FORGE wechselt in den bestehenden Bereich und springt zur jeweiligen Einstellung. Tippen außerhalb oder Escape schließt das Menü. Ein Back-Gesture wird **nicht** künstlich abgefangen: Der Browser kann seine native Zurück-Navigation nutzen, wo er sie anbietet. Ob die installierte iOS-Home-Bildschirm-App dieselbe Geste bietet, muss auf dem iPhone getestet werden.
+
+**Pull-to-Refresh:** Wir überschreiben die Browserfunktion nicht und bauen keine zusätzliche automatische Aktualisierung, die offene Eingaben verwerfen könnte.
+
 ## Codex-Agent-Skills und UI-Qualitätsleitfaden
 
 Alle **17 Skill-Einstiegspunkte** aus [emilkowalski/skills](https://github.com/emilkowalski/skills) sind mit ihren neun ergänzenden Markdown-Dateien projektlokal unter `.agents/skills/` eingebunden. Dazu kommen die zwei unveränderten Cheatsheets, Upstream-README und MIT-Lizenz in `docs/emil-kowalski/`.
@@ -156,4 +172,4 @@ Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.5.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
+Aktuelle Version: **7.6.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
