@@ -1,59 +1,59 @@
 /* FORGE 6 — visual refresh layered over working UI. No tracking logic changed. */
 :root{
- --bg:#090e12;--panel:#121a21;--panel2:#19252d;--line:#26373b;
- --text:#f4f8f5;--muted:#91a5a6;--accent:#c9ff6a;--accent2:#89df8d;
+ --bg:#0a101b;--panel:#121a21;--panel2:#19252d;--line:#262f3b;
+ --text:#f4f6f8;--muted:#919aa6;--accent:#6aadff;--accent2:#448ef5;
  --shadow:0 16px 42px rgba(0,0,0,.17);--radius:21px;
 }
 html{background:#090e12;scroll-behavior:smooth}
 body{
- background:radial-gradient(ellipse 70% 25% at 75% -3%,rgba(124,218,108,.12),transparent 75%),
- linear-gradient(180deg,#0b1317,#090e12 55%,#0a1115);
+ background:radial-gradient(ellipse 70% 25% at 75% -3%,rgba(108,158,218,.12),transparent 75%),
+ linear-gradient(180deg,#0b1017,#090e12 55%,#0a1115);
  color:var(--text);font-feature-settings:"tnum" 1;
 }
 .app{max-width:1060px;padding:calc(25px + env(safe-area-inset-top)) 20px calc(68px + env(safe-area-inset-bottom))}
 .topbar{margin-bottom:24px;position:relative}
 .brand{gap:12px}.brand-mark{
- background:linear-gradient(140deg,#d9ff90,#a5e86c);width:46px;height:46px;
- border-radius:14px;color:#183014;box-shadow:0 11px 28px rgba(171,242,113,.14);font-size:27px
+ background:linear-gradient(140deg,#90c2ff,#6ca4e8);width:46px;height:46px;
+ border-radius:14px;color:#142130;box-shadow:0 11px 28px rgba(113,171,242,.14);font-size:27px
 }
 .brand h1{font-size:26px;letter-spacing:-1.5px;font-weight:950}
-.brand p{font-size:11px;letter-spacing:.3px;color:#91ada4;font-weight:600}
-.pill{padding:9px 14px;background:#172820;color:#c5f9a0;border-color:#36533d;letter-spacing:.8px;font-size:10px}
+.brand p{font-size:11px;letter-spacing:.3px;color:#919ead;font-weight:600}
+.pill{padding:9px 14px;background:#171f28;color:#a0c8f9;border-color:#364353;letter-spacing:.8px;font-size:10px}
 .tabs{
- background:rgba(14,23,29,.9);border:1px solid #2a3b40;
+ background:rgba(14,23,29,.9);border:1px solid #2a3440;
  box-shadow:0 7px 30px rgba(0,0,0,.2);border-radius:18px;
  padding:6px;gap:5px;z-index:90
 }
 .tab{font-size:12px;min-height:48px;gap:7px;letter-spacing:.1px;transition:background-color .18s ease-out,color .18s ease-out,transform .14s ease-out}
-.tab.active{background:#c9ff6a;color:#16220d;box-shadow:0 3px 14px rgba(172,240,91,.14)}
+.tab.active{background:#6aadff;color:#0d1622;box-shadow:0 3px 14px rgba(91,158,240,.14)}
 .nav-icon{font-size:19px;line-height:1}
-@media (hover:hover) and (pointer:fine){.tab:not(.active):hover{background:#1c2c30;color:#eff8ee}}
+@media (hover:hover) and (pointer:fine){.tab:not(.active):hover{background:#1c2530;color:#eef3f8}}
 .section-title{font-size:20px;letter-spacing:-.65px;margin:28px 0 13px}
-.eyebrow,.forge-kicker,.planner-kicker{font-size:10px;letter-spacing:2px;color:#bdf191}
+.eyebrow,.forge-kicker,.planner-kicker{font-size:10px;letter-spacing:2px;color:#91bcf1}
 .card,.forge-surface,.insight-card,.summary-tile,.forecast-card{
- border-color:#2b3c40;background:linear-gradient(148deg,#172128,#111a20);
+ border-color:#2b3440;background:linear-gradient(148deg,#172128,#111a20);
  box-shadow:0 6px 25px rgba(0,0,0,.06)
 }
 .card{border-radius:20px}.forge-surface{border-radius:22px}
 .hero-dash{
  position:relative;isolation:isolate;min-height:215px;margin:0 0 13px;
- padding:29px 31px;border-radius:27px;border:1px solid #486c42;
- background:radial-gradient(ellipse 42% 100% at 100% 0%,rgba(185,254,105,.15),transparent),
- linear-gradient(130deg,#203928,#13251f 58%,#16272a);
+ padding:29px 31px;border-radius:27px;border:1px solid #42556c;
+ background:radial-gradient(ellipse 42% 100% at 100% 0%,rgba(105,172,254,.15),transparent),
+ linear-gradient(130deg,#202b39,#131b25 58%,#161f2a);
  box-shadow:0 18px 50px rgba(0,0,0,.13);gap:20px
 }
 .hero-dash::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.45;pointer-events:none;
- background:repeating-linear-gradient(135deg,transparent 0 25px,rgba(176,240,132,.03) 25px 26px);border-radius:inherit}
+ background:repeating-linear-gradient(135deg,transparent 0 25px,rgba(132,181,240,.03) 25px 26px);border-radius:inherit}
 .hero-dash h2{font-size:clamp(29px,4vw,43px);max-width:480px;line-height:1.07;letter-spacing:-1.8px}
-.hero-dash p{color:#bad1c4;font-size:13px;max-width:450px}
-.ring{width:126px;height:126px;box-shadow:0 0 0 8px rgba(19,37,31,.45);background:conic-gradient(#c9ff6a var(--progress),#325044 0)}
-.ring-inner{width:100px;height:100px;background:#193129}
+.hero-dash p{color:#bac4d1;font-size:13px;max-width:450px}
+.ring{width:126px;height:126px;box-shadow:0 0 0 8px rgba(19,27,37,.45);background:conic-gradient(#6aadff var(--progress),#324050 0)}
+.ring-inner{width:100px;height:100px;background:#192431}
 .ring-inner strong{font-size:29px}
-.ring-inner small{color:#aacbb4;text-transform:uppercase;letter-spacing:.6px}
+.ring-inner small{color:#aab9cb;text-transform:uppercase;letter-spacing:.6px}
 .forge-live-brief{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:9px 12px;
- background:rgba(9,29,21,.49);border:1px solid rgba(171,224,139,.2);border-radius:11px;color:#daf4d0;
+ background:rgba(9,18,29,.49);border:1px solid rgba(139,177,224,.2);border-radius:11px;color:#d0e0f4;
  font-size:12px;font-weight:650;max-width:100%}
-.forge-live-dot{width:6px;height:6px;border-radius:100%;background:#b5f76f;box-shadow:0 0 0 4px #a6ec6820;flex-shrink:0}
+.forge-live-dot{width:6px;height:6px;border-radius:100%;background:#6facf7;box-shadow:0 0 0 4px #68a3ec20;flex-shrink:0}
 #today.view.active{display:flex;flex-direction:column}
 #today>*{order:10}
 #today>.hero-dash{order:0}
@@ -64,67 +64,67 @@ body{
 #today>.grid4{order:5}
 .forge-snapshot{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:10px;margin-bottom:5px}
 .forge-snapshot-card{
- border:1px solid #304644;background:linear-gradient(155deg,#152427,#101b21);
+ border:1px solid #303a46;background:linear-gradient(155deg,#151d27,#101b21);
  padding:17px 20px;border-radius:19px;display:flex;flex-direction:column;justify-content:space-between;min-height:114px;gap:9px
 }
-.forge-snapshot-card.is-primary{background:linear-gradient(138deg,#20372c,#162924);border-color:#44653d}
-.forge-snapshot-label{font-size:11px;color:#adc1ba}
+.forge-snapshot-card.is-primary{background:linear-gradient(138deg,#202a37,#161f29);border-color:#3d4f65}
+.forge-snapshot-label{font-size:11px;color:#adb6c1}
 .forge-snapshot-card strong{font-size:clamp(21px,3vw,28px);letter-spacing:-1px;line-height:1.05}
-.forge-snapshot-card.is-primary strong{color:#d0ff89}
-.forge-snapshot-card small{font-size:11px;color:#91b1a1}
-.forge-snapshot-card button{align-self:flex-start;border:0;background:transparent;color:#bdf29a;font-size:11px;font-weight:850;padding:0;cursor:pointer;text-align:left}
+.forge-snapshot-card.is-primary strong{color:#89beff}
+.forge-snapshot-card small{font-size:11px;color:#919fb1}
+.forge-snapshot-card button{align-self:flex-start;border:0;background:transparent;color:#9ac2f2;font-size:11px;font-weight:850;padding:0;cursor:pointer;text-align:left}
 .forge-section{margin-top:21px}.forge-heading{margin-bottom:11px}
 .forge-heading h2{font-size:19px;letter-spacing:-.6px}
 #today .forge-section:has(#forgeTodayTools)>.forge-heading{margin-top:9px}
-#forgeTodayTools{background:#121e25;border-color:#324447}
+#forgeTodayTools{background:#121e25;border-color:#323b47}
 #forgeTodayTools .forge-grid>.forge-field input{font-size:18px;font-weight:750}
-.forge-sm-btn.primary,.btn{background:#c9ff6a;color:#1b2913;box-shadow:0 7px 20px rgba(161,242,107,.1)}
+.forge-sm-btn.primary,.btn{background:#6aadff;color:#131d29;box-shadow:0 7px 20px rgba(107,168,242,.1)}
 .btn{min-height:49px;letter-spacing:.1px}
 @media (hover:hover) and (pointer:fine){.btn:hover,.forge-sm-btn.primary:hover{filter:brightness(1.045)}}
 .btn:active,.forge-sm-btn:active{transform:scale(.985)}
 .forge-sm-btn{min-height:44px;border-radius:12px;transition:background-color .16s ease-out,border-color .16s ease-out,color .16s ease-out,filter .16s ease-out,transform .14s ease-out}
-.forge-field input:focus,.forge-field select:focus{border-color:#c9ff6a;box-shadow:0 0 0 3px #c9ff6a15}
+.forge-field input:focus,.forge-field select:focus{border-color:#6aadff;box-shadow:0 0 0 3px #6aadff15}
 .planner{
- border:1px solid #41613c;background:linear-gradient(150deg,#1b3027,#121f23 80%);
+ border:1px solid #3c4d61;background:linear-gradient(150deg,#1b2430,#121a23 80%);
  border-radius:24px;padding:23px;margin:13px 0 2px;box-shadow:none
 }
 .planner h2{font-size:25px;letter-spacing:-1px}
-.planner-mark{background:#c9ff6a}
+.planner-mark{background:#6aadff}
 .planner-fields input,.planner-fields select{font-feature-settings:"tnum" 1}
 .planner-results{gap:9px}
-.planner-result{background:#112123;border-color:#385446;padding:14px}
-.planner-result strong{color:#f4faf3;font-size:23px}
-.planner-result.accent strong{color:#c9ff6a}
-.planner-summary{background:#193127;border-color:#3a6447;color:#e0eddf}
-.forge-auto{background:#20392c;border-color:#466d4c}
-.forge-auto strong{color:#d8fac9}
-.forge-auto p{color:#b7d5bf}
-.goal{border-color:#2d4144;border-radius:15px;background:#132126;min-height:69px}
-.goal b{font-size:14px}.goal span{font-size:12px;color:#9aadb5}
-.goal:has(.check:checked){border-color:#51844b;background:#203a2a}
+.planner-result{background:#111923;border-color:#384554;padding:14px}
+.planner-result strong{color:#f3f6fa;font-size:23px}
+.planner-result.accent strong{color:#6aadff}
+.planner-summary{background:#192431;border-color:#3a4d64;color:#dfe5ed}
+.forge-auto{background:#202b39;border-color:#46586d}
+.forge-auto strong{color:#c9dffa}
+.forge-auto p{color:#b7c5d5}
+.goal{border-color:#2d3744;border-radius:15px;background:#131c26;min-height:69px}
+.goal b{font-size:14px}.goal span{font-size:12px;color:#9aa6b5}
+.goal:has(.check:checked){border-color:#4b6584;background:#202c3a}
 .grid4>.card.stat{min-height:108px}
 .stat .value{font-size:24px}
-.macro{background:#121f23;border-color:#2b4142}
-.checkpoint{background:linear-gradient(135deg,#1b3628,#152325);border-color:#3f6446}
-.checkpoint .big{color:#c9ff6a}
-.forge-reminder{border-radius:11px;background:#192b26;border-color:#345448;color:#cbe0d4}
-.walk-main{background:linear-gradient(135deg,#24482f,#172d28);border-color:#4a794a}
-.walk-main .big{font-size:42px;color:#e4ffbf}
-.walk-stat,.block{border-radius:16px;background:#142026;border-color:#2e4242}
-.walk-stat b{color:#e4ffcf}
+.macro{background:#121a23;border-color:#2b3542}
+.checkpoint{background:linear-gradient(135deg,#1b2736,#151c25);border-color:#3f5064}
+.checkpoint .big{color:#6aadff}
+.forge-reminder{border-radius:11px;background:#19212b;border-color:#344254;color:#cbd4e0}
+.walk-main{background:linear-gradient(135deg,#243448,#17212d);border-color:#4a5f79}
+.walk-main .big{font-size:42px;color:#bfdcff}
+.walk-stat,.block{border-radius:16px;background:#141c26;border-color:#2e3742}
+.walk-stat b{color:#cfe5ff}
 .inputrow>.field,.inputrow>.speed-field{min-width:0}
-.speed-chip.active{background:#2c482a;color:#caff9c;border-color:#5a8951}
-.day.done{background:#24452e;border-color:#639b52}
+.speed-chip.active{background:#2a3848;color:#9cc9ff;border-color:#516a89}
+.day.done{background:#243345;border-color:#52739b}
 .forge-entry{border-radius:15px}
 .weight-summary{gap:9px}
 .summary-tile{border-radius:17px}
-.weight-item{border-color:#2b3f41}
+.weight-item{border-color:#2b3541}
 .chart{border-radius:19px}
 .forge-sm-btn:focus-visible,.speed-chip:focus-visible,.goal-option:focus-visible,.tab:focus-visible,
-.day:focus-visible,.speed-btn:focus-visible,button:focus-visible{outline:2px solid #d7ff90;outline-offset:3px}
-input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offset:2px}
-.footer-note{margin-top:45px;border-top:1px solid #25383b;padding-top:16px;color:#7e999a}
-.forge-version{font-weight:900;color:#aec69d;letter-spacing:.5px}
+.day:focus-visible,.speed-btn:focus-visible,button:focus-visible{outline:2px solid #90c2ff;outline-offset:3px}
+input:focus-visible,select:focus-visible{outline:2px solid #6aadff;outline-offset:2px}
+.footer-note{margin-top:45px;border-top:1px solid #252f3b;padding-top:16px;color:#7e8b9a}
+.forge-version{font-weight:900;color:#9dafc6;letter-spacing:.5px}
 @media(min-width:850px){
  .app{padding-top:34px}
  .tabs{position:sticky;top:13px}
@@ -140,14 +140,14 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
  .brand p{font-size:10px}
  .pill{font-size:9px;padding:8px 9px}
  .tabs{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));top:auto;
-  max-width:520px;margin:0 auto;padding:6px;border-radius:19px;gap:4px;background:#122026f4;
-  box-shadow:0 10px 50px rgba(0,0,0,.55);border:1px solid #38504b}
+  max-width:520px;margin:0 auto;padding:6px;border-radius:19px;gap:4px;background:#121b26f4;
+  box-shadow:0 10px 50px rgba(0,0,0,.55);border:1px solid #384350}
  .tab{min-height:58px;gap:3px;font-size:10px}
  .nav-icon{font-size:22px}
  .hero-dash{border-radius:22px;padding:21px 20px;min-height:0;gap:10px}
  .hero-dash h2{font-size:clamp(24px,6.5vw,31px);letter-spacing:-1.1px}
  .hero-dash p{font-size:12px;line-height:1.5}
- .ring{width:88px;height:88px;box-shadow:0 0 0 5px #112f262b}
+ .ring{width:88px;height:88px;box-shadow:0 0 0 5px #111f2f2b}
  .ring-inner{width:69px;height:69px}.ring-inner strong{font-size:21px}.ring-inner small{font-size:9px}
  .forge-live-brief{font-size:11px;margin-top:11px;padding:8px 10px}
  .forge-snapshot{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
@@ -202,7 +202,7 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 .tabs>.tab>.nav-icon{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;line-height:1}
 .tabs>.tab>.nav-icon svg{width:23px;height:23px;display:block;fill:none;stroke:currentColor;overflow:visible}
 .forge-plan-reference{
-  margin-top:25px;border:1px solid #2a4041;background:linear-gradient(135deg,#142228,#101c20);
+  margin-top:25px;border:1px solid #2a3441;background:linear-gradient(135deg,#141d28,#101720);
   border-radius:17px;overflow:hidden;color:var(--text)
 }
 .forge-plan-reference summary{
@@ -211,12 +211,12 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 }
 .forge-plan-reference summary::-webkit-details-marker{display:none}
 .forge-plan-reference summary strong{display:block;font-weight:800;font-size:15px;letter-spacing:-.25px}
-.forge-plan-reference summary small{display:block;margin-top:3px;color:#91a6a8;font-size:11px}
+.forge-plan-reference summary small{display:block;margin-top:3px;color:#919ba8;font-size:11px}
 .forge-plan-chevron{font-size:23px;line-height:1;color:var(--accent);transition:transform .16s;flex-shrink:0}
 .forge-plan-reference[open] .forge-plan-chevron{transform:rotate(180deg)}
 .forge-plan-reference summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px;border-radius:15px}
 .forge-plan-content{padding:0 16px 17px}
-.forge-plan-content p{font-size:12px;color:#9fb6b6;line-height:1.5;margin:0 0 13px}
+.forge-plan-content p{font-size:12px;color:#9fa9b6;line-height:1.5;margin:0 0 13px}
 .forge-plan-content .macro{padding:12px 7px}
 .forge-plan-content .macro b{font-size:17px}
 .forge-plan-reference + .section-title{margin-top:24px}
@@ -251,15 +251,15 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 
 /* FORGE 6.1 – quick backup and keyboard-friendly mobile editing. */
 .forge-backup-mini{
- margin-top:14px;padding:13px 14px;border:1px solid #365444;
- border-radius:14px;background:linear-gradient(135deg,#1a3027,#152722)
+ margin-top:14px;padding:13px 14px;border:1px solid #364454;
+ border-radius:14px;background:linear-gradient(135deg,#1a2430,#151d27)
 }
-.forge-backup-lead strong{display:block;color:#e8f7e8;font-size:13px;font-weight:800}
-.forge-backup-lead span{display:block;margin-top:4px;color:#aec3b7;font-size:11px;line-height:1.45}
+.forge-backup-lead strong{display:block;color:#e8eff7;font-size:13px;font-weight:800}
+.forge-backup-lead span{display:block;margin-top:4px;color:#aeb7c3;font-size:11px;line-height:1.45}
 .forge-backup-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
 .forge-backup-actions .forge-sm-btn{min-width:0;min-height:42px;white-space:normal;font-size:12px}
 .forge-backup-actions #forgeQuickExport{
- color:#1a280f;background:#c9ff6a;border-color:#c9ff6a
+ color:#0f1a28;background:#6aadff;border-color:#6aadff
 }
 .forge-backup-mini .forge-feedback{margin-top:9px}
 .forge-backup-mini .forge-feedback:empty{display:none}
@@ -272,15 +272,15 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 
 /* FORGE 7.0 — Health Shortcuts bridge and local calendar export */
 .forge-sync-stats{margin:12px 0}
-.forge-sync-stats .forge-tile{background:linear-gradient(135deg,#1a3429,#132321);border-color:#3a6249}
+.forge-sync-stats .forge-tile{background:linear-gradient(135deg,#1a2634,#131a23);border-color:#3a4c62}
 .forge-sync-date{font-size:19px!important;letter-spacing:-.4px}
-.forge-sync-how{padding:13px 14px;border-radius:14px;background:#111f22;border:1px solid #304743;margin:13px 0}
+.forge-sync-how{padding:13px 14px;border-radius:14px;background:#111922;border:1px solid #303a47;margin:13px 0}
 .forge-sync-how>strong{display:block;font-size:13px;font-weight:850;margin-bottom:6px}
-.forge-sync-how ol{margin:9px 0 0;padding-left:21px;color:#b9cfc8;font-size:12px;line-height:1.65}
+.forge-sync-how ol{margin:9px 0 0;padding-left:21px;color:#b9c3cf;font-size:12px;line-height:1.65}
 .forge-sync-how li{padding-left:3px;margin:6px 0}
-.forge-sync-how b{color:#ecf7e8}
-.forge-sync-how code{background:#21372d;color:#d6ffa1;border-radius:5px;padding:2px 4px;overflow-wrap:anywhere}
-.forge-sync-subtitle{display:block;color:#e0f2df;font-size:14px;margin:0 0 8px}
+.forge-sync-how b{color:#e8eff7}
+.forge-sync-how code{background:#212b37;color:#a1cbff;border-radius:5px;padding:2px 4px;overflow-wrap:anywhere}
+.forge-sync-subtitle{display:block;color:#dfe8f2;font-size:14px;margin:0 0 8px}
 #forgeSyncSection .forge-sm-btn.primary,#forgeCalendarSection .forge-sm-btn.primary{width:100%;margin:3px 0 8px}
 .forge-reminder-config{
  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -300,62 +300,62 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 #today>.forge-steps-card{order:1}
 .forge-steps-card{
  margin:3px 0 8px;padding:22px 23px 18px;
- background:radial-gradient(ellipse 65% 85% at 5% 0%,rgba(171,247,106,.115),transparent),
- linear-gradient(140deg,#182b25,#121e24 67%);
- border:1px solid #456449;border-radius:24px;box-shadow:0 11px 30px #0000001a
+ background:radial-gradient(ellipse 65% 85% at 5% 0%,rgba(106,169,247,.115),transparent),
+ linear-gradient(140deg,#18212b,#121a24 67%);
+ border:1px solid #455364;border-radius:24px;box-shadow:0 11px 30px #0000001a
 }
 .forge-step-head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:21px}
 .forge-step-head h2{font-size:23px;letter-spacing:-.9px;line-height:1.2;margin:5px 0 0}
-.forge-step-goal{background:#223a2e;color:#d4f7bd;border:1px solid #456c4b;border-radius:100px;
+.forge-step-goal{background:#222d3a;color:#bdd7f7;border:1px solid #45576c;border-radius:100px;
  font-weight:850;font-size:11px;padding:8px 10px;white-space:nowrap;align-self:start}
 .forge-step-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:19px}
-.forge-step-stat{min-width:0;padding:12px 15px;border-radius:16px;background:#102123;border:1px solid #304943}
-.forge-step-stat span,.forge-step-stat small{display:block;color:#9fb8b4;font-size:11px;font-weight:650}
+.forge-step-stat{min-width:0;padding:12px 15px;border-radius:16px;background:#101923;border:1px solid #303b49}
+.forge-step-stat span,.forge-step-stat small{display:block;color:#9faab8;font-size:11px;font-weight:650}
 .forge-step-stat strong{display:block;font-size:clamp(31px,4.8vw,43px);letter-spacing:-1.7px;
- color:#f2f8f1;line-height:1.15;margin:6px 0 4px;font-variant-numeric:tabular-nums}
-.forge-step-stat strong.forge-step-done{color:#ccff81}
+ color:#f1f4f8;line-height:1.15;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.forge-step-stat strong.forge-step-done{color:#81baff}
 .forge-step-bar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
- font-size:12px;color:#b6cabc;margin-bottom:8px}
-.forge-step-bar-head strong{color:#d5f8b0;font-weight:850}
-.forge-step-progress{height:11px;border-radius:100px;overflow:hidden;background:#30453b;border:1px solid #405a48}
-#forgeStepFill{width:100%;height:100%;background:linear-gradient(90deg,#82c96d,#d0ff78);border-radius:inherit;transform:scaleX(0);transform-origin:left center;transition:transform .18s cubic-bezier(.22,1,.36,1)}
-.forge-step-note{font-size:12px;color:#d5e5d5;line-height:1.5;margin:10px 0 18px}
-.forge-step-entry{background:#0e1a20;border:1px solid #344a46;border-radius:16px;padding:15px}
-.forge-step-entry>label{display:block;font-size:12px;color:#c8dacd;font-weight:800;margin-bottom:10px}
+ font-size:12px;color:#b6bfca;margin-bottom:8px}
+.forge-step-bar-head strong{color:#b0d0f8;font-weight:850}
+.forge-step-progress{height:11px;border-radius:100px;overflow:hidden;background:#303945;border:1px solid #404c5a}
+#forgeStepFill{width:100%;height:100%;background:linear-gradient(90deg,#6d96c9,#78b5ff);border-radius:inherit;transform:scaleX(0);transform-origin:left center;transition:transform .18s cubic-bezier(.22,1,.36,1)}
+.forge-step-note{font-size:12px;color:#d5dce5;line-height:1.5;margin:10px 0 18px}
+.forge-step-entry{background:#0e1620;border:1px solid #343e4a;border-radius:16px;padding:15px}
+.forge-step-entry>label{display:block;font-size:12px;color:#c8d0da;font-weight:800;margin-bottom:10px}
 .forge-step-entry-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
-.forge-step-entry-row input{width:100%;min-width:0;min-height:50px;border:1px solid #3a5250;
- border-radius:12px;background:#0c151a;color:#eff8ec;padding:10px 13px;
+.forge-step-entry-row input{width:100%;min-width:0;min-height:50px;border:1px solid #3a4552;
+ border-radius:12px;background:#0c151a;color:#ecf1f8;padding:10px 13px;
  font-size:22px;font-weight:800;font-variant-numeric:tabular-nums;outline:none}
-.forge-step-entry-row input:focus{border-color:#b5f56e;box-shadow:0 0 0 3px #c9ff6a1a}
-.forge-step-save{background:#c9ff6a;color:#183111;border:0;border-radius:12px;font-weight:900;
+.forge-step-entry-row input:focus{border-color:#6eabf5;box-shadow:0 0 0 3px #6aadff1a}
+.forge-step-save{background:#6aadff;color:#111f31;border:0;border-radius:12px;font-weight:900;
  padding:0 22px;font-size:13px;cursor:pointer;min-width:109px}
 .forge-step-save:active{transform:scale(.98)}
-.forge-step-hint{color:#97aaa8;font-size:11px;line-height:1.45;margin:10px 0 0}
-.forge-step-hint strong{color:#c8dfc6}
-.forge-step-feedback{color:#b8ecc6;font-size:12px;margin-top:8px;line-height:1.4}
+.forge-step-hint{color:#97a0aa;font-size:11px;line-height:1.45;margin:10px 0 0}
+.forge-step-hint strong{color:#c6d1df}
+.forge-step-feedback{color:#b8cfec;font-size:12px;margin-top:8px;line-height:1.4}
 .forge-step-feedback:empty{display:none}
 .forge-step-feedback.error{color:#ffb1a9}
 .forge-step-links{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:14px}
-.forge-step-links button,.forge-step-weight button{border:0;background:transparent;color:#bff287;
+.forge-step-links button,.forge-step-weight button{border:0;background:transparent;color:#87b7f2;
  font-weight:800;font-size:12px;padding:5px 0;cursor:pointer}
-.forge-step-links button:last-child{color:#abbdbe}
+.forge-step-links button:last-child{color:#abb4be}
 .forge-step-weight{display:flex;align-items:center;justify-content:space-between;gap:10px;
- font-size:11px;color:#9fb4ae;border-top:1px solid #344a44;margin-top:11px;padding-top:12px}
-.forge-step-weight strong{color:#e7f4e3;font-size:13px}
+ font-size:11px;color:#9fa8b4;border-top:1px solid #343e4a;margin-top:11px;padding-top:12px}
+.forge-step-weight strong{color:#e3ebf4;font-size:13px}
 .forge-quick-weight-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px}
 .forge-quick-weight-row>.forge-field{min-width:0}
 .forge-quick-weight-row>.forge-sm-btn{height:45px;white-space:nowrap}
 /* Collapse the advanced planner: the simple step input remains visible above it. */
 #today>.forge-collapsible-planner{order:3}
-.forge-collapsible-planner{padding:0!important;background:#14251f;border:1px solid #395943;margin:9px 0 0;border-radius:19px}
+.forge-collapsible-planner{padding:0!important;background:#141c25;border:1px solid #394759;margin:9px 0 0;border-radius:19px}
 .forge-collapsible-planner>summary{list-style:none;cursor:pointer;display:flex;
  align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;min-height:72px}
 .forge-collapsible-planner>summary::-webkit-details-marker{display:none}
-.forge-planner-summary-text strong{display:block;color:#e7f5e4;font-size:15px;letter-spacing:-.35px}
-.forge-planner-summary-text small{display:block;color:#a1bdb0;font-size:11px;margin-top:3px}
-.forge-planner-arrow{color:#c9ff6a;font-size:23px;line-height:1;transition:transform .2s}
+.forge-planner-summary-text strong{display:block;color:#e4ecf5;font-size:15px;letter-spacing:-.35px}
+.forge-planner-summary-text small{display:block;color:#a1aebd;font-size:11px;margin-top:3px}
+.forge-planner-arrow{color:#6aadff;font-size:23px;line-height:1;transition:transform .2s}
 .forge-collapsible-planner[open] .forge-planner-arrow{transform:rotate(180deg)}
-.forge-collapsible-planner>summary:focus-visible{outline:2px solid #c9ff6a;outline-offset:-4px;border-radius:17px}
+.forge-collapsible-planner>summary:focus-visible{outline:2px solid #6aadff;outline-offset:-4px;border-radius:17px}
 .forge-planner-inner{padding:0 18px 20px}
 .forge-planner-inner .planner-top{margin-top:7px}
 .forge-planner-inner .planner-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -386,31 +386,31 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 
 /* FORGE 7.2 — today and walking share one actual step count. */
 .forge-walk-sync{padding:19px 20px;margin-bottom:13px;border-radius:21px;
- background:linear-gradient(137deg,#193329,#122322);border:1px solid #436b4c}
+ background:linear-gradient(137deg,#192533,#121a23);border:1px solid #43556b}
 .forge-walk-sync-heading{display:flex;align-items:center;justify-content:space-between;gap:9px;
- margin-bottom:14px;color:#cdfa98;font-size:11px;font-weight:900;letter-spacing:1.3px}
-.forge-walk-sync-source{color:#b2d8b4;border:1px solid #3c6749;background:#21372d;
+ margin-bottom:14px;color:#98c4fa;font-size:11px;font-weight:900;letter-spacing:1.3px}
+.forge-walk-sync-source{color:#b2c3d8;border:1px solid #3c4f67;background:#212b37;
  padding:6px 10px;border-radius:999px;font-size:10px;letter-spacing:0;white-space:nowrap}
 .forge-walk-sync-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.forge-walk-sync-values>div{background:#11231f;border:1px solid #365244;border-radius:13px;padding:13px}
-.forge-walk-sync-values small{display:block;color:#a3bdb0;font-size:11px;margin-bottom:4px}
-.forge-walk-sync-values strong{display:block;color:#f0f6ef;font-size:clamp(26px,6vw,34px);
+.forge-walk-sync-values>div{background:#111923;border:1px solid #364352;border-radius:13px;padding:13px}
+.forge-walk-sync-values small{display:block;color:#a3afbd;font-size:11px;margin-bottom:4px}
+.forge-walk-sync-values strong{display:block;color:#eff2f6;font-size:clamp(26px,6vw,34px);
  font-weight:900;letter-spacing:-1px;font-variant-numeric:tabular-nums}
-.forge-walk-sync-values>div:first-child strong{color:#c8ff7e}
+.forge-walk-sync-values>div:first-child strong{color:#7eb8ff}
 .forge-walk-sync-progress{margin-top:14px;height:10px;border-radius:100px;
- background:#304e3f;overflow:hidden}
+ background:#303e4e;overflow:hidden}
 #walkingProgressFill{height:100%;width:100%;border-radius:100px;transform:scaleX(0);transform-origin:left center;
- background:linear-gradient(90deg,#8fd975,#c9ff6a);transition:transform .18s cubic-bezier(.22,1,.36,1)}
-#walkingSyncNote{margin:12px 0 0;font-size:12px;line-height:1.55;color:#c0d5c3}
+ background:linear-gradient(90deg,#75a2d9,#6aadff);transition:transform .18s cubic-bezier(.22,1,.36,1)}
+#walkingSyncNote{margin:12px 0 0;font-size:12px;line-height:1.55;color:#c0c9d5}
 .forge-walk-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
- background:#111c21;border:1px solid #293c3e;border-radius:14px;padding:5px}
+ background:#111821;border:1px solid #29323e;border-radius:14px;padding:5px}
 .forge-walk-mode button{min-width:0;border:0;border-radius:10px;padding:11px 8px;
- background:transparent;color:#9fb5b2;font-size:12px;font-weight:850;
+ background:transparent;color:#9fa9b5;font-size:12px;font-weight:850;
  cursor:pointer;line-height:1.3}
-.forge-walk-mode button.active{background:#c9ff6a;color:#1d2d13;
+.forge-walk-mode button.active{background:#6aadff;color:#131f2d;
  box-shadow:0 4px 13px #00000025}
-.forge-walk-mode-note{color:#a8c4b6;font-size:12px;line-height:1.55;margin:11px 4px 16px}
-#walkSteps[readonly],#otherSteps[readonly]{background:#152827;color:#c7e9bc;
+.forge-walk-mode-note{color:#a8b5c4;font-size:12px;line-height:1.55;margin:11px 4px 16px}
+#walkSteps[readonly],#otherSteps[readonly]{background:#151e28;color:#bcd0e9;
  opacity:.78;cursor:not-allowed}
 #walkGoalLine{line-height:1.55}
 @media(max-width:700px){
@@ -425,38 +425,38 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 
 /* FORGE 7.3 — Walk completed flow and factual seven-day movement. */
 .forge-walk-finish{display:flex;align-items:center;justify-content:space-between;gap:20px;
-  border:1px solid #456747;border-radius:19px;padding:18px 20px;margin:23px 0 17px;
-  background:linear-gradient(130deg,#1d372b,#122329 90%)}
+  border:1px solid #455467;border-radius:19px;padding:18px 20px;margin:23px 0 17px;
+  background:linear-gradient(130deg,#1d2937,#121c29 90%)}
 .forge-walk-finish h2{font-size:19px;letter-spacing:-.55px;margin:5px 0 6px}
-.forge-walk-finish p{font-size:12px;line-height:1.55;color:#b6cdbb;margin:0;max-width:530px}
-.forge-walk-finish p strong{color:#d8f7cd}
+.forge-walk-finish p{font-size:12px;line-height:1.55;color:#b6c0cd;margin:0;max-width:530px}
+.forge-walk-finish p strong{color:#cde0f7}
 .forge-walk-finish-btn{min-width:190px;max-width:220px;border:0;border-radius:13px;
-  background:#c9ff6a;color:#1d2c14;font-size:12px;font-weight:900;line-height:1.35;
+  background:#6aadff;color:#141f2c;font-size:12px;font-weight:900;line-height:1.35;
   padding:14px 13px;cursor:pointer;flex-shrink:0;transition:filter .15s}
 @media (hover:hover) and (pointer:fine){.forge-walk-finish-btn:hover{filter:brightness(1.05)}}
-.forge-step-week{margin:12px 0 26px;border-radius:20px;background:linear-gradient(145deg,#16232a,#101b20);
-  border:1px solid #304944;padding:19px 19px 15px}
+.forge-step-week{margin:12px 0 26px;border-radius:20px;background:linear-gradient(145deg,#16232a,#101720);
+  border:1px solid #303b49;padding:19px 19px 15px}
 .forge-step-week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:19px}
 .forge-step-week h2{font-size:20px;letter-spacing:-.7px;margin:5px 0 0}
-.forge-step-week-badge{font-size:10px;font-weight:850;color:#d9f8c5;border:1px solid #4d7350;
-  background:#254030;padding:7px 11px;border-radius:30px;max-width:46%;text-align:right}
+.forge-step-week-badge{font-size:10px;font-weight:850;color:#c5dcf8;border:1px solid #4d5e73;
+  background:#253140;padding:7px 11px;border-radius:30px;max-width:46%;text-align:right}
 .forge-step-week-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:0 0 13px}
 .forge-step-week-day{min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;
-  color:#90a7a8;text-align:center;font-variant-numeric:tabular-nums}
+  color:#909ba8;text-align:center;font-variant-numeric:tabular-nums}
 .forge-step-week-label{font-size:11px;font-weight:800}
-.forge-step-week-day.today .forge-step-week-label{color:#d7ffa7}
+.forge-step-week-day.today .forge-step-week-label{color:#a7cfff}
 .forge-step-week-column{height:105px;width:100%;display:flex;align-items:flex-end;justify-content:center;
-  border-radius:9px;background:#1b2a2d;overflow:hidden;padding:3px}
-.forge-step-week-bar{width:100%;background:#689b70;border-radius:6px 6px 3px 3px;
+  border-radius:9px;background:#1b232d;overflow:hidden;padding:3px}
+.forge-step-week-bar{width:100%;background:#687f9b;border-radius:6px 6px 3px 3px;
   min-height:3px}
-.forge-step-week-bar.completed{background:linear-gradient(180deg,#d0ff81,#85c96a)}
-.forge-step-week-bar.missing{background:#39504d}
-.forge-step-week-day small{font-size:10px;font-weight:750;color:#c3d7d0;white-space:nowrap}
-.forge-step-week-day.today small{color:#d3f7ac}
+.forge-step-week-bar.completed{background:linear-gradient(180deg,#81baff,#6a95c9)}
+.forge-step-week-bar.missing{background:#394350}
+.forge-step-week-day small{font-size:10px;font-weight:750;color:#c3ccd7;white-space:nowrap}
+.forge-step-week-day.today small{color:#accef7}
 .forge-step-week-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;
-  border-top:1px solid #334646;padding-top:12px;font-size:12px;color:#c7dacc}
+  border-top:1px solid #333c46;padding-top:12px;font-size:12px;color:#c7d0da}
 .forge-step-week-footer span:first-child{font-weight:850}
-.forge-step-week-note{font-size:11px;line-height:1.5;color:#91a9aa;margin:10px 0 0}
+.forge-step-week-note{font-size:11px;line-height:1.5;color:#919caa;margin:10px 0 0}
 @media(max-width:700px){
  .forge-walk-finish{display:block;padding:16px;margin:21px 0 14px}
  .forge-walk-finish-btn{min-width:0;max-width:none;width:100%;margin-top:14px}
@@ -480,47 +480,47 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 /* FORGE 7.4 — Mobile-first Walking: useful summary, details on demand. */
 .forge-walk-plan-card{
   margin:13px 0 8px;padding:22px 23px 19px;border-radius:23px;
-  background:radial-gradient(ellipse 70% 90% at 0% 0%,rgba(165,246,108,.1),transparent),
-    linear-gradient(145deg,#1a3229,#132322 67%,#16252a);
-  border:1px solid #4b7250;box-shadow:0 12px 35px rgba(0,0,0,.12)
+  background:radial-gradient(ellipse 70% 90% at 0% 0%,rgba(108,170,246,.1),transparent),
+    linear-gradient(145deg,#1a2532,#131a23 67%,#161f2a);
+  border:1px solid #4b5d72;box-shadow:0 12px 35px rgba(0,0,0,.12)
 }
 .forge-walk-plan-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
 .forge-walk-plan-top h2{font-size:22px;letter-spacing:-.7px;line-height:1.15;margin:5px 0 0}
-.forge-walk-plan-state{white-space:nowrap;border:1px solid #3d6049;border-radius:99px;
-  color:#b9d4c0;background:#233b30;padding:7px 9px;font-size:10px;font-weight:800}
+.forge-walk-plan-state{white-space:nowrap;border:1px solid #3d4d60;border-radius:99px;
+  color:#b9c5d4;background:#232e3b;padding:7px 9px;font-size:10px;font-weight:800}
 .forge-walk-plan-main{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 16px}
-.forge-walk-plan-time,.forge-walk-plan-count{min-width:0;background:#12251f;border:1px solid #345446;
+.forge-walk-plan-time,.forge-walk-plan-count{min-width:0;background:#121b25;border:1px solid #344254;
   padding:14px 15px;border-radius:16px}
-.forge-walk-plan-time{background:#243f2c;border-color:#537b4d}
-.forge-walk-plan-time small,.forge-walk-plan-count small{display:block;font-size:11px;color:#b4c9bc;margin-bottom:8px}
-.forge-walk-plan-time strong{display:block;font-size:clamp(24px,4.3vw,34px);color:#d9ff9a;
+.forge-walk-plan-time{background:#24303f;border-color:#4d627b}
+.forge-walk-plan-time small,.forge-walk-plan-count small{display:block;font-size:11px;color:#b4bdc9;margin-bottom:8px}
+.forge-walk-plan-time strong{display:block;font-size:clamp(24px,4.3vw,34px);color:#9ac7ff;
   letter-spacing:-1px;line-height:1.1;white-space:nowrap}
-.forge-walk-plan-count strong{font-size:clamp(24px,4vw,32px);color:#f4fbf2;line-height:1.1;
+.forge-walk-plan-count strong{font-size:clamp(24px,4vw,32px);color:#f2f6fb;line-height:1.1;
   letter-spacing:-1px;font-variant-numeric:tabular-nums}
 .forge-walk-plan-meta{display:flex;align-items:center;flex-wrap:wrap;gap:7px}
 .forge-walk-plan-meta>span:not(.forge-walk-plan-incline-pct){display:flex;flex-direction:column;
-  border:1px solid #345347;border-radius:11px;padding:8px 10px;background:#142820;min-width:75px}
-.forge-walk-plan-meta small{font-size:10px;color:#a4bdaf;margin-bottom:3px}
-.forge-walk-plan-meta strong{font-size:12px;font-weight:850;color:#e3f4dc;white-space:nowrap}
-.forge-walk-plan-incline-pct{font-size:10px;color:#9dbdac}
-#forgeWalkPlanSubtitle{font-size:12px;color:#c2d4c4;line-height:1.55;margin:14px 0 0}
+  border:1px solid #344253;border-radius:11px;padding:8px 10px;background:#141d28;min-width:75px}
+.forge-walk-plan-meta small{font-size:10px;color:#a4afbd;margin-bottom:3px}
+.forge-walk-plan-meta strong{font-size:12px;font-weight:850;color:#dce7f4;white-space:nowrap}
+.forge-walk-plan-incline-pct{font-size:10px;color:#9dabbd}
+#forgeWalkPlanSubtitle{font-size:12px;color:#c2cad4;line-height:1.55;margin:14px 0 0}
 .forge-walk-plan-outcome{display:flex;justify-content:space-between;align-items:center;gap:9px;
-  margin-top:16px;border-top:1px solid #355747;padding-top:13px}
-.forge-walk-plan-outcome span{font-size:11px;color:#b5cdb9;max-width:220px;line-height:1.3}
-.forge-walk-plan-outcome strong{color:#deffc0;font-size:20px;font-variant-numeric:tabular-nums}
-.forge-walk-details{margin:12px 0;border:1px solid #334b47;border-radius:18px;
-  background:linear-gradient(130deg,#16262a,#111e24);overflow:hidden}
+  margin-top:16px;border-top:1px solid #354457;padding-top:13px}
+.forge-walk-plan-outcome span{font-size:11px;color:#b5c0cd;max-width:220px;line-height:1.3}
+.forge-walk-plan-outcome strong{color:#c0dcff;font-size:20px;font-variant-numeric:tabular-nums}
+.forge-walk-details{margin:12px 0;border:1px solid #333e4b;border-radius:18px;
+  background:linear-gradient(130deg,#161f2a,#111a24);overflow:hidden}
 .forge-walk-details>summary{display:flex;align-items:center;gap:12px;padding:17px 18px;min-height:74px;
   list-style:none;cursor:pointer;user-select:none}
 .forge-walk-details>summary::-webkit-details-marker{display:none}
 .forge-walk-details-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;
-  background:#294238;border:1px solid #3c5d4c;color:#d9f6ce;border-radius:11px;font-size:17px}
+  background:#293442;border:1px solid #3c4b5d;color:#cee0f6;border-radius:11px;font-size:17px}
 .forge-walk-details>summary>span:nth-child(2){min-width:0;flex:1}
-.forge-walk-details>summary strong{display:block;color:#e8f5e6;font-size:14px;line-height:1.2}
-.forge-walk-details>summary small{display:block;color:#9bb7ae;font-size:11px;margin-top:4px;line-height:1.4}
-.forge-walk-details-chevron{font-size:22px;color:#c8f58d;transition:transform .18s;flex:none}
+.forge-walk-details>summary strong{display:block;color:#e6edf5;font-size:14px;line-height:1.2}
+.forge-walk-details>summary small{display:block;color:#9ba8b7;font-size:11px;margin-top:4px;line-height:1.4}
+.forge-walk-details-chevron{font-size:22px;color:#8dbcf5;transition:transform .18s;flex:none}
 .forge-walk-details[open] .forge-walk-details-chevron{transform:rotate(180deg)}
-.forge-walk-details>summary:focus-visible{outline:2px solid #d6ff9d;outline-offset:-4px;border-radius:16px}
+.forge-walk-details>summary:focus-visible{outline:2px solid #9dc9ff;outline-offset:-4px;border-radius:16px}
 .forge-walk-details-body{padding:0 17px 17px}
 .forge-walk-details-body>.section-title:first-child{margin-top:8px}
 .forge-walk-details-body .card{margin-bottom:12px}
@@ -566,7 +566,7 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
   user-select:none;
 }
 :where(.tab,.btn,.forge-sm-btn,.forge-step-save,.forge-walk-mode button,.forge-walk-finish-btn,.forge-walk-details>summary,.forge-plan-reference>summary):focus-visible{
-  outline:2px solid #d2ff95;
+  outline:2px solid #95c5ff;
   outline-offset:3px;
 }
 :where(.tab,.btn,.forge-sm-btn,.forge-step-save,.forge-walk-mode button,.forge-walk-finish-btn):active:not(:disabled){
@@ -593,41 +593,41 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 .forge-header-menu{position:relative;z-index:155;flex-shrink:0}
 .forge-header-menu>summary{
   list-style:none;display:grid;place-items:center;width:44px;height:44px;
-  border-radius:13px;border:1px solid #385247;
-  background:#1c2c28;color:#d7f4c8;cursor:pointer;
+  border-radius:13px;border:1px solid #384452;
+  background:#1c232c;color:#c8dcf4;cursor:pointer;
   touch-action:manipulation;user-select:none;-webkit-user-select:none;
   -webkit-tap-highlight-color:transparent;
   transition:background-color .15s ease-out,border-color .15s ease-out,transform .13s ease-out
 }
 .forge-header-menu>summary::-webkit-details-marker{display:none}
 .forge-header-menu>summary svg{width:20px;height:20px;display:block;flex-shrink:0}
-.forge-header-menu[open]>summary{background:#304c38;border-color:#b2e883;color:#e8ffca}
+.forge-header-menu[open]>summary{background:#303d4c;border-color:#83b0e8;color:#cae2ff}
 .forge-header-menu>summary:active{transform:scale(.96)}
 .forge-header-menu>summary:focus-visible,
 .forge-header-panel button:focus-visible{
-  outline:2px solid #c7ff91;outline-offset:3px
+  outline:2px solid #91c3ff;outline-offset:3px
 }
 .forge-header-panel{
   position:absolute;right:0;top:calc(100% + 10px);
   width:min(306px,calc(100vw - 32px));padding:8px;
-  border-radius:18px;border:1px solid #45614f;
-  background:#17252a;box-shadow:0 22px 60px #00000088;
+  border-radius:18px;border:1px solid #455261;
+  background:#17202a;box-shadow:0 22px 60px #00000088;
   z-index:156
 }
-.forge-header-panel-title{padding:11px 12px 9px;color:#a8c4b6;font-size:11px;
+.forge-header-panel-title{padding:11px 12px 9px;color:#a8b5c4;font-size:11px;
   font-weight:850;letter-spacing:.65px;text-transform:uppercase}
 .forge-header-panel button{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   width:100%;min-height:48px;padding:11px 12px;border:0;border-radius:11px;
-  background:transparent;color:#edf8ed;text-align:left;line-height:1.3;
+  background:transparent;color:#edf2f8;text-align:left;line-height:1.3;
   font-size:14px;font-weight:750;cursor:pointer;
   transition:background-color .14s ease-out
 }
-.forge-header-panel button span{color:#bce68a;font-size:15px;flex-shrink:0}
-.forge-header-panel button:active{background:#304b3c}
+.forge-header-panel button span{color:#8ab3e6;font-size:15px;flex-shrink:0}
+.forge-header-panel button:active{background:#303c4b}
 @media (hover:hover) and (pointer:fine){
-  .forge-header-menu>summary:hover{background:#2d4336}
-  .forge-header-panel button:hover{background:#263c33}
+  .forge-header-menu>summary:hover{background:#2d3743}
+  .forge-header-panel button:hover{background:#26303c}
 }
 @media(max-width:430px){
   .topbar .brand{min-width:0}
@@ -645,7 +645,7 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 }
 
 
-/* FORGE 8 — BACK TO BASICS
+/* FORGE 8.1 — NAVY & BLUE / BACK TO BASICS
    Progressive visual reduction. Advanced inputs and all local fitness data remain mounted.
    One simple step counter, one Walking estimate, one weight trend.
 */
@@ -675,26 +675,26 @@ body:not(.forge-basics) .forge-basics-menu-action{display:none!important}
 body:not(.forge-basics) .forge-basics-menu-note{display:none!important}
 
 .forge-basics-walking-controls{
- margin:12px 0 2px;padding:16px 17px;background:#172720;
- border:1px solid #375847;border-radius:18px
+ margin:12px 0 2px;padding:16px 17px;background:#171e27;
+ border:1px solid #374658;border-radius:18px
 }
 .forge-basics-walking-controls h2{
- font-size:17px;letter-spacing:-.45px;margin:4px 0 12px;color:#edf9e9
+ font-size:17px;letter-spacing:-.45px;margin:4px 0 12px;color:#e9f0f9
 }
 .forge-basics-walking-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .forge-basics-walking-fields label{display:flex;flex-direction:column;gap:8px;
- color:#bcd0c3;font-size:12px;font-weight:750;min-width:0}
+ color:#bcc5d0;font-size:12px;font-weight:750;min-width:0}
 .forge-basics-walking-fields input{
  display:block;box-sizing:border-box;width:100%;min-height:48px;
- border:1px solid #496857;border-radius:12px;padding:11px 12px;
- color:#f2faed;background:#0f1c1b;font-size:17px;font-weight:800;
+ border:1px solid #495768;border-radius:12px;padding:11px 12px;
+ color:#edf3fa;background:#0f151c;font-size:17px;font-weight:800;
  font-variant-numeric:tabular-nums;outline:none
 }
-.forge-basics-walking-fields input:focus-visible{border-color:#c9ff6a;outline:2px solid #c9ff6a88;outline-offset:1px}
+.forge-basics-walking-fields input:focus-visible{border-color:#6aadff;outline:2px solid #6aadff88;outline-offset:1px}
 .forge-basics-field-feedback{color:#ffc6ac;font-size:12px;line-height:1.4;margin-top:8px}
 .forge-basics-field-feedback:empty{display:none}
 .forge-basics-menu-action,.forge-basics-menu-toggle{width:100%}
-.forge-basics-menu-note{font-size:11px;line-height:1.45;color:#a9bdb3;margin:7px 10px 4px}
+.forge-basics-menu-note{font-size:11px;line-height:1.45;color:#a9b2bd;margin:7px 10px 4px}
 .forge-basics #today #forgeStepTitle{font-size:23px}
 .forge-basics #walking .forge-walk-plan-main{margin-top:15px}
 @media(max-width:700px){
@@ -707,4 +707,204 @@ body:not(.forge-basics) .forge-basics-menu-note{display:none!important}
 @media(max-width:360px){
  .forge-basics-walking-fields{gap:7px}
  .forge-basics-walking-fields input{padding-inline:8px}
+}
+
+
+/* FORGE 8.1 — Midnight Blue core UI. No new features, no tracking changes.
+   Design focus: 1 primary task per view, clean hierarchy, strong readable numbers. */
+:root{
+  --bg:#0a101b;
+  --panel:#111d2b;
+  --panel2:#172638;
+  --line:#2a405a;
+  --text:#f5f8ff;
+  --muted:#9caec4;
+  --accent:#6aadff;
+  --accent2:#448ef5;
+  --forge-blue-soft:#96caff;
+  --forge-blue-strong:#3c82ea;
+}
+html{background:#0a101b}
+body.forge-basics{
+  background:
+    radial-gradient(ellipse 85% 30% at 50% -9%,rgba(64,126,217,.16),transparent 76%),
+    linear-gradient(180deg,#0c1422 0%,#0a101b 67%,#0a101b 100%);
+}
+.forge-basics .topbar{margin-bottom:18px}
+.forge-basics .brand-mark{
+  background:linear-gradient(145deg,#8ac5ff,#448ef5);
+  color:#0a1b31;
+  box-shadow:0 8px 22px rgba(57,121,224,.18);
+}
+.forge-basics .forge-header-menu>summary{
+  background:#162537;
+  border-color:#344e6a;
+  color:#badcff;
+}
+.forge-basics .forge-header-panel{
+  background:#152235;
+  border-color:#385477;
+}
+.forge-basics .tabs{
+  background:rgba(15,27,43,.97);
+  border-color:#2a4361;
+}
+.forge-basics .tab.active{
+  background:linear-gradient(135deg,#81c0ff,#549af4);
+  color:#09203a;
+  box-shadow:0 3px 14px rgba(53,126,230,.18);
+}
+.forge-basics .tab:not(.active){color:#a7b7cb}
+.forge-basics #today .forge-steps-card,
+.forge-basics #walking .forge-walk-sync,
+.forge-basics #walking .forge-walk-plan-card,
+.forge-basics #walking .forge-basics-walking-controls,
+.forge-basics #progress .card,
+.forge-basics #progress .chart,
+.forge-basics #progress .summary-tile{
+  box-shadow:0 12px 28px rgba(3,9,18,.15);
+  border-color:#304a67;
+}
+.forge-basics #today .forge-steps-card,
+.forge-basics #walking .forge-walk-plan-card{
+  background:radial-gradient(ellipse 80% 65% at 0% 0%,rgba(77,149,255,.12),transparent 72%),
+    linear-gradient(145deg,#17273b,#101b2a 80%);
+  border-radius:22px;
+}
+.forge-basics #today .forge-step-head h2{font-size:clamp(20px,3.5vw,24px);line-height:1.18}
+.forge-basics #today .forge-step-goal{
+  background:#203751;border-color:#3b5e85;color:#b8dcff;
+  letter-spacing:.1px;
+}
+.forge-basics #today .forge-step-stat{
+  background:#111f30;
+  border-color:#2e4662;
+}
+.forge-basics #today .forge-step-stat .forge-step-done{color:#88c5ff}
+.forge-basics #today .forge-step-progress{
+  background:#23374e;
+  border-color:#304a68;
+}
+.forge-basics #today #forgeStepFill,
+.forge-basics #walking #walkingProgressFill{
+  background:linear-gradient(90deg,#367fec,#83c4ff);
+  box-shadow:none;
+}
+.forge-basics #today .forge-step-bar-head strong{color:#9bcfff}
+.forge-basics #today .forge-step-entry{
+  background:#101b2a;
+  border-color:#2e4761;
+}
+.forge-basics #today .forge-step-entry-row input,
+.forge-basics #walking .forge-basics-walking-fields input{
+  background:#0d1725;color:#f4f8ff;border-color:#36516d;
+}
+.forge-basics #today .forge-step-entry-row input:focus,
+.forge-basics #walking .forge-basics-walking-fields input:focus{
+  border-color:#74b8ff;
+  box-shadow:0 0 0 3px rgba(103,167,244,.15);
+}
+.forge-basics #today .forge-step-save,
+.forge-basics #walking .forge-walk-finish-btn{
+  background:#6aadff;
+  color:#0b223e;
+  font-weight:900;
+}
+.forge-basics #today .forge-step-links button,
+.forge-basics #today .forge-step-weight button{color:#9fcaff}
+.forge-basics #today .forge-step-weight{
+  border-top-color:#314761;
+  color:#a8bbd0;
+}
+
+/* Walking: show real step status, estimated time, then controls. */
+.forge-basics #walking.view.active{display:flex;flex-direction:column}
+.forge-basics #walking .forge-walk-sync{order:0}
+.forge-basics #walking .forge-walk-plan-card{order:1}
+.forge-basics #walking .forge-basics-walking-controls{order:2}
+.forge-basics #walking .forge-walk-finish{order:3}
+.forge-basics #walking .forge-walk-sync{
+  background:linear-gradient(130deg,#16273b,#111d2d);
+}
+.forge-basics #walking .forge-walk-sync-source{
+  color:#b3d7ff;background:#1d3550;border-color:#315475;
+}
+.forge-basics #walking .forge-walk-sync-values>div{
+  background:#101f30;border-color:#2d4765;
+}
+.forge-basics #walking .forge-walk-sync-values>div:first-child strong{color:#88c5ff}
+.forge-basics #walking .forge-walk-sync-progress{background:#233b56}
+.forge-basics #walking .forge-walk-plan-time{
+  background:#1c3554;
+  border-color:#3e6899;
+}
+.forge-basics #walking .forge-walk-plan-time strong{color:#b8dcff}
+.forge-basics #walking .forge-walk-plan-count{
+  background:#122236;
+  border-color:#344f70;
+}
+.forge-basics #walking .forge-walk-plan-meta>span:not(:first-child){display:none!important}
+.forge-basics #walking .forge-walk-plan-meta>span:first-child{
+  background:#13253a;border-color:#2f4c69;padding:8px 12px;
+}
+.forge-basics #walking .forge-basics-walking-controls{
+  background:#132235;border-radius:18px;
+}
+.forge-basics #walking .forge-basics-walking-controls h2{margin-bottom:12px}
+.forge-basics #walking .forge-walk-finish{
+  background:#131f30;
+  border-color:#2c4462;
+  box-shadow:none;
+  margin-top:12px;
+}
+.forge-basics #walking .forge-walk-finish h2{font-size:17px}
+.forge-basics #walking .forge-walk-finish p{max-width:400px}
+
+/* Weight: one summary, one input, one factual trend. */
+.forge-basics #progress .mini-header h2{font-size:clamp(22px,4vw,27px)}
+.forge-basics #progress .weight-summary .summary-tile{
+  background:#142235;border-radius:17px;
+}
+.forge-basics #progress .weight-summary .summary-tile b{
+  color:#e5f1ff;font-variant-numeric:tabular-nums;
+}
+.forge-basics #progress .section-title{font-size:17px;letter-spacing:-.3px}
+.forge-basics #progress .card{
+  background:#121e2d;
+  border-radius:18px;
+}
+.forge-basics #progress #addWeight{
+  background:#6aadff;color:#0c2139;
+  min-height:48px;
+}
+.forge-basics #progress .chart{
+  background:#111e2e;
+  border-radius:18px;
+}
+.forge-basics #progress .feedback{color:#adc3db}
+@media(max-width:700px){
+  .forge-basics #today .forge-steps-card{padding:18px 15px 16px}
+  .forge-basics #walking .forge-walk-plan-card{padding:18px 15px}
+  .forge-basics #walking .forge-walk-finish{padding:15px}
+  .forge-basics #progress #addWeight{width:100%}
+}
+@media(max-width:370px){
+  .forge-basics #today .forge-step-head{gap:7px}
+  .forge-basics #today .forge-step-goal{font-size:9px;padding:7px}
+  .forge-basics #today .forge-step-stat{padding-inline:10px}
+  .forge-basics #walking .forge-walk-plan-main{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  .forge-basics #today #forgeStepFill,
+  .forge-basics #walking #walkingProgressFill{transition:none}
+}
+
+
+/* The estimated Walking duration intentionally does not treat incline as speed. */
+.forge-basics .forge-basics-help{
+  margin:12px 2px 0;
+  font-size:11px;
+  color:#9fb5cf;
+  line-height:1.55;
+  max-width:62ch;
 }
