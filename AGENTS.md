@@ -57,6 +57,17 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 8. Keep essential actions reachable with the iOS keyboard shown and the fixed navigation in view or intentionally hidden. Use safe-area padding. Test landscape and installed-PWA mode.
 9. Real-world user screenshots take precedence over theoretical pixel-perfect tests. Confirm any deployment at the published URL, not merely by commit success.
 
+## Familiar navigation conventions (Jakob's Law)
+
+- Treat familiarity as a usability goal, **not** as a requirement to clone Instagram, TikTok or YouTube. Official guidance: Nielsen Norman Group (Jakob's Law) and Apple Human Interface Guidelines (tab bars).
+- Keep the existing **four** top-level areas in this order: **Heute, Walking, Fortschritt, Training**. Do not add a fifth **Profil** tab until FORGE really has user accounts or profile-centric workflows.
+- Use bottom navigation for destinations, **not actions**. Step entry belongs to the step counter and workout entry to Training. Avoid a forced central plus button.
+- The top-right `#forgeHeaderMenu` is the predictable access point for secondary options. Its buttons navigate to the real sections for reminders, Health integration, backups and app installation – never duplicate data-entry forms.
+- Preserve browser-native gestures rather than hijacking touch input: native swipe/back should work *where the browser supports it* by recording tab visits with History API; do not promise an iOS Home Screen PWA has the same gesture behavior as Safari.
+- Do not implement custom pull-to-refresh if a browser already handles it; in offline mode it could be disruptive. Never reload a page while unsaved form input is present without confirmation.
+- Keep URLs with `#forge-sync?` private: when Health Shortcuts opens FORGE, skip tab-history entries and let the existing import clear its URL fragment. Do not push the health payload into a new history state.
+- Any tab or settings-menu changes must be checked for keyboard and VoiceOver access, real 320px screen width, focus targets, and no new localStorage keys.
+
 ## Required process for future changes
 
 1. Inspect affected code, screenshots and current stored-data paths before changing layout.
