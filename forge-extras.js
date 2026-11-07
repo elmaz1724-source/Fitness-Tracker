@@ -295,7 +295,7 @@ $('#forgeDeviceCheck').addEventListener('click',async()=>{
  const add=(kind,title,detail)=>{
   const line=document.createElement('div');
   line.className='forge-reminder';
-  line.style.borderColor=kind==='ok'?'#416846':kind==='warn'?'#756142':'#824647';
+  line.style.borderColor=kind==='ok'?'#415368':kind==='warn'?'#756142':'#824647';
   const state=kind==='ok'?'✓':kind==='warn'?'!':'×';
   line.textContent=state+' '+title+' – '+detail;
   target.appendChild(line);
