@@ -61,8 +61,13 @@
    stepInput.select();
  });
  $('#forgeGoWalking').addEventListener('click',()=>{
-   $('#forgePlannerDetails').open=true;
-   goTo('#forgePlannerDetails');
+   if(document.body.classList.contains('forge-basics')){
+     $('.tab[data-view="walking"]')?.click();
+     window.scrollTo?.({top:0,behavior:'auto'});
+   }else{
+     $('#forgePlannerDetails').open=true;
+     goTo('#forgePlannerDetails');
+   }
  });
  $('#forgeGoWeight').addEventListener('click',()=>{
    const tab=$('.tab[data-view="progress"]');

@@ -643,3 +643,68 @@ input:focus-visible,select:focus-visible{outline:2px solid #c9ff6a;outline-offse
 @media(prefers-reduced-motion:reduce){
   .forge-header-menu>summary,.forge-header-panel button{transition:none}
 }
+
+
+/* FORGE 8 — BACK TO BASICS
+   Progressive visual reduction. Advanced inputs and all local fitness data remain mounted.
+   One simple step counter, one Walking estimate, one weight trend.
+*/
+.forge-basics{--forge-tab-count:3}
+.forge-basics .tabs>.tab[data-view="training"]{display:none!important}
+.forge-basics #today>:not(#forgeStepsCenter){display:none!important}
+.forge-basics #today #forgeGoSteps{display:none!important}
+.forge-basics #today .forge-step-links{margin-top:14px}
+.forge-basics #today .forge-steps-card{margin-top:12px}
+.forge-basics .topbar .pill{display:none}
+.forge-basics #walking .forge-walk-mode,
+.forge-basics #walking .forge-walk-mode-note,
+.forge-basics #walking .forge-walk-details,
+.forge-basics #walking .forge-walk-plan-outcome{display:none!important}
+.forge-basics #walking .forge-walk-plan-card{margin-top:12px}
+.forge-basics #walking .forge-walk-plan-state{font-size:10px}
+.forge-basics #progress .trend-grid,
+.forge-basics #progress .insights-layout,
+.forge-basics #progress .forge-advanced-view,
+.forge-basics #progress .weight-summary .summary-tile:nth-child(n+3){display:none!important}
+.forge-basics #progress .weight-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+.forge-basics #progress .mini-header{margin-bottom:16px}
+.forge-basics #training{display:none!important}
+.forge-basics .forge-header-panel button[data-forge-menu-view]{display:none!important}
+body:not(.forge-basics) .forge-basics-walking-controls{display:none!important}
+body:not(.forge-basics) .forge-basics-menu-action{display:none!important}
+body:not(.forge-basics) .forge-basics-menu-note{display:none!important}
+
+.forge-basics-walking-controls{
+ margin:12px 0 2px;padding:16px 17px;background:#172720;
+ border:1px solid #375847;border-radius:18px
+}
+.forge-basics-walking-controls h2{
+ font-size:17px;letter-spacing:-.45px;margin:4px 0 12px;color:#edf9e9
+}
+.forge-basics-walking-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.forge-basics-walking-fields label{display:flex;flex-direction:column;gap:8px;
+ color:#bcd0c3;font-size:12px;font-weight:750;min-width:0}
+.forge-basics-walking-fields input{
+ display:block;box-sizing:border-box;width:100%;min-height:48px;
+ border:1px solid #496857;border-radius:12px;padding:11px 12px;
+ color:#f2faed;background:#0f1c1b;font-size:17px;font-weight:800;
+ font-variant-numeric:tabular-nums;outline:none
+}
+.forge-basics-walking-fields input:focus-visible{border-color:#c9ff6a;outline:2px solid #c9ff6a88;outline-offset:1px}
+.forge-basics-field-feedback{color:#ffc6ac;font-size:12px;line-height:1.4;margin-top:8px}
+.forge-basics-field-feedback:empty{display:none}
+.forge-basics-menu-action,.forge-basics-menu-toggle{width:100%}
+.forge-basics-menu-note{font-size:11px;line-height:1.45;color:#a9bdb3;margin:7px 10px 4px}
+.forge-basics #today #forgeStepTitle{font-size:23px}
+.forge-basics #walking .forge-walk-plan-main{margin-top:15px}
+@media(max-width:700px){
+ .forge-basics nav.tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .forge-basics-walking-controls{padding:13px 14px;border-radius:16px}
+ .forge-basics #today .forge-steps-card{margin-top:8px}
+ .forge-basics #walking .forge-walk-plan-card{margin-top:10px}
+ .forge-basics .forge-step-weight{margin-top:12px}
+}
+@media(max-width:360px){
+ .forge-basics-walking-fields{gap:7px}
+ .forge-basics-walking-fields input{padding-inline:8px}
+}

@@ -1,0 +1,90 @@
+/* FORGE 8: less interface, same fitness data.
+   The basics view is a purely visual default; old tools stay available. */
+(()=>{
+ 'use strict';
+ const $=id=>document.getElementById(id);
+ const toggle=$('forgeBasicsToggle');
+ const backup=$('forgeBasicsBackup');
+ const menu=$('forgeHeaderMenu');
+ const pace=$('pace');
+ const incline=$('incline');
+ const simplePace=$('forgeBasicsPace');
+ const simpleIncline=$('forgeBasicsIncline');
+ const status=$('forgeBasicsPaceFeedback');
+ if(!toggle||!pace||!incline||!simplePace||!simpleIncline)return;
+
+ function syncInputs(){
+   if(document.activeElement!==simplePace)simplePace.value=pace.value;
+   if(document.activeElement!==simpleIncline)simpleIncline.value=incline.value;
+   status.textContent=$('paceError')?.textContent.trim()||'';
+ }
+
+ function refreshWalking(){
+   // The existing Walking calculator owns the formulas, validation and persistence.
+   pace.dispatchEvent(new Event('input',{bubbles:true}));
+   syncInputs();
+ }
+ function setBasics(enabled){
+   if(enabled&&document.querySelector('.tab[data-view="training"]')?.classList.contains('active')){
+     document.querySelector('.tab[data-view="today"]')?.click();
+   }
+   document.body.classList.toggle('forge-basics',enabled);
+   if(!enabled){
+     // In simple mode calculations always use the remaining steps; the saved custom
+     // walking plan is not overwritten and can be restored on opening the archive.
+     try{
+       const settings=JSON.parse(localStorage.getItem('fitness-walking')||'{}');
+       if(settings.mode==='custom'){
+         if(Number.isFinite(settings.steps))$('walkSteps').value=String(settings.steps);
+         if(Number.isFinite(settings.other))$('otherSteps').value=String(settings.other);
+         $('forgeWalkAdvanced').open=true;
+       }else{
+         $('forgeWalkAdvanced').open=false;
+       }
+     }catch{/* Keep current input values if storage is inaccessible. */}
+   }
+   toggle.innerHTML=enabled
+      ?'Weitere Funktionen öffnen <span aria-hidden="true">↗</span>'
+      :'Zur einfachen Ansicht <span aria-hidden="true">↙</span>';
+   toggle.setAttribute('aria-pressed',String(!enabled));
+   if(menu)menu.open=false;
+   refreshWalking();
+ }
+
+ toggle.addEventListener('click',()=>setBasics(!document.body.classList.contains('forge-basics')));
+ backup?.addEventListener('click',()=>{
+   menu.open=false;
+   const action=$('exportData');
+   if(action){
+     action.click();
+     $('forgeBasicsNote').textContent='Backup angefordert. Prüfe deine Downloads und sichere die Datei.';
+   }
+ });
+ simplePace.addEventListener('input',()=>{
+   pace.value=simplePace.value;
+   refreshWalking();
+ });
+ simpleIncline.addEventListener('input',()=>{
+   incline.value=simpleIncline.value;
+   refreshWalking();
+ });
+ pace.addEventListener('input',syncInputs);
+ incline.addEventListener('input',syncInputs);
+
+ // iOS Shortcut links target a section of the archived interface.
+ // Open it before the Health bridge runs; do not modify its URL or saved values.
+ if(location.hash.startsWith('#forge-sync?')){
+   setBasics(false);
+ }else{
+   syncInputs();
+   toggle.innerHTML='Weitere Funktionen öffnen <span aria-hidden="true">↗</span>';
+   toggle.setAttribute('aria-pressed','false');
+ }
+
+ // If browser back restores the archived Training view, make it visible.
+ window.addEventListener('popstate',event=>{
+   if(event.state?.forgeView==='training'&&document.body.classList.contains('forge-basics')){
+     setBasics(false);
+   }
+ });
+})();

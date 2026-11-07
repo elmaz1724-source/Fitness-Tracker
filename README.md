@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 7.6:** FORGE nutzt bewusst vertraute iPhone-Navigationsmuster: vier stabile Tabs, einen neuen Einstellungszugang oben rechts und Browser-Zurück zwischen zuvor geöffneten Bereichen. Alle bisherigen Fitnessfunktionen und Daten bleiben erhalten; kein Ernährungstracking.
+**Version 8.0 – Back to Basics:** FORGE konzentriert sich wieder auf drei Dinge: aktuelle Schritte und Rest bis 10.000, Walking-Pad-Zeit aus Tempo/Neigung und einen klaren Gewichtsverlauf. Drei sichtbare Tabs. Zusätzliche Funktionen sind nur über „Weitere Funktionen öffnen“ erreichbar; alle bisherigen Daten bleiben erhalten.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,26 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## FORGE 8.0 — Back to Basics
+
+Die App wurde bewusst auf ihren ursprünglichen Zweck zurückgeführt. Beim normalen Öffnen sind nur noch **drei Tabs** sichtbar:
+
+| Bereich | Wofür? |
+| --- | --- |
+| **Heute** | Den tatsächlich gegangenen Schrittstand eintragen, sofort sehen, wie viele bis **10.000** fehlen |
+| **Walking** | Die fehlenden Schritte auf dem Walking-Pad planen; **Tempo und Neigung** einstellen; ungefähre Dauer sehen |
+| **Fortschritt** | Körpergewicht eintragen, aktuellen Stand und übersichtlichen Gewichtsverlauf sehen |
+
+**Nicht mehr im Vordergrund:** Daily Checklists, Smart Daily Planner, Coaching-Erinnerungen, Makro-Referenzen, Gewichtsprognosen, 3-Blöcke-Pläne, Trainingslog, Health-Shortcuts-Einrichtung, Kalenderexport und Systemchecks.
+
+**Nichts gelöscht:** Alle Originalmodule und die alten localStorage-Schlüssel bleiben vorhanden. Das Menü oben rechts bietet **„Weitere Funktionen öffnen“**, falls du alte Trainingsaufzeichnungen, komplexe Walking-Einstellungen, Datenimporte oder Benachrichtigungen brauchst. **„Zur einfachen Ansicht“** führt zurück. Ein Backup kann direkt aus dem einfachen Menü angefordert werden. Nach Neustart öffnet FORGE wieder im einfachen Modus.
+
+Im einfachen Walking-Modus wird die bereits gelaufene Schrittzahl wie bisher aus `fitness-planner-YYYY-MM-DD` gelesen und automatisch die noch fehlende Distanz bis zu 10.000 berechnet. Die erweiterten persönlichen Walking-Pläne werden beim Anzeigen des einfachen Modus **nicht überschrieben**. Tempo und Neigung verwenden die vorhandene Berechnung, keine zweite Tracking-Datenbank.
+
+Diese Vereinfachung ist ein **Präsentations-Reset**, kein technischer Daten-Reset. Bitte Browserdaten nicht löschen. Bestehende Backups bleiben gültig.
+
+**Tests:** `node scripts/test-basics.mjs`, `node scripts/test-navigation.mjs`, `node scripts/verify-agent-skills.mjs` sowie die vorhandenen GitHub-Workflows.
+
 ## Navigation nach Jakob's Law (FORGE 7.6)
 
 Die Nielsen Norman Group beschreibt mit **Jakob's Law**, warum Nutzer eine vertraute App-Navigation erwarten. FORGE übernimmt nur die passenden Muster, nicht die Oberfläche von Instagram/TikTok/YouTube.
@@ -172,4 +192,4 @@ Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **7.6.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
+Aktuelle Version: **8.0.0** (Codex-Skills und erste mobile UI-/Animations-Verbesserungen; echte iPhone- und Pages-Live-Verifikation noch offen).
