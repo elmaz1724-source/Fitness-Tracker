@@ -1180,3 +1180,112 @@ body.forge-basics{
   .forge-basics .forge-basics-daily-list #dailyProgress,
   .forge-basics .forge-basics-daily-list .goal{transition:none}
 }
+
+
+/* FORGE 8.3 — shared graphite materials for the optional advanced interface.
+   Existing modules keep working; this only aligns their appearance with basic mode. */
+body:not(.forge-basics){
+  background:#101114;color:#f5f6f8;
+}
+body:not(.forge-basics) .brand-mark{
+  background:#24262b;color:#f5f6f8;border:1px solid #35383f;
+  box-shadow:none;
+}
+body:not(.forge-basics) :is(
+  .hero-dash,.card,.planner,.forge-collapsible-planner,.forge-surface,
+  .forge-steps-card,.forge-walk-sync,.forge-walk-plan-card,
+  .forge-basics-daily-list,.forge-walk-finish,.forge-walk-details,
+  .forge-step-week,.forecast-card,.insight-card,.trend-metric,.summary-tile,
+  .forge-auto,.forge-plan-reference,.forge-simple-blocks,
+  .forge-install-panel,.forge-sync-panel,.forge-calendar-panel,
+  .forge-export-card,.forge-reminder-panel,.forge-today-card
+){
+  background:#1b1d22;border-color:#34363d;box-shadow:none;
+}
+body:not(.forge-basics) :is(
+  .planner-result,.walk-stat,.block,.goal,.forge-step-stat,
+  .forge-walk-sync-values>div,.forge-walk-plan-time,.forge-walk-plan-count,
+  .forge-walk-plan-meta>span,.forge-mini,.planner-summary,
+  .stat,.forge-step-entry,.planner-settings,.forge-section .mini-stat
+){
+  background:#16181c;border-color:#33363d;box-shadow:none;
+}
+body:not(.forge-basics) :is(
+  .goal:has(.check:checked),.day.done,.speed-chip.active,
+  .goal-option.active,.forge-walk-mode button.active,.forge-sm-btn.active
+){
+  background:#282b31;border-color:#4c5666;color:#f4f5f8;
+}
+body:not(.forge-basics) :is(.tabs,.forge-header-panel,.forge-header-menu>summary){
+  background:#1b1d22;border-color:#35383f;box-shadow:none;
+}
+body:not(.forge-basics) .tab.active{
+  background:#303238;color:#f5f6f8;box-shadow:none;
+}
+body:not(.forge-basics) .tab.active svg{color:#82b4ff;stroke:#82b4ff}
+body:not(.forge-basics) :is(.forge-kicker,.planner-kicker,.eyebrow,.forge-heading .small){
+  color:#a9adb6;
+}
+body:not(.forge-basics) :is(.section-lead,.small,.helper,.forge-mini,.forge-step-note,.forge-walk-sync-source,.forge-step-week-note){
+  color:#aeb2bb;
+}
+body:not(.forge-basics) :is(.section-title,.forge-heading h2,.planner h2,.card h2){
+  color:#f5f6f8;
+}
+body:not(.forge-basics) :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,textarea
+){
+  background:#121418;border-color:#40444d;color:#f5f6f8;
+}
+body:not(.forge-basics) :is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,textarea
+):focus-visible{
+  border-color:#82b4ff;outline:2px solid rgba(130,180,255,.25);
+  outline-offset:1px;
+}
+body:not(.forge-basics) :is(.check,input[type="checkbox"]){accent-color:#82b4ff}
+body:not(.forge-basics) :is(.btn,.forge-sm-btn,.forge-walk-finish-btn,.speed-chip,.goal-option){
+  border-color:#41454d;
+  box-shadow:none;
+}
+body:not(.forge-basics) :is(
+  #forgeStepSave,#addWeight,.btn:not(.secondary),
+  .forge-sm-btn.primary
+){
+  background:#82b4ff;color:#0b192a;border-color:#82b4ff;
+}
+body:not(.forge-basics) :is(.btn.secondary,.forge-walk-finish-btn,.forge-header-panel button){
+  background:#282a30;color:#f0f1f5;border-color:#40434b;
+}
+body:not(.forge-basics) :is(
+  .progress,.progress-track,.planner-progress-track,
+  .forge-step-progress,.forge-walk-sync-progress,.forge-step-week-column
+){background:#33363d;border-color:#35383e}
+body:not(.forge-basics) :is(
+  #forgeStepFill,#walkingProgressFill,#dailyProgress,#weekProgress,
+  .planner-progress-fill,.progress-fill,.forge-step-week-bar.completed
+){
+  background:#82b4ff;box-shadow:none;
+}
+body:not(.forge-basics) :is(.forge-step-week-bar,.forge-step-week-badge){
+  background:#42464e;border-color:#42464e;color:#e1e3e8;
+}
+body:not(.forge-basics) .forge-step-week-bar.missing{background:#363940}
+body:not(.forge-basics) .forge-step-week-day.today .forge-step-week-label{
+  color:#f5f6f8;
+}
+body:not(.forge-basics) .forge-header-panel button:active{background:#383b43}
+body:not(.forge-basics) :is(.forge-step-done,.walkingDone,.walk-stat b){
+  color:#f5f6f8;
+}
+@media(hover:hover) and (pointer:fine){
+  body:not(.forge-basics) .forge-header-panel button:hover{background:#32353b}
+  body:not(.forge-basics) .tab:not(.active):hover{background:#27292f;color:#ecedf0}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.forge-basics) :is(.forge-step-week-bar,.forge-walk-finish-btn){
+    transition:none;
+  }
+}
