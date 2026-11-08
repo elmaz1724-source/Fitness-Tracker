@@ -1484,6 +1484,16 @@
     });
     svg.innerHTML=out;
   }
+  // Only redraw when crossing the mobile/desktop chart breakpoint.
+  // Avoid unnecessary reflows on every resize pixel.
+  let weightChartWasCompact=window.innerWidth<=520;
+  window.addEventListener('resize',()=>{
+    const compact=window.innerWidth<=520;
+    if(compact!==weightChartWasCompact){
+      weightChartWasCompact=compact;
+      drawChart();
+    }
+  });
 
   // Lokale Backups: bestehende Keys bleiben unverändert, Migration nicht nötig.
   const allowedKey=k=>/^fitness-(walking|week|week-migrated-week|week-\d{4}-\d{2}-\d{2}|weights|daily-\d{4}-\d{2}-\d{2}|planner-\d{4}-\d{2}-\d{2})$/.test(k)||/^forge-(workouts-v1|preferences-v1|last-sync-v1|creatine-\d{4}-\d{2}-\d{2})$/.test(k);
