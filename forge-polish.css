@@ -1336,17 +1336,17 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
   letter-spacing:-.55px;
   color:#f5f6f8;
 }
-#progress .forge-weight-entry-card,
-#progress .forge-weight-chart-card{
+#progress .card.forge-weight-entry-card,
+#progress .chart.forge-weight-chart-card{
   background:#1b1d22;
   border:1px solid #34363d;
   border-radius:20px;
   box-shadow:none;
 }
-#progress .forge-weight-entry-card{
+#progress .card.forge-weight-entry-card{
   padding:20px;
 }
-#progress .forge-weight-entry-grid{
+#progress .grid2.forge-weight-entry-grid{
   display:grid;
   grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
   align-items:start;
@@ -1369,7 +1369,7 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
   letter-spacing:0;
   margin:0;
 }
-#progress .forge-weight-entry-field input{
+#progress .card .forge-weight-entry-field input{
   display:block;
   box-sizing:border-box;
   width:100%;
@@ -1401,12 +1401,12 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
 #progress .forge-weight-entry-field input[type="date"]::-webkit-datetime-edit{
   padding:0;
 }
-#progress .forge-weight-entry-field input:focus-visible{
+#progress .card .forge-weight-entry-field input:focus-visible{
   border-color:#82b4ff;
   outline:2px solid rgba(130,180,255,.35);
   outline-offset:2px;
 }
-#progress .forge-weight-save{
+#progress #addWeight.forge-weight-save{
   display:block;
   width:100%;
   min-height:52px;
@@ -1425,12 +1425,12 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
   touch-action:manipulation;
   transition:transform .14s ease-out,background-color .14s ease-out;
 }
-#progress .forge-weight-save:active{transform:scale(.985)}
-#progress .forge-weight-save:focus-visible{
+#progress #addWeight.forge-weight-save:active{transform:scale(.985)}
+#progress #addWeight.forge-weight-save:focus-visible{
   outline:2px solid #a7ccff;
   outline-offset:3px;
 }
-#progress .forge-weight-feedback{
+#progress .feedback.forge-weight-feedback{
   margin:13px 2px 0;
   padding:0;
   background:transparent;
@@ -1441,9 +1441,9 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
   line-height:1.55;
   min-height:18px;
 }
-#progress .forge-weight-feedback[data-state="success"]{color:#b6d5ff}
-#progress .forge-weight-feedback[data-state="error"]{color:#ffc0ac}
-#progress .forge-weight-chart-card{
+#progress .feedback.forge-weight-feedback[data-state="success"]{color:#b6d5ff}
+#progress .feedback.forge-weight-feedback[data-state="error"]{color:#ffc0ac}
+#progress .chart.forge-weight-chart-card{
   margin-top:0;
   padding:18px;
   overflow:hidden;
@@ -1496,20 +1496,20 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
   color:#999fa9;
 }
 @media(max-width:520px){
-  #progress .forge-weight-entry-grid{grid-template-columns:minmax(0,1fr);gap:15px}
-  #progress .forge-weight-entry-card{padding:18px 16px 16px}
-  #progress .forge-weight-entry-field input{height:54px;min-height:54px;font-size:17px}
-  #progress .forge-weight-save{margin-top:17px;min-height:50px}
-  #progress .forge-weight-chart-card{padding:17px 11px 16px}
+  #progress .grid2.forge-weight-entry-grid{grid-template-columns:minmax(0,1fr);gap:15px}
+  #progress .card.forge-weight-entry-card{padding:18px 16px 16px}
+  #progress .card .forge-weight-entry-field input{height:54px;min-height:54px;font-size:17px}
+  #progress #addWeight.forge-weight-save{margin-top:17px;min-height:50px}
+  #progress .chart.forge-weight-chart-card{padding:17px 11px 16px}
   #progress .forge-weight-chart-heading{padding:0 5px;margin-bottom:12px}
   #progress .forge-weight-chart-heading>.small{width:100%}
   #progress .forge-weight-chart-heading .legend{gap:8px 14px}
   #progress .forge-weight-section-title{font-size:19px;margin-top:24px}
 }
 @media(max-width:350px){
-  #progress .forge-weight-entry-card{padding:15px 13px}
-  #progress .forge-weight-chart-card{padding-inline:6px}
+  #progress .card.forge-weight-entry-card{padding:15px 13px}
+  #progress .chart.forge-weight-chart-card{padding-inline:6px}
 }
 @media(prefers-reduced-motion:reduce){
-  #progress .forge-weight-save{transition:none}
+  #progress #addWeight.forge-weight-save{transition:none}
 }
