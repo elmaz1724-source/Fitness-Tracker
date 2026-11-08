@@ -1289,3 +1289,37 @@ body:not(.forge-basics) :is(.forge-step-done,.walkingDone,.walk-stat b){
     transition:none;
   }
 }
+
+
+/* Final parity pass: older nested advanced modules must not retain cobalt cards. */
+body:not(.forge-basics) :is(
+  .forge-tile,.forge-entry,.forge-reminder,.forge-note,
+  .forge-backup-mini,.forge-snapshot-card,.forge-sync-how,
+  .forge-sync-stats .forge-tile,.forge-line,.forge-walk-mode,
+  .macro,.checkpoint,.weight-item,.walk-main,.ring-inner,
+  .forge-sync-how code,.forge-walk-details-icon,
+  .forge-walk-plan-state,.forge-step-goal,.forge-walk-sync-source
+){
+  background:#22242a;border-color:#35383f;box-shadow:none;
+}
+body:not(.forge-basics) .forge-snapshot-card.is-primary{
+  background:#25272d;border-color:#42454e;
+}
+body:not(.forge-basics) :is(
+  .forge-walk-plan-meta>span:not(.forge-walk-plan-incline-pct),
+  .forge-walk-sync-values>div,.forge-steps-card .forge-step-entry,
+  .forge-step-week-column,.forge-walk-plan-time,.forge-walk-plan-count
+){
+  background:#16181c;border-color:#34363d;
+}
+body:not(.forge-basics) :is(.forge-sm-btn:not(.primary),.speed-chip,.goal-option){
+  background:#272a30;color:#e7e8ec;
+}
+body:not(.forge-basics) :is(
+  .forge-auto strong,.walk-stat b,.forge-snapshot-card strong,
+  .forge-walk-plan-time strong,.forge-walk-sync-values>div strong,
+  .forge-step-week-day small
+){color:#f1f3f5}
+body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
+  background:#747983;
+}
