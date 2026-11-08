@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0a101b">
-  <meta name="application-version" content="8.1.0">
+  <meta name="theme-color" content="#101114">
+  <meta name="application-version" content="8.2.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -12,14 +12,14 @@
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <style>
     :root{
-      --bg:#0a101b;
-      --panel:#121923;
-      --panel2:#17212d;
-      --line:#263241;
-      --text:#f4f7fb;
-      --muted:#93a1b2;
-      --accent:#6aadff;
-      --accent2:#2b6bb9;
+      --bg:#101114;
+      --panel:#1a1c20;
+      --panel2:#22242a;
+      --line:#303239;
+      --text:#f6f7f9;
+      --muted:#a2a5ae;
+      --accent:#84b6ff;
+      --accent2:#609ce9;
       --warn:#f5bb4b;
       --danger:#ff6b6b;
       --shadow:0 10px 30px rgba(0,0,0,.22);
@@ -30,9 +30,7 @@
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
-      background:
-        radial-gradient(circle at 15% 0%,rgba(82,142,215,.08),transparent 26%),
-        var(--bg);
+      background:var(--bg);
       color:var(--text);
       min-height:100vh;
     }
@@ -164,7 +162,7 @@
     /* FORGE — überarbeitete, mobile-first UI */
     :root{
       --bg:#090d12;--panel:#121920;--panel2:#1a242e;--line:#293540;
-      --text:#f3f6f9;--muted:#91a2ae;--accent:#5da2f6;--accent2:#5a93d9;
+      --text:#f3f6f9;--muted:#91a2ae;--accent:#82b4ff;--accent2:#5a93d9;
       --shadow:0 12px 36px rgba(0,0,0,.16);--radius:22px;
     }
     html{background:var(--bg)}
@@ -190,7 +188,7 @@
     .check:checked{background:var(--accent);border-color:var(--accent)}
     .check:checked::after{color:#0a1420}
     .progress{height:9px;background:#25323d}
-    .progress>div{background:linear-gradient(90deg,#6c98ce,#5da2f6)}
+    .progress>div{background:linear-gradient(90deg,#6c98ce,#82b4ff)}
     .macro{background:#111c23;border-color:#2a3740;border-radius:18px;padding:17px 9px}
     .macro b{font-size:23px;letter-spacing:-.6px}
     .checkpoint{background:linear-gradient(110deg,#1d2734,#131920 68%,#111b23);border-color:#35404e;padding:23px}
@@ -264,13 +262,13 @@
     .forecast-date{font-size:clamp(19px,2.2vw,25px);font-weight:900;letter-spacing:-.7px;line-height:1.3;margin:11px 0 8px}
     .forecast-caption{font-size:12px;color:#aab4c0;line-height:1.5}
     .progress-track{background:#2b333c;border-radius:99px;height:10px;overflow:hidden;margin-top:15px}
-    .progress-fill{width:0;height:100%;background:linear-gradient(90deg,#6a94c8,#5da2f6);transition:width .25s}
+    .progress-fill{width:0;height:100%;background:linear-gradient(90deg,#6a94c8,#82b4ff);transition:width .25s}
     .progress-meta{display:flex;justify-content:space-between;gap:8px;margin-top:7px;color:#abb3bd;font-size:11px}
     .chart-topline{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;margin-top:7px}
     .legend{display:flex;flex-wrap:wrap;gap:13px}
     .legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#a8b3c1}
     .legend i{display:inline-block;width:18px;height:3px;border-radius:99px;background:#718794}
-    .legend i.avg{background:#5da2f6}
+    .legend i.avg{background:#82b4ff}
     .chart-explain{font-size:11px;color:#8e9cac;line-height:1.5;margin:9px 4px 0}
     .stat-note{font-size:11px;color:#92a0b0;margin-top:11px;line-height:1.5}
     @media(max-width:700px){
@@ -320,7 +318,7 @@
     .planner-settings label{font-size:12px;color:#b5bcc4;white-space:nowrap}
     .planner-settings select{font-size:13px;font-weight:700;padding:9px 11px;min-height:39px;background:#17202a;border:1px solid #3a434e;border-radius:11px;color:#f3f6f9;max-width:240px}
     .planner-progress-track{height:9px;background:#303842;border-radius:100px;overflow:hidden;margin-top:16px}
-    .planner-progress-fill{width:0;height:100%;background:linear-gradient(90deg,#6996cc,#5da2f6);transition:width .2s}
+    .planner-progress-fill{width:0;height:100%;background:linear-gradient(90deg,#6996cc,#82b4ff);transition:width .2s}
     .planner-progress-label{display:flex;gap:12px;justify-content:space-between;color:#c0c7cf;font-size:11px;margin-top:7px}
     .planner-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}
     .planner-result{background:#101924;border:1px solid #333c48;border-radius:14px;padding:12px;min-width:0}
@@ -854,7 +852,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v8.1.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v8.2.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -866,7 +864,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 8.1.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 8.2.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -1433,16 +1431,16 @@
     const leftDay=series[0].day,rightDay=series[series.length-1].day;
     const x=day=>left+(W-left-right)*(rightDay===leftDay?.5:(day-leftDay)/(rightDay-leftDay));
     const y=v=>top+(H-top-bottom)*(max-v)/(max-min);
-    let out='<defs><linearGradient id="area7" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5da2f6" stop-opacity=".2"/><stop offset="1" stop-color="#5da2f6" stop-opacity="0"/></linearGradient></defs>';
+    let out='<defs><linearGradient id="area7" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#82b4ff" stop-opacity=".085"/><stop offset="1" stop-color="#82b4ff" stop-opacity="0"/></linearGradient></defs>';
     [0,.25,.5,.75,1].forEach(p=>{
       const yy=top+(H-top-bottom)*p,kg=max-(max-min)*p;
-      out+='<line x1="'+left+'" y1="'+yy+'" x2="'+(W-right)+'" y2="'+yy+'" stroke="#2a3645" stroke-width="1"/>';
+      out+='<line x1="'+left+'" y1="'+yy+'" x2="'+(W-right)+'" y2="'+yy+'" stroke="#31343b" stroke-width="1"/>';
       out+='<text x="'+(left-9)+'" y="'+(yy+4)+'" text-anchor="end" fill="#909dad" font-size="11">'+german(kg)+'</text>';
     });
     const raw=series.map((p,i)=>(i?'L':'M')+x(p.day)+' '+y(p.value)).join(' ');
-    out+='<path d="'+raw+'" fill="none" stroke="#73859b" stroke-opacity=".75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    out+='<path d="'+raw+'" fill="none" stroke="#8b8f99" stroke-opacity=".75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
     series.forEach(p=>{
-      out+='<circle cx="'+x(p.day)+'" cy="'+y(p.value)+'" r="3.5" fill="#111c23" stroke="#94a2b3" stroke-width="2"><title>'+p.date+': '+german(p.value)+' kg</title></circle>';
+      out+='<circle cx="'+x(p.day)+'" cy="'+y(p.value)+'" r="3.5" fill="#17191e" stroke="#a2a6b0" stroke-width="2"><title>'+p.date+': '+german(p.value)+' kg</title></circle>';
     });
     const averages=series.filter(p=>p.avg!==null);
     // Zwischen Lücken >7 Tagen keine scheinbar durchgehende geglättete Linie zeichnen.
@@ -1455,9 +1453,9 @@
       const path=group.map((p,i)=>(i?'L':'M')+x(p.day)+' '+y(p.avg)).join(' ');
       if(group.length>1){
         out+='<path d="'+path+' L'+x(group.at(-1).day)+' '+(H-bottom)+' L'+x(group[0].day)+' '+(H-bottom)+' Z" fill="url(#area7)"/>';
-        out+='<path d="'+path+'" fill="none" stroke="#5da2f6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+        out+='<path d="'+path+'" fill="none" stroke="#82b4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
       }
-      group.forEach(p=>{out+='<circle cx="'+x(p.day)+'" cy="'+y(p.avg)+'" r="3" fill="#5da2f6"><title>7-Tage-Ø: '+german(p.avg,2)+' kg</title></circle>';});
+      group.forEach(p=>{out+='<circle cx="'+x(p.day)+'" cy="'+y(p.avg)+'" r="3" fill="#82b4ff"><title>7-Tage-Ø: '+german(p.avg,2)+' kg</title></circle>';});
     });
     const ticks=rightDay===leftDay?[leftDay]:[leftDay,Math.round((leftDay+rightDay)/2),rightDay];
     ticks.forEach(day=>{
