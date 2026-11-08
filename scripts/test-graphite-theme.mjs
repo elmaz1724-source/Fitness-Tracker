@@ -51,7 +51,7 @@ check(html.includes('name="theme-color" content="#101114"')&&
       manifest.theme_color==='#101114'&&manifest.background_color==='#101114','iOS and PWA background match graphite');
 check(icon.includes('fill="#101114"')&&icon.includes('stroke="#f3f4f7"')&&
       icon.includes('stroke="#82b4ff"'),'icon uses mostly monochrome with small blue arrow accent');
-check(sw.includes('forge-shell-v8-2-0'),'offline cache refreshes for new design');
+check(sw.includes('forge-shell-v8-3-0'),'offline cache refreshes for new design');
 check(css.includes('@media(prefers-reduced-motion:reduce)'),'reduced motion maintained');
 for(const [path,body] of [['forge-polish.css',css],['forge-extras.css',extras]]){
  check((body.match(/\{/g)||[]).length===(body.match(/\}/g)||[]).length,path+' braces balanced');
