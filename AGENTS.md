@@ -57,6 +57,15 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 8. Keep essential actions reachable with the iOS keyboard shown and the fixed navigation in view or intentionally hidden. Use safe-area padding. Test landscape and installed-PWA mode.
 9. Real-world user screenshots take precedence over theoretical pixel-perfect tests. Confirm any deployment at the published URL, not merely by commit success.
 
+## FORGE 8.4 — Weight entry & chart iPhone quality
+
+- The user showed that the date and weight inputs were misaligned on an iPhone. Use the specific `forge-weight-entry-*` classes and **grid columns with `minmax(0,...)` and input `min-width:0`** to prevent native iOS date picker intrinsic width from escaping the grid.
+- On touch screens up to 520px the date and weight fields **stack vertically**, on larger screens keep two aligned columns. Do not replace the editable native `type=date` input with readonly text: past weights can be backfilled.
+- The feedback message must stay a compact, unboxed `aria-live=polite` text; the only prominent action is weight save. Never change the existing 50–200kg validation, date restrictions, same-date replacement or the `fitness-weights` local storage key.
+- The trend chart uses `340×244` SVG coordinates on phones and `720×290` on wider screens to keep labels readable, without altering points or the 7-day-average algorithm. Axis end labels must be anchored within the SVG.
+- Prefer a real-device screenshot review after deployment; CI must pass `node scripts/test-weight-ui.mjs` alongside all core tests.
+- Applied installed skills: `emil-design-eng` for typography/spacing and reduced visual weight; `mobile-native` for native date input and touch targets; `break-ui` for narrow layouts and empty/invalid data.
+
 ## FORGE 8.3 — Restored essentials and design parity
 
 The user reported that FORGE's basic view had lost important functions. FORGE 8.3 restores them **without creating new data sources**:
