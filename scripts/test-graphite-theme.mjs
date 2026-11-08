@@ -18,7 +18,7 @@ let passed=0;
 const check=(ok,message)=>{if(!ok)throw Error('FORGE 8.2 graphite: '+message);passed++;};
 check(!!script,'main script exists');
 new Script(script);
-check(html.includes('application-version" content="8.2.0"'),'app version is 8.2.0');
+check(html.includes('application-version" content="8.3.0"'),'app version is 8.3.0');
 check(html.includes('<body class="forge-basics">'),'basic three-screen mode remains default');
 const nav=html.slice(html.indexOf('<nav class="tabs"'),html.indexOf('</nav>')+6);
 const tabs=[...nav.matchAll(/data-view="([^"]+)"/g)].map(m=>m[1]);
