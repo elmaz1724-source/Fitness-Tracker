@@ -26,6 +26,8 @@ jobs:
           node --check forge-basics.js
           node --check scripts/test-basics.mjs
           node scripts/test-basics.mjs
+          node --check scripts/test-restored-basics.mjs
+          node scripts/test-restored-basics.mjs
           node --check scripts/test-graphite-theme.mjs
           node scripts/test-graphite-theme.mjs
           node --check scripts/test-navigation.mjs

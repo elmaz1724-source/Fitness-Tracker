@@ -57,6 +57,17 @@ Consult `docs/emil-kowalski/ui-cheatsheet.md` for typography, numerals, responsi
 8. Keep essential actions reachable with the iOS keyboard shown and the fixed navigation in view or intentionally hidden. Use safe-area padding. Test landscape and installed-PWA mode.
 9. Real-world user screenshots take precedence over theoretical pixel-perfect tests. Confirm any deployment at the published URL, not merely by commit success.
 
+## FORGE 8.3 — Restored essentials and design parity
+
+The user reported that FORGE's basic view had lost important functions. FORGE 8.3 restores them **without creating new data sources**:
+- Today's five original goal toggles (calories, protein, 10k steps, training/recovery, regeneration) use the same `fitness-daily-YYYY-MM-DD` key and the original `.daily` listeners. They are *checkmarks*, not food logging.
+- Walking shows the existing 3-block schedule as **three compact rows**. The original algorithm divides missing (not already walked) steps 30% / 30% / remainder 40%; the third block gets exact integer remainder so the sum always equals planned steps.
+- The existing seven-day recorded steps chart reads only `fitness-planner-YYYY-MM-DD` daily totals. Missing days are not zero steps. It is visible in basic Walking; the separate manually checked Wochentracker stays in optional advanced Walking.
+- One shared set of DOM IDs, no duplicated step storage or separate copies of chart data. Do not reintroduce the former multi-card detailed plan.
+- **Advanced mode must use the same neutral graphite palette**: `#101114` canvas, `#1b1d22` cards, `#303239` borders, mostly white numbers, `#82b4ff` only for selected controls and priority actions. No blue-heavy gradients or green highlights.
+- Visual selection and help messages must distinguish *measured/recorded* from *planned* steps, and original data must survive switching modes.
+- Run `node scripts/test-restored-basics.mjs` together with the existing graphite, basics, navigation and skill checks. Test sparse weekly histories, < 10 planned steps, and exact 10k reached.
+
 ## FORGE 8.2 Graphite identity — Apple-like restraint
 
 The user rejected both the original lime-green look and the excessively blue FORGE 8.1 design. Keep the **Graphite + Accent** system as the new baseline. Aim for the care and clarity of a polished iPhone app, **not a copy of an Apple product**.
@@ -75,8 +86,8 @@ The user rejected both the original lime-green look and the excessively blue FOR
 
 The user explicitly wants FORGE to stop accumulating features. The product's core purpose is **track actual steps, show missing steps to 10,000, calculate Walking-Pad time from speed and incline, and review weight progress**.
 
-- Default body mode is `forge-basics`. **Do not reintroduce** daily checklists, calories, macro references, coaching reminders, extra dashboards, multi-step planning widgets, training logs, Health integration setup, imports, forecasts or other advanced tools into the basic view.
-- Show **Heute** (one current-day steps entry), **Walking** (already walked, still missing, speed/incline, estimated time), **Fortschritt** (simple weight entry/chart).
+- Default body mode is `forge-basics`. **FORGE 8.3 restores the user's original five daily-goal checkboxes**, a compact 3-block Walking split and a 7-day actual-step chart. These are explicit exceptions requested by the user. Do **not** bring back extra dashboards, coaching reminders, detailed nutrition logs, Health setup, imports, forecasts, or unrelated tools into the basic view.
+- Show **Heute** (one current-day steps entry and five compact, independently checkable original daily goals), **Walking** (already walked, still missing, estimated duration, speed/incline, original 30/30/40 split, last seven days of *actual* steps), and **Fortschritt** (simple weight entry/chart).
 - Old modules remain mounted for backward compatibility and are reached by the explicit top-right **Weitere Funktionen öffnen** menu. This is a reversible presentation change, **not a data migration**. Do not silently delete historical workout, weight, reminder, backup or walking configuration records.
 - The automatic missing-step Walking mode must be used for calculations in basics even if the archived user preference is a custom plan; the archived custom values must survive toggling advanced mode.
 - No new settings or feature sprawl without the user's explicit approval. Always question whether a suggested addition simplifies the core task. Prefer **removing visible complexity** over adding another switch or card.
