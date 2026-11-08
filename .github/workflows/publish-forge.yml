@@ -45,6 +45,8 @@ jobs:
           node scripts/test-basics.mjs
           node --check scripts/test-restored-basics.mjs
           node scripts/test-restored-basics.mjs
+          node --check scripts/test-weight-ui.mjs
+          node scripts/test-weight-ui.mjs
           node --check scripts/test-graphite-theme.mjs
           node scripts/test-graphite-theme.mjs
           node --check scripts/test-navigation.mjs
