@@ -36,8 +36,8 @@ check(css.includes('background:#82b4ff;')&&css.includes('#forgeStepFill'),'progr
 check(css.includes('.forge-basics #today .forge-step-save,')&&
       css.includes('.forge-basics #progress #addWeight{'),'Save buttons share the same blue CTA');
 check(css.includes('.forge-basics #walking .forge-walk-finish-btn{\n  background:#2b2e34;'),'secondary walking action stays neutral');
-check(css.includes('.forge-basics #walking .forge-walk-plan-card{order:1}')&&
-      css.includes('.forge-basics #walking .forge-basics-walking-controls{order:2}'),'walking time remains before speed and incline fields');
+check(css.includes('.forge-basics #walking .forge-walk-plan-card{order:1;')&&
+      css.includes('.forge-basics #walking .forge-basics-walking-controls{order:2;'),'walking time remains before speed and incline fields');
 check(html.includes('id="forgeSnapSteps"')&&html.includes('id="forgeSnapLeft"')&&
       html.includes('id="forgeStepSave"'),'Today still has one canonical step entry');
 check(html.includes('id="forgeBasicsPace"')&&html.includes('id="forgeBasicsIncline"')&&
