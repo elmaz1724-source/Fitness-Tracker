@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101114">
-  <meta name="application-version" content="8.2.0">
+  <meta name="application-version" content="8.3.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -434,6 +434,21 @@
         <div class="forge-step-weight"><span>Letztes Gewicht: <strong id="forgeSnapWeight">—</strong></span><button type="button" id="forgeGoWeight">Fortschritt ansehen ↗</button></div>
       </section>
 
+      <section class="forge-basics-daily" id="forgeBasicsDaily" aria-labelledby="forgeBasicsDailyTitle">
+        <div class="forge-basics-section-head">
+          <div><span class="forge-kicker">DEIN TAG</span><h2 id="forgeBasicsDailyTitle">Tagesziele <span id="scoreText" class="forge-basics-daily-count">· 0/5</span></h2></div>
+          <span class="forge-basics-section-caption">Einfach abhaken</span>
+        </div>
+        <div class="forge-basics-daily-list">
+          <label class="goal"><div><b>Kalorien</b><span>≈ 2.350 kcal</span></div><input class="check daily" data-key="cal" type="checkbox"></label>
+          <label class="goal"><div><b>Protein</b><span>180 g</span></div><input class="check daily" data-key="protein" type="checkbox"></label>
+          <label class="goal"><div><b>10.000 Gesamtschritte</b><span>Alltag + Walking Pad</span></div><input class="check daily" data-key="steps" type="checkbox"></label>
+          <label class="goal"><div><b>Krafttraining / Erholung</b><span>3× pro Woche, Leistung halten</span></div><input class="check daily" data-key="training" type="checkbox"></label>
+          <label class="goal"><div><b>Regeneration</b><span>Schlaf, Wasser, Belastung im Blick</span></div><input class="check daily" data-key="recovery" type="checkbox"></label>
+          <div class="progress" aria-hidden="true"><div id="dailyProgress"></div></div>
+        </div>
+      </section>
+
       <details class="planner forge-collapsible-planner" id="forgePlannerDetails">
         <summary class="forge-planner-summary"><span class="forge-planner-summary-text"><strong>Walking-Planer</strong><small>Optional: Dauer & Tempo berechnen</small></span><span class="forge-planner-arrow" aria-hidden="true">⌄</span></summary>
         <div class="forge-planner-inner">
@@ -509,16 +524,6 @@
         <div class="card stat"><div class="label">Zieltempo</div><div class="value">0,5–0,7</div><div class="small">kg/Woche</div></div>
       </div>
 
-      <div class="section-title">Tagesziele <span id="scoreText" class="small"></span></div>
-      <div class="card">
-        <label class="goal"><div><b>Kalorien</b><span>≈ 2.350 kcal</span></div><input class="check daily" data-key="cal" type="checkbox"></label>
-        <label class="goal"><div><b>Protein</b><span>180 g</span></div><input class="check daily" data-key="protein" type="checkbox"></label>
-        <label class="goal"><div><b>10.000 Gesamtschritte</b><span>Alltag + Walking Pad</span></div><input class="check daily" data-key="steps" type="checkbox"></label>
-        <label class="goal"><div><b>Krafttraining / Erholung</b><span>3× pro Woche, Leistung halten</span></div><input class="check daily" data-key="training" type="checkbox"></label>
-        <label class="goal"><div><b>Regeneration</b><span>Schlaf, Wasser, Belastung im Blick</span></div><input class="check daily" data-key="recovery" type="checkbox"></label>
-        <div class="progress"><div id="dailyProgress"></div></div>
-      </div>
-
       <details class="forge-plan-reference">
         <summary><span><strong>Ernährungsrichtwerte</strong><small>Optional ansehen · kein Tracking</small></span><span class="forge-plan-chevron" aria-hidden="true">⌄</span></summary>
         <div class="forge-plan-content">
@@ -592,6 +597,19 @@
       </section>
       <div id="walkingPlanHint" class="notice" hidden></div>
 
+      <section class="forge-simple-blocks" id="forgeSimpleBlocks" aria-labelledby="forgeSimpleBlocksTitle">
+        <div class="forge-basics-section-head">
+          <div><span class="forge-kicker">DEINE EINHEIT AUFTEILEN</span><h2 id="forgeSimpleBlocksTitle">3-Blöcke-Plan</h2></div>
+          <span class="forge-basics-section-caption">30 / 30 / 40 %</span>
+        </div>
+        <div class="forge-simple-block-list" aria-label="Drei vorgeschlagene Walking-Einheiten">
+          <div class="forge-simple-block"><span class="forge-simple-block-number" aria-hidden="true">01</span><span class="forge-simple-block-name">Morgens</span><strong id="block1Steps">3.000 Schritte</strong><span class="forge-simple-block-duration" id="b1">≈ 20 Min.</span></div>
+          <div class="forge-simple-block"><span class="forge-simple-block-number" aria-hidden="true">02</span><span class="forge-simple-block-name">Mittags</span><strong id="block2Steps">3.000 Schritte</strong><span class="forge-simple-block-duration" id="b2">≈ 20 Min.</span></div>
+          <div class="forge-simple-block"><span class="forge-simple-block-number" aria-hidden="true">03</span><span class="forge-simple-block-name">Abends</span><strong id="block3Steps">4.000 Schritte</strong><span class="forge-simple-block-duration" id="b3">≈ 27 Min.</span></div>
+        </div>
+        <p class="forge-simple-block-note">Eine mögliche Aufteilung der <strong>noch geplanten</strong> Schritte, kein automatisch erfasstes Training.</p>
+      </section>
+
       <section class="forge-walk-finish" aria-labelledby="forgeFinishTitle">
         <div><div class="forge-kicker">DANACH</div>
           <h2 id="forgeFinishTitle">Einheit geschafft?</h2>
@@ -599,11 +617,24 @@
         </div>
         <button type="button" id="forgeFinishWalking" class="forge-walk-finish-btn">Schrittstand aktualisieren <span aria-hidden="true">↗</span></button>
       </section>
+      <section class="forge-step-week" id="forgeSimpleWeek" aria-labelledby="forgeWeekStepsTitle">
+        <div class="forge-step-week-head"><div><div class="forge-kicker">DEINE BEWEGUNG</div>
+          <h2 id="forgeWeekStepsTitle">Wochenverlauf</h2></div>
+          <span id="forgeStepWeekGoal" class="forge-step-week-badge">Noch keine Einträge</span>
+        </div>
+        <div id="forgeStepWeekBars" class="forge-step-week-bars" aria-label="Tatsächlich erfasste Schritte der letzten sieben Kalendertage"></div>
+        <div class="forge-step-week-footer">
+          <span id="forgeStepWeekAvg">Ø noch keine Werte</span>
+          <span id="forgeStepWeekCount">0 Tage erfasst</span>
+        </div>
+        <p class="forge-step-week-note">Nur tatsächlich eingetragene Schritte. Tage ohne Eintrag bleiben leer; geplante Schritte zählen nicht.</p>
+      </section>
+
       <details class="forge-walk-details" id="forgeWalkAdvanced">
         <summary>
           <span class="forge-walk-details-icon" aria-hidden="true">⚙</span>
-          <span><strong>Einstellungen & 3-Blöcke-Plan</strong>
-            <small>Tempo, Neigung, eigene Schritte und Schrittlänge</small></span>
+          <span><strong>Individuelle Planung</strong>
+            <small>Eigene Schritte, Tempo und Schrittlänge</small></span>
           <span class="forge-walk-details-chevron" aria-hidden="true">⌄</span>
         </summary>
         <div class="forge-walk-details-body">
@@ -631,36 +662,17 @@
         <div class="notice" id="walkNote">Belastung abhängig von Tempo und Steigung.</div>
       </div>
 
-      <div class="section-title">3-Blöcke-Plan</div>
-      <div class="blocks">
-        <div class="block"><div class="tag">BLOCK 1</div><b id="block1Steps">3.000 Schritte</b><span class="small" id="b1">≈ 20 Min.</span><div class="small" style="margin-top:7px">morgens</div></div>
-        <div class="block"><div class="tag">BLOCK 2</div><b id="block2Steps">3.000 Schritte</b><span class="small" id="b2">≈ 20 Min.</span><div class="small" style="margin-top:7px">mittags</div></div>
-        <div class="block"><div class="tag">BLOCK 3</div><b id="block3Steps">4.000 Schritte</b><span class="small" id="b3">≈ 27 Min.</span><div class="small" style="margin-top:7px">abends</div></div>
-      </div>
 
         </div>
       </details>
       <details class="forge-walk-details forge-walk-history-details" id="forgeWalkHistory">
         <summary>
           <span class="forge-walk-details-icon" aria-hidden="true">▥</span>
-          <span><strong>Wochenverlauf ansehen</strong>
-            <small>Deine Schritte der letzten 7 Tage & Wochentracker</small></span>
+          <span><strong>Manueller Wochentracker</strong>
+            <small>Walking-Tage für diese Woche markieren</small></span>
           <span class="forge-walk-details-chevron" aria-hidden="true">⌄</span>
         </summary>
         <div class="forge-walk-details-body">
-      <section class="forge-step-week" aria-labelledby="forgeWeekStepsTitle">
-        <div class="forge-step-week-head"><div><div class="forge-kicker">DEINE BEWEGUNG</div>
-          <h2 id="forgeWeekStepsTitle">Letzte 7 Tage</h2></div>
-          <span id="forgeStepWeekGoal" class="forge-step-week-badge">Noch keine Einträge</span>
-        </div>
-        <div id="forgeStepWeekBars" class="forge-step-week-bars" aria-label="Tatsächlich erfasste Schritte der letzten sieben Kalendertage"></div>
-        <div class="forge-step-week-footer">
-          <span id="forgeStepWeekAvg">Ø noch keine Werte</span>
-          <span id="forgeStepWeekCount">0 Tage erfasst</span>
-        </div>
-        <p class="forge-step-week-note">Nur gespeicherte Tagesstände. Tage ohne Eintrag bleiben leer und zählen nicht als 0 Schritte. Geplante Walking-Schritte zählen nicht.</p>
-      </section>
-
       <div class="section-title">Wochentracker</div>
       <div class="card">
         <div class="week" id="weekGrid"></div>
@@ -852,7 +864,7 @@
         </div>
       </div>
       <div class="forge-section">
-        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v8.2.0</span></div>
+        <div class="forge-heading"><h2>Systemcheck auf deinem Gerät</h2><span class="forge-chip">v8.3.0</span></div>
         <div class="forge-surface">
           <p class="forge-muted">Prüfe direkt auf deinem iPhone, ob Daten gespeichert werden können und die App für Offline-Nutzung vorbereitet ist. Es werden keine Fitnessdaten übertragen.</p>
           <div id="forgeBuildStatus" class="forge-note" role="status" aria-live="polite" style="margin:0 0 12px">Veröffentlichungsstatus wird geprüft …</div>
@@ -864,7 +876,7 @@
     </section>
 
     <p class="footer-note">
-      <span class="forge-version">FORGE 8.2.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
+      <span class="forge-version">FORGE 8.3.0</span> · Lokal gespeichert, ohne Account. Berechnungen sind Schätzwerte.
     </p>
   </main>
 
@@ -1043,9 +1055,9 @@
     $('#heroInclinePct').textContent='≈ '+fmt1(anglePct)+' %';
     $('#distance').textContent=fmt2(km)+' km';
     $('#duration').textContent=Math.round(mins)+' Min.';
-    const blockShares=[.3,.3,.4];
-    blockShares.forEach((share,i)=>{
-      const blockSteps=Math.round(steps*share);
+    const blockCounts=[Math.round(steps*.3),Math.round(steps*.3)];
+    blockCounts.push(steps-blockCounts[0]-blockCounts[1]);
+    blockCounts.forEach((blockSteps,i)=>{
       $('#block'+(i+1)+'Steps').textContent=blockSteps.toLocaleString('de-DE')+' Schritte';
       $('#b'+(i+1)).textContent='≈ '+Math.round(minutes(blockSteps,pace,stride))+' Min.';
     });
