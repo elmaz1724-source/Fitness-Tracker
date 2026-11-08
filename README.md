@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 8.2 – Graphite + Accent:** FORGE bleibt Back to Basics und wirkt deutlich ruhiger: neutrale anthrazitfarbene Flächen, weiße Fitnesszahlen und wenige gezielte blaue Akzente für Fortschritt und Speichern. Die drei Ansichten Heute, Walking und Fortschritt behalten ihre Funktionen, Daten und Navigation.
+**Version 8.3 – Essentials zurück:** Die einfache Ansicht zeigt wieder die fünf Tagesziele, einen kompakten 3-Blöcke-Plan und den echten 7-Tage-Schrittverlauf. „Weitere Funktionen“ ist jetzt ebenfalls graphitfarben mit wenigen blauen Akzenten. Drei Hauptansichten, dieselben gespeicherten Werte und keine neuen Tracking-Formate.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,21 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## FORGE 8.3 – Tagesziele, 3 Blöcke und Wochenverlauf
+
+Beim Back-to-Basics-Reset wurden einige bewährte Elemente versehentlich mit ausgeblendet. Die bestehenden Funktionen wurden nicht gelöscht und sind nun mit geringerem Platzbedarf wieder Teil der **einfachen Ansicht**:
+
+| Ansicht | Wieder sichtbar | Datenbasis |
+| --- | --- | --- |
+| **Heute** | Die ursprünglichen fünf Tagesziele als kompakte, einzeln abhäkbare Liste: Kalorien, Protein, 10.000 Schritte, Krafttraining/Erholung, Regeneration; ein leiser Fortschrittsbalken | Unverändert `fitness-daily-YYYY-MM-DD`; **kein Mahlzeiten- oder Ernährungstracking** |
+| **Walking** | Drei einfache Zeilen „Morgens / Mittags / Abends“ mit Schrittzahl und geschätzter Dauer | Die bestehende Walking-Berechnung; **30 % / 30 % / Rest** der *noch geplanten* Pad-Schritte, exakt ohne Rundungsabweichung |
+| **Walking** | Sieben Tagesbalken, erreichte 10.000er-Tage, Durchschnitt und Erfassungstage | Ausschließlich tatsächlich gespeicherte Tagesstände aus `fitness-planner-YYYY-MM-DD`; fehlende Einträge zählen nicht als null |
+| **Weitere Funktionen** | Die älteren Formulare, Erinnerungen, Trainingslogs, importierten Werte und Zusatzkarten nutzen dieselben neutralen Graphitflächen wie die einfache Ansicht | Keine Änderung an Einstellungen, Berechnungen und Backups |
+
+**Wichtig:** Tagesziele bleiben manuell abhäkbare Checklisten (keine zusätzliche Nahrungserfassung). Der 3-Blöcke-Plan ist nur ein Vorschlag; geplante Schritte werden niemals als gelaufen gezählt. Der alte manuelle Wochentracker bleibt getrennt von der tatsächlichen 7-Tage-Schrittstatistik in der erweiterten Ansicht erhalten.
+
+Zur Qualitätssicherung wurden `scripts/test-restored-basics.mjs` und die bisherigen Workflow-Tests kombiniert. Getestet werden außerdem sehr kleine und ungerade Rest-Schrittzahlen (z. B. 1 Schritt), damit die drei Zeilen in Summe immer exakt stimmen.
+
 ## FORGE 8.2 – Graphite + Accent
 
 FORGE 8.1 war dem Nutzer deutlich **zu blau**. Die neue Designrichtung orientiert sich an den Prinzipien von Emil Kowalski und der zurückhaltenden Klarheit guter iPhone-Apps, ohne Apples visuelle Gestaltung zu kopieren.
@@ -210,4 +225,4 @@ Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **8.2.0** (Graphite mit dezenten blauen Akzenten, ruhige iPhone-Oberflächen; visueller Realgerät-Test noch offen).
+Aktuelle Version: **8.3.0** (Graphite mit dezenten blauen Akzenten, ruhige iPhone-Oberflächen; visueller Realgerät-Test noch offen).
