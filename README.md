@@ -1,6 +1,6 @@
 # FORGE – Persönlicher Fitness Tracker
 
-**Version 8.3 – Essentials zurück:** Die einfache Ansicht zeigt wieder die fünf Tagesziele, einen kompakten 3-Blöcke-Plan und den echten 7-Tage-Schrittverlauf. „Weitere Funktionen“ ist jetzt ebenfalls graphitfarben mit wenigen blauen Akzenten. Drei Hauptansichten, dieselben gespeicherten Werte und keine neuen Tracking-Formate.
+**Version 8.4 – Gewicht sauber erfassen:** Der Fortschritt-Bereich hat jetzt gleichmäßig ausgerichtete Felder, eine besonders auf iPhones gut bedienbare Gewichtsmaske und ein besser lesbares Gewichtsdiagramm. Alle bisherigen Schritte, Walking-Daten, Gewichte und Backups bleiben erhalten.
 
 Mobile-first Fitness-Tracker, veröffentlicht über GitHub Pages:  
 https://elmaz1724-source.github.io/Fitness-Tracker/
@@ -131,6 +131,18 @@ Der veröffentlichte Build enthält nun `build-info.json` mit Versionsnummer, Co
 
 Auch der Workflow prüft nach dem Deploy, ob `build-info.json` von der öffentlichen Adresse mit der erwarteten Commit-ID ausgeliefert wird. Bei noch ausstehender CDN-Aktualisierung erscheint eine Warnung. 
 
+## FORGE 8.4 – Gewicht erfassen und Verlauf besser lesen
+
+Der Nutzer hat im iPhone-Screenshot gezeigt, dass die Felder **Datum / Gewicht** ungleichmäßig wirken und sich teilweise überlappen. Die Ursache war das zuvor verwendete generische Zweispaltenraster in Kombination mit der nativen Datumssteuerung auf iOS.
+
+**Korrektur:** Die bestehende Gewichtskarte unter `Fortschritt` benutzt nun explizite `forge-weight-*`-Klassen. Auf schmalen Displays bis 520px liegen Datum und Gewicht **untereinander**, um den iOS-Datepicker nicht zusammenzuquetschen; auf breiteren Displays stehen sie in einem min-width-sicheren Raster. Der Datumswähler bleibt bearbeitbar, damit nachträgliche Messungen möglich sind. Beide Felder haben dieselbe Höhe und Touch-größen von mindestens 54–56px. Der blaue Speichern-Button und ein kleiner, ungerahmter Statushinweis ersetzen die ehemals schwere Hinweisbox.
+
+**Gewichtsverlauf:** Der SVG-Chart verwendet auf Smartphones ein eigenes 340×244-ViewBox-Layout statt eines auf halbe Größe geschrumpften Desktop-Diagramms (720×290). Erste/letzte Zeitbeschriftungen werden an den Rändern ausgerichtet, die Legende ordnet sich schmalen Bildschirmen unter und das Diagramm wird beim Wechsel zwischen mobilen und breiten Viewports neu gezeichnet. Die bisherigen Messpunkte, gleitenden 7-Tage-Durchschnitte und Datenregeln bleiben unverändert.
+
+**Keine Änderung an Fitnessdaten:** Die Gewichtseingabe schreibt weiterhin ausschließlich `fitness-weights`; identische Tage ersetzen wie bisher den alten Wert, Werte außerhalb von 50–200 kg und zukünftige Daten werden zurückgewiesen. Das Backupformat bleibt unverändert. Keine Ernährungserfassung.
+
+**Verifikation:** `node scripts/test-weight-ui.mjs` prüft mobile CSS-Breiten, Datumsbearbeitbarkeit, SVG-Achsen für Mobil/Desktop, Leerdaten und das echte vorhandene Speicher-/Validierungsverhalten. Die bestehenden FORGE-Tests bleiben im Pre-Merge- und Pages-Workflow aktiv.
+
 ## FORGE 8.3 – Tagesziele, 3 Blöcke und Wochenverlauf
 
 Beim Back-to-Basics-Reset wurden einige bewährte Elemente versehentlich mit ausgeblendet. Die bestehenden Funktionen wurden nicht gelöscht und sind nun mit geringerem Platzbedarf wieder Teil der **einfachen Ansicht**:
@@ -225,4 +237,4 @@ Die erste Qualitätsrunde optimiert iOS-Bedienung, `aria-current` der Navigation
 
 Reines HTML/CSS/Vanilla-JavaScript ohne externe Bibliotheken. Die Web-App verwendet ein Manifest und einen Service Worker mit Network-First-Strategie und Offline-Fallback. Bei Änderungen an Shell-Dateien Cache-Version in `sw.js` erhöhen.
 
-Aktuelle Version: **8.3.0** (Graphite mit dezenten blauen Akzenten, ruhige iPhone-Oberflächen; visueller Realgerät-Test noch offen).
+Aktuelle Version: **8.4.0** (Graphite mit dezenten blauen Akzenten, ruhige iPhone-Oberflächen; visueller Realgerät-Test noch offen).
