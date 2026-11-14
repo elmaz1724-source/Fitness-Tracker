@@ -14,6 +14,7 @@ function setup({hash='',mode='custom'}={}){
  }};
  const listeners={};
  const el=id=>({id,value:'',textContent:'',innerHTML:'',open:false,attrs:{},listeners:{},
+   classList:{tokens:new Set(),toggle(k,on){if(on)this.tokens.add(k);else this.tokens.delete(k)},contains(k){return this.tokens.has(k)}},
    addEventListener(k,fn){(this.listeners[k]??=[]).push(fn)},
    dispatchEvent(e){for(const fn of this.listeners[e.type]??[])fn(e)},
    click(){this.dispatchEvent({type:'click'})},
@@ -22,9 +23,12 @@ function setup({hash='',mode='custom'}={}){
  });
  const ids=['forgeBasicsToggle','forgeBasicsBackup','forgeHeaderMenu','pace','incline',
   'forgeBasicsPace','forgeBasicsIncline','forgeBasicsPaceFeedback','paceError',
+  'inclineGrade','forgeBasicsGrade','inclineUnit','forgeBasicsInclineUnit',
+  'forgeBasicsDegrees','forgeBasicsPercent','forgeBasicsInclineLabel',
   'forgeWalkAdvanced','walkSteps','otherSteps','exportData','forgeBasicsNote'];
  const items=Object.fromEntries(ids.map(id=>[id,el(id)]));
  items.pace.value='6,7';items.incline.value='8';
+ items.inclineUnit.value='degrees';items.inclineGrade.value='14';
  const tabs={training:el('training'),today:el('today')};
  tabs.training.classList={contains:c=>c==='active'&&!!tabs.training.active};
  tabs.today.classList={contains:c=>c==='active'&&!tabs.training.active};
@@ -56,6 +60,16 @@ i.forgeBasicsPace.value='6,2';i.forgeBasicsPace.dispatchEvent({type:'input'});
 verify(i.pace.value==='6,2'&&app.recalculations>=1,'speed forwards to the one original calculator');
 i.forgeBasicsIncline.value='5';i.forgeBasicsIncline.dispatchEvent({type:'input'});
 verify(i.incline.value==='5','incline forwards to original calculator');
+i.forgeBasicsPercent.click();
+verify(i.inclineUnit.value==='percent'&&i.forgeBasicsPercent.getAttribute('aria-pressed')==='true',
+ 'simple percentage button activates the shared calculator mode');
+verify(i.forgeBasicsIncline.hidden===true&&i.forgeBasicsGrade.hidden===false,
+ 'the treadmill grade picker replaces the angle input');
+i.forgeBasicsGrade.value='4.5';i.forgeBasicsGrade.dispatchEvent({type:'change'});
+verify(i.inclineGrade.value==='4.5','0.5-percent grade preset forwards to calculator');
+i.forgeBasicsDegrees.click();
+verify(i.inclineUnit.value==='degrees'&&i.forgeBasicsDegrees.getAttribute('aria-pressed')==='true',
+ 'switching back preserves degrees mode');
 verify(JSON.parse(app.db.get('fitness-walking')).steps===7300,'existing walking plan untouched by UI forwarding');
 i.forgeBasicsToggle.click();
 verify(!app.rootClass.has('forge-basics'),'advanced view opens');
