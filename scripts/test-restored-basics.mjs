@@ -15,6 +15,11 @@ check(!!inline,'inline application exists');
 new Script(inline);
 check(html.includes('<body class="forge-basics">'),'simple view is the default');
 check(html.includes('id="forgeBasicsDaily"')&&html.includes('id="forgeSimpleBlocks"')&&html.includes('id="forgeSimpleWeek"'),'all three restored basics are mounted');
+check(html.includes('id="forgeBasicsDegrees"')&&html.includes('id="forgeBasicsPercent"')&&
+      html.includes('id="forgeBasicsGrade"'),'simple Walking view offers clearly visible angle/percent controls');
+check(inline.includes('const gradeStepCount=53')&&inline.includes('const percent=step/2;'),
+      'treadmill percent picker covers 0.0–26.5 in half-percent steps');
+check(css.includes('.forge-basics-slope-segments button.is-active'),'active unit is visibly highlighted');
 check(css.includes('#today>:not(#forgeStepsCenter):not(#forgeBasicsDaily)'),'daily goals are not hidden with old cards');
 check(css.includes('#walking .forge-simple-blocks{order:3;')&&css.includes('#walking #forgeSimpleWeek{order:5}'),'3-block plan and week chart visible in correct order');
 const goals=html.slice(html.indexOf('<section class="forge-basics-daily"'),html.indexOf('</section>',html.indexOf('<section class="forge-basics-daily"')));
@@ -99,10 +104,11 @@ const pref={pace:6.2,steps:8000,other:0,stride:.76,incline:8,mode:'remaining'};
 const environment={body:{classList:{contains:c=>c==='forge-basics'}},
  querySelectorAll(){return[]}};
 const makeWalking=new Function('$','document','storage','actualDailySteps','renderStepWeek','walkMode',
-  'parsedPace','clamp','fmt1','fmt2','minutes','walkingPrefs',
+  'parsedPace','clamp','fmt1','fmt2','minutes','walkingPrefs','currentInclineDegrees','inclineUnit',
   inline.slice(walkingStart,walkingEnd)+'\nreturn updateWalking;');
 let actualSteps=6500;
-const update=makeWalking($,environment,storage,()=>actualSteps,()=>{},'remaining',()=>6.2,clamp,fmt1,fmt2,minutes,pref);
+const update=makeWalking($,environment,storage,()=>actualSteps,()=>{},'remaining',()=>6.2,clamp,fmt1,fmt2,minutes,pref,
+  ()=>Number(byId['#incline'].value),'degrees');
 update();
 check(byId['#walkingRemaining'].textContent==='3.500'&&byId['#forgeWalkNeeded'].textContent==='3.500','Walking plans the true remainder without double counting');
 const countBlocks=()=>[1,2,3].map(i=>Number(byId['#block'+i+'Steps'].textContent.replace(/[^\d]/g,'')));
