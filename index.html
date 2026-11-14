@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101114">
-  <meta name="application-version" content="8.4.2">
+  <meta name="application-version" content="8.4.3">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -360,7 +360,7 @@
   </style>
   <!-- Feature and mobile design rules must load after the base inline styles. -->
   <link rel="stylesheet" href="./forge-extras.css">
-  <link rel="stylesheet" href="./forge-polish.css">
+  <link rel="stylesheet" href="./forge-polish.css?v=8.4.3">
 </head>
 <body class="forge-basics">
   <main class="app">
@@ -562,12 +562,20 @@
       <section class="forge-basics-walking-controls" aria-labelledby="forgeBasicsWalkingTitle">
         <div class="forge-kicker">DEIN WALKING-PAD</div>
         <h2 id="forgeBasicsWalkingTitle">Tempo &amp; Steigung</h2>
+        <div class="forge-basics-slope-unit" role="group" aria-label="Steigungseinheit wählen">
+          <span>Steigung eingeben als</span>
+          <div class="forge-basics-slope-segments">
+            <button id="forgeBasicsDegrees" type="button" aria-pressed="true">Neigung °</button>
+            <button id="forgeBasicsPercent" type="button" aria-pressed="false">Steigung %</button>
+          </div>
+        </div>
         <div class="forge-basics-walking-fields">
           <label for="forgeBasicsPace">Geschwindigkeit (km/h)
             <input id="forgeBasicsPace" type="text" inputmode="decimal" autocomplete="off" value="6,7" placeholder="z. B. 6,2">
           </label>
           <div class="forge-basics-incline-field">
-            <select id="forgeBasicsInclineUnit" aria-label="Neigung in Grad oder Steigung in Prozent wählen">
+            <span id="forgeBasicsInclineLabel" class="forge-basics-incline-value-label">Neigung (°)</span>
+            <select id="forgeBasicsInclineUnit" aria-label="Neigung in Grad oder Steigung in Prozent wählen" hidden>
               <option value="degrees">Neigung (°)</option>
               <option value="percent">Steigung (%)</option>
             </select>
@@ -1601,7 +1609,7 @@
   <script src="./forge-extras.js" defer></script>
   <script src="./forge-polish.js" defer></script>
   <script src="./forge-navigation.js" defer></script>
-  <script src="./forge-basics.js" defer></script>
+  <script src="./forge-basics.js?v=8.4.3" defer></script>
   <script src="./forge-integrations.js" defer></script>
 </body>
 </html>
