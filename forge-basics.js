@@ -14,8 +14,11 @@
  const simpleGrade=$('forgeBasicsGrade');
  const inclineUnit=$('inclineUnit');
  const simpleInclineUnit=$('forgeBasicsInclineUnit');
+ const simpleDegrees=$('forgeBasicsDegrees');
+ const simplePercent=$('forgeBasicsPercent');
+ const simpleInclineLabel=$('forgeBasicsInclineLabel');
  const status=$('forgeBasicsPaceFeedback');
- if(!toggle||!pace||!incline||!simplePace||!simpleIncline||!grade||!simpleGrade||!inclineUnit||!simpleInclineUnit)return;
+ if(!toggle||!pace||!incline||!simplePace||!simpleIncline||!grade||!simpleGrade||!inclineUnit||!simpleInclineUnit||!simpleDegrees||!simplePercent||!simpleInclineLabel)return;
 
  function syncInputs(){
    if(document.activeElement!==simplePace)simplePace.value=pace.value;
@@ -26,6 +29,11 @@
    const percentage=inclineUnit.value==='percent';
    simpleIncline.hidden=percentage;
    simpleGrade.hidden=!percentage;
+   simpleDegrees.classList.toggle('is-active',!percentage);
+   simplePercent.classList.toggle('is-active',percentage);
+   simpleDegrees.setAttribute('aria-pressed',String(!percentage));
+   simplePercent.setAttribute('aria-pressed',String(percentage));
+   simpleInclineLabel.textContent=percentage?'Steigung (%)':'Neigung (°)';
    status.textContent=$('paceError')?.textContent.trim()||'';
  }
 
@@ -88,6 +96,14 @@
    inclineUnit.dispatchEvent(new Event('change',{bubbles:true}));
    syncInputs();
  });
+ function setUnitFromSimple(unit){
+   // Dispatch through the calculator's existing unit switch to keep units
+   // consistent across the simple view, advanced tools and stored plan.
+   simpleInclineUnit.value=unit;
+   simpleInclineUnit.dispatchEvent(new Event('change',{bubbles:true}));
+ }
+ simpleDegrees.addEventListener('click',()=>setUnitFromSimple('degrees'));
+ simplePercent.addEventListener('click',()=>setUnitFromSimple('percent'));
  pace.addEventListener('input',syncInputs);
  incline.addEventListener('input',syncInputs);
  grade.addEventListener('change',syncInputs);
