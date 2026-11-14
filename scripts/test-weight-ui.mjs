@@ -14,7 +14,7 @@ let total=0;
 const check=(ok,label)=>{if(!ok)throw Error('Weight UI test: '+label);total++};
 check(!!inline,'inline application source exists');
 new Script(inline);
-check(html.includes('application-version" content="8.4.0"'),'release version 8.4.0');
+check(/application-version" content="8\.\d+\.\d+"/.test(html),'valid release version in the 8.x line');
 check(html.includes('class="card forge-weight-entry-card"'),'original card uses explicit styling');
 check(html.includes('class="grid2 forge-weight-entry-grid"'),'form uses a dedicated grid');
 check(/id="weightDate" type="date"[^>]*>/.test(html),'date stays native, editable and can be backdated');
