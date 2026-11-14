@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101114">
-  <meta name="application-version" content="8.4.1">
+  <meta name="application-version" content="8.4.2">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>FORGE — Fitness Tracker</title>
@@ -571,7 +571,8 @@
               <option value="degrees">Neigung (°)</option>
               <option value="percent">Steigung (%)</option>
             </select>
-            <input id="forgeBasicsIncline" type="number" inputmode="decimal" min="0" max="15" step="any" value="8" aria-label="Neigung oder Steigung eingeben">
+            <input id="forgeBasicsIncline" type="number" inputmode="decimal" min="0" max="15" step="any" value="8" aria-label="Neigung in Grad eingeben">
+            <select id="forgeBasicsGrade" class="forge-incline-grade-select" aria-label="Steigung in 0,5-Prozent-Schritten auswählen" hidden></select>
           </div>
         </div>
         <p class="forge-basics-help">Die Gehzeit hängt von deinem Tempo und deiner Schrittlänge ab. Steigung erhöht die Belastung, nicht die berechnete Gehzeit.</p>
@@ -656,7 +657,8 @@
               <option value="degrees">Neigung (°)</option>
               <option value="percent">Steigung (%)</option>
             </select>
-            <input id="incline" type="number" inputmode="decimal" min="0" max="15" step="any" value="8" aria-label="Neigung oder Steigung eingeben">
+            <input id="incline" type="number" inputmode="decimal" min="0" max="15" step="any" value="8" aria-label="Neigung in Grad eingeben">
+            <select id="inclineGrade" class="forge-incline-grade-select" aria-label="Steigung in 0,5-Prozent-Schritten auswählen" hidden></select>
           </div>
           <label class="field"><span>Zusätzliche Walking-Pad-Schritte</span><input id="walkSteps" type="number" inputmode="numeric" min="0" max="20000" step="100" value="10000"></label>
           <label class="field"><span>Weitere geplante Schritte (außer Pad)</span><input id="otherSteps" type="number" inputmode="numeric" min="0" max="30000" step="100" value="0"></label>
@@ -950,13 +952,40 @@
   let inclineUnit=walkingPrefs.inclineUnit==='percent'?'percent':'degrees';
   const inclineFromDegrees=(degrees,unit)=>unit==='percent'?Math.tan(degrees*Math.PI/180)*100:degrees;
   const degreesFromIncline=(value,unit)=>unit==='percent'?Math.atan(value/100)*180/Math.PI:value;
-  const inclineInputValue=value=>String(Math.round(value*100)/100);
-  $('#inclineUnit').value=inclineUnit;
-  $('#incline').max=inclineUnit==='percent'?'26.8':'15';
+  const inclineInputValue=value=>String(Math.round(value*10000)/10000);
+  // Common treadmill grade settings use 0.5 percentage-point steps.
+  // 26.5% is the highest half-step below the original 15-degree safety cap.
+  const gradeStepCount=53;
+  function populateGradeOptions(grade){
+    const picker=$('#inclineGrade');
+    picker.replaceChildren();
+    for(let step=0;step<=gradeStepCount;step++){
+      const percent=step/2;
+      picker.add(new Option(fmt1(percent)+' %',String(percent)));
+    }
+    const rounded=Math.round(grade*2)/2;
+    if(Math.abs(grade-rounded)<0.0000001&&rounded>=0&&rounded<=gradeStepCount/2){
+      picker.value=String(rounded);
+    }else{
+      // Keep older exact angle settings when switching units, until a preset is chosen.
+      const precise=Math.round(grade*10000)/10000;
+      picker.add(new Option(fmt1(precise)+' % (umgerechnet)',String(precise)));
+      picker.value=String(precise);
+    }
+  }
+  function syncInclineUnitDisplay(){
+    const percentage=inclineUnit==='percent';
+    $('#inclineUnit').value=inclineUnit;
+    $('#incline').hidden=percentage;
+    $('#inclineGrade').hidden=!percentage;
+  }
+  const initialDegrees=clamp(Number(walkingPrefs.incline),0,15,8);
+  $('#incline').value=inclineInputValue(initialDegrees);
+  populateGradeOptions(inclineFromDegrees(initialDegrees,'percent'));
+  syncInclineUnitDisplay();
   $('#pace').value = String(walkingPrefs.pace ?? 6.7).replace('.', ',');
   $('#walkSteps').value = walkingPrefs.steps ?? 10000;
   $('#stride').value = walkingPrefs.stride ?? .76;
-  $('#incline').value = inclineInputValue(inclineFromDegrees(clamp(Number(walkingPrefs.incline),0,15,8),inclineUnit));
   $('#otherSteps').value = walkingPrefs.other ?? 0;
   function clamp(v,min,max,fallback){
     if(!Number.isFinite(v))return fallback;
@@ -966,7 +995,8 @@
   function fmt1(n){ return n.toFixed(1).replace('.', ','); }
   function fmt2(n){ return String(Math.round(n*100)/100).replace('.', ','); }
   function currentInclineDegrees(){
-    const raw=$('#incline').value.trim();
+    const source=inclineUnit==='percent'?$('#inclineGrade'):$('#incline');
+    const raw=source.value.trim();
     const value=raw===''?NaN:Number(raw);
     const fallback=clamp(Number(walkingPrefs.incline),0,15,8);
     return Number.isFinite(value)?clamp(degreesFromIncline(value,inclineUnit),0,15,fallback):fallback;
@@ -976,9 +1006,9 @@
     if(unit===inclineUnit)return;
     const degrees=currentInclineDegrees();
     inclineUnit=unit;
-    $('#inclineUnit').value=unit;
-    $('#incline').max=unit==='percent'?'26.8':'15';
-    $('#incline').value=inclineInputValue(inclineFromDegrees(degrees,unit));
+    $('#incline').value=inclineInputValue(degrees);
+    populateGradeOptions(inclineFromDegrees(degrees,'percent'));
+    syncInclineUnitDisplay();
     updateWalking();
   }
   function parsedPace(){
@@ -1123,6 +1153,7 @@
   $('#walkModeRemaining').addEventListener('click',()=>selectWalkingMode('remaining'));
   $('#walkModeCustom').addEventListener('click',()=>selectWalkingMode('custom'));
   ['pace','walkSteps','stride','incline','otherSteps'].forEach(id=>$('#'+id).addEventListener('input',updateWalking));
+  $('#inclineGrade').addEventListener('change',updateWalking);
   $('#inclineUnit').addEventListener('change',()=>selectInclineUnit($('#inclineUnit').value));
   $('#paceMinus').addEventListener('click',()=>setPace((parsedPace()??6.7)-.1));
   $('#pacePlus').addEventListener('click',()=>setPace((parsedPace()??6.7)+.1));
