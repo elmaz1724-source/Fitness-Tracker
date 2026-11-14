@@ -66,7 +66,7 @@ jobs:
           if (new Set(ids).size !== ids.length) throw new Error('Duplicate element ids');
           const endBaseStyle=html.indexOf('</style>');
           const extrasLink=html.indexOf('href="./forge-extras.css"');
-          const polishLink=html.indexOf('href="./forge-polish.css"');
+          const polishLink=html.search(/href="\.\/forge-polish\.css(?:\?v=[^"]+)?"/);
           if (!(endBaseStyle>0 && extrasLink>endBaseStyle && polishLink>extrasLink))
             throw new Error('Feature stylesheets must load AFTER the inline CSS to prevent mobile nav regression');
           const tabs=[...html.matchAll(/<button\b[^>]*class="tab(?: active)?"[^>]*data-view="([^"]+)"/g)].map(x=>x[1]);
