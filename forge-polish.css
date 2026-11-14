@@ -1513,3 +1513,20 @@ body:not(.forge-basics) .forge-step-week-bar:not(.completed):not(.missing){
 @media(prefers-reduced-motion:reduce){
   #progress #addWeight.forge-weight-save{transition:none}
 }
+
+/* Walking-Pad: compact, consistent choice between slope angle and grade. */
+.forge-basics-walking-fields .forge-basics-incline-field{
+ display:flex;flex-direction:column;gap:8px;min-width:0
+}
+.forge-basics-walking-fields .forge-basics-incline-field select,
+.forge-incline-advanced-field select{
+ display:block;width:100%;height:17px;min-height:17px;
+ border:0;border-radius:0;background:transparent;
+ color:#aeb8c5;font-size:12px;font-weight:750;
+ padding:0 18px 0 0;cursor:pointer;outline-offset:2px
+}
+.forge-basics-walking-fields .forge-basics-incline-field select option,
+.forge-incline-advanced-field select option{background:#1a1c20;color:#f5f6f8}
+.forge-basics-walking-fields .forge-basics-incline-field input{width:100%}
+.forge-incline-advanced-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.forge-incline-advanced-field input{width:100%}
