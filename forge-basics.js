@@ -10,16 +10,22 @@
  const incline=$('incline');
  const simplePace=$('forgeBasicsPace');
  const simpleIncline=$('forgeBasicsIncline');
+ const grade=$('inclineGrade');
+ const simpleGrade=$('forgeBasicsGrade');
  const inclineUnit=$('inclineUnit');
  const simpleInclineUnit=$('forgeBasicsInclineUnit');
  const status=$('forgeBasicsPaceFeedback');
- if(!toggle||!pace||!incline||!simplePace||!simpleIncline||!inclineUnit||!simpleInclineUnit)return;
+ if(!toggle||!pace||!incline||!simplePace||!simpleIncline||!grade||!simpleGrade||!inclineUnit||!simpleInclineUnit)return;
 
  function syncInputs(){
    if(document.activeElement!==simplePace)simplePace.value=pace.value;
    if(document.activeElement!==simpleIncline)simpleIncline.value=incline.value;
+   if(simpleGrade.innerHTML!==grade.innerHTML)simpleGrade.innerHTML=grade.innerHTML;
+   if(document.activeElement!==simpleGrade)simpleGrade.value=grade.value;
    simpleInclineUnit.value=inclineUnit.value;
-   simpleIncline.max=incline.max;
+   const percentage=inclineUnit.value==='percent';
+   simpleIncline.hidden=percentage;
+   simpleGrade.hidden=!percentage;
    status.textContent=$('paceError')?.textContent.trim()||'';
  }
 
@@ -72,6 +78,11 @@
    incline.value=simpleIncline.value;
    refreshWalking();
  });
+ simpleGrade.addEventListener('change',()=>{
+   grade.value=simpleGrade.value;
+   grade.dispatchEvent(new Event('change',{bubbles:true}));
+   syncInputs();
+ });
  simpleInclineUnit.addEventListener('change',()=>{
    inclineUnit.value=simpleInclineUnit.value;
    inclineUnit.dispatchEvent(new Event('change',{bubbles:true}));
@@ -79,6 +90,7 @@
  });
  pace.addEventListener('input',syncInputs);
  incline.addEventListener('input',syncInputs);
+ grade.addEventListener('change',syncInputs);
  inclineUnit.addEventListener('change',syncInputs);
 
  // iOS Shortcut links target a section of the archived interface.
